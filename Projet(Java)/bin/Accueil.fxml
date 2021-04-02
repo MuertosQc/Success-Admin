@@ -1,0 +1,1636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.media.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="905.0" prefWidth="1333.0" style="-fx-background-color: ebebeb;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccueilController">
+   <children>
+      <Pane prefHeight="905.0" prefWidth="272.0" style="-fx-background-color: #523d87;">
+         <children>
+            <Pane prefHeight="122.0" prefWidth="272.0" style="-fx-background-color: #2d1c58;">
+               <children>
+                  <Label layoutX="106.0" layoutY="41.0" text="Success" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="36.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="ImgLogo" fitHeight="79.0" fitWidth="79.0" layoutX="20.0" layoutY="22.0">
+                     <image>
+                        <Image url="@Photos/S.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Button fx:id="BtnAcueil" layoutX="14.0" layoutY="173.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Accueil">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></Button>
+            <Button fx:id="BtnEtudiant" layoutX="14.0" layoutY="240.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Étudiant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></Button>
+            <Button fx:id="BtnEnseignant" layoutX="14.0" layoutY="307.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Enseignant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></Button>
+            <Button fx:id="BtnProgramme" layoutX="14.0" layoutY="374.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Programme">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></Button>
+            <Separator layoutX="15.0" layoutY="216.0" opacity="0.34" prefHeight="3.0" prefWidth="245.0" />
+            <Separator layoutX="15.0" layoutY="284.0" opacity="0.34" prefHeight="3.0" prefWidth="245.0" />
+            <Separator layoutX="15.0" layoutY="349.0" opacity="0.34" prefHeight="6.0" prefWidth="245.0" />
+            <Separator layoutX="14.0" layoutY="416.0" opacity="0.34" prefHeight="6.0" prefWidth="245.0" />
+            <Separator layoutX="15.0" layoutY="483.0" opacity="0.34" prefHeight="6.0" prefWidth="245.0" />
+            <Button fx:id="BtnCour" layoutX="14.0" layoutY="441.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Cours">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnFrais" layoutX="13.0" layoutY="508.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Frais étudiant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Separator fx:id="LigneDessousBtnFrais" layoutX="14.0" layoutY="550.0" opacity="0.34" prefHeight="6.0" prefWidth="245.0" />
+            <Separator fx:id="LigneDessousBtnFrais1" layoutX="16.0" layoutY="616.0" opacity="0.34" prefHeight="6.0" prefWidth="245.0" />
+            <Button fx:id="BtnResultat" layoutX="15.0" layoutY="574.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Résultat">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="272.0" prefHeight="53.0" prefWidth="1061.0" style="-fx-background-color: white;">
+         <children>
+            <Label fx:id="LblNom" layoutX="161.0" layoutY="20.0" text="Nom Utilisateur">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="ImageViewPPicture" layoutX="117.0" layoutY="14.0">
+               <image>
+                  <Image url="@Photos/user.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImageViewNotif" layoutX="80.0" layoutY="17.0" onMouseClicked="#OnClickNotif">
+               <image>
+                  <Image url="@Photos/Notif%20(2).png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImageViewChat" layoutX="47.0" layoutY="17.0">
+               <image>
+                  <Image url="@Photos/icons8-bavarder-24.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImageViewSearch" layoutX="14.0" layoutY="17.0">
+               <image>
+                  <Image url="@Photos/icons8-chercher-24.png" />
+               </image>
+            </ImageView>
+            <Circle fx:id="RondNotif" fill="#f20000" layoutX="98.0" layoutY="23.0" radius="3.0" smooth="false" stroke="RED" strokeType="INSIDE" visible="false" />
+            <ImageView fx:id="ImgClose" fitHeight="32.0" fitWidth="32.0" layoutX="1015.0" layoutY="7.0" onMouseClicked="#onMouseClickLeave">
+               <image>
+                  <Image url="@../bin/Photos/XNoir50.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImgMini" fitHeight="32.0" fitWidth="32.0" layoutX="969.0" layoutY="10.0" onMouseClicked="#onMouseClickReduce">
+               <image>
+                  <Image url="@../bin/Photos/moins50.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneAccueil" layoutX="281.0" layoutY="86.0" prefHeight="788.0" prefWidth="1045.0">
+         <children>
+            <Pane fx:id="PaneCour" layoutX="292.0" layoutY="47.0" prefHeight="135.0" prefWidth="221.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5;">
+               <children>
+                  <Label layoutX="79.0" layoutY="93.0" text="Cours">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="36.0" layoutY="16.0" prefHeight="74.0" prefWidth="150.0">
+                     <children>
+                        <Label fx:id="LblCompteurCours" text="45">
+                           <font>
+                              <Font name="Arial Bold" size="48.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </Pane>
+            <Pane fx:id="PaneEtudiant" layoutX="533.0" layoutY="47.0" prefHeight="135.0" prefWidth="221.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5;">
+               <children>
+                  <Label layoutX="61.0" layoutY="93.0" text="Étudiants">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="36.0" layoutY="16.0" prefHeight="74.0" prefWidth="150.0">
+                     <children>
+                        <Label fx:id="LblCompteurEtudiants" text="578">
+                           <font>
+                              <Font name="Arial Bold" size="48.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </Pane>
+            <BarChart fx:id="BarChart" barGap="3.0" categoryGap="3.0" layoutX="16.0" layoutY="197.0" prefHeight="591.0" prefWidth="1014.0">
+               <xAxis>
+                  <CategoryAxis prefWidth="10.0" side="BOTTOM" style=": ;" fx:id="xAxis" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis fx:id="yAxis" maxWidth="10.0" prefWidth="10.0" side="LEFT" />
+               </yAxis>
+            </BarChart>
+            <Pane fx:id="PaneEnseignant" layoutX="51.0" layoutY="47.0" prefHeight="135.0" prefWidth="221.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5;">
+               <children>
+                  <Label layoutX="45.0" layoutY="91.0" text="Enseignants">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="36.0" layoutY="14.0" prefHeight="74.0" prefWidth="150.0">
+                     <children>
+                        <Label fx:id="LblCompteurEnseignants" text="20">
+                           <font>
+                              <Font name="Arial Bold" size="48.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </Pane>
+            <Pane fx:id="PaneProgramme" layoutX="774.0" layoutY="47.0" prefHeight="135.0" prefWidth="221.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5;">
+               <children>
+                  <Label layoutX="42.0" layoutY="90.0" text="Programmes">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="36.0" layoutY="16.0" prefHeight="74.0" prefWidth="150.0">
+                     <children>
+                        <Label fx:id="LblCompteurProgramme" text="3">
+                           <font>
+                              <Font name="Arial Bold" size="48.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </Pane>
+            <BarChart fx:id="BarChartInactif" barGap="3.0" categoryGap="3.0" layoutX="16.0" layoutY="197.0" prefHeight="591.0" prefWidth="1014.0" visible="false">
+               <xAxis>
+                  <CategoryAxis prefWidth="10.0" side="BOTTOM" style=": ;" fx:id="xAxis1" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis fx:id="yAxis1" maxWidth="10.0" prefWidth="10.0" side="LEFT" />
+               </yAxis>
+            </BarChart>
+            <GridPane layoutX="436.0" layoutY="741.0" prefHeight="42.0" prefWidth="179.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="LblTitreCoursActifs" alignment="CENTER" prefHeight="36.0" prefWidth="184.0" style="-fx-background-color: ebebeb;" text="Données actifs">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <GridPane layoutX="488.0" layoutY="810.0" prefHeight="15.0" prefWidth="70.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <ImageView fx:id="ImgFlecheGauche" fitHeight="24.0" fitWidth="24.0" layoutX="412.0" layoutY="752.0" onMouseClicked="#OnActionFleche" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../bin/Photos/LeftArrow24.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImgFlecheDroite" fitHeight="24.0" fitWidth="24.0" layoutX="620.0" layoutY="752.0" onMouseClicked="#OnActionFleche" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../bin/Photos/RightArrow24.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="GrandePaneEtudiant" layoutX="280.0" layoutY="62.0" prefHeight="838.0" prefWidth="1045.0" visible="false">
+         <children>
+            <TableView fx:id="TableViewEtudiant" layoutX="11.0" layoutY="49.0" prefHeight="634.0" prefWidth="1027.0">
+              <columns>
+                  <TableColumn fx:id="TcUser" prefWidth="125.0" text="Utilisateur" />
+                  <TableColumn fx:id="TcNomComplet" prefWidth="171.0" text="Nom complet" />
+                  <TableColumn fx:id="TcTel" prefWidth="166.0" text="Telephone" />
+                  <TableColumn fx:id="TcEmail" prefWidth="180.0" text="Email" />
+                  <TableColumn fx:id="TcAdresse" prefWidth="246.0" text="Adresse" />
+                  <TableColumn fx:id="TcProvince" prefWidth="138.0" text="Province" />
+              </columns>
+            </TableView>
+            <Button fx:id="BtnAjouterEtudiant" layoutX="387.0" layoutY="698.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter un étudiant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnModifierEtudiant" disable="true" layoutX="77.0" layoutY="698.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Modifier un étudiant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnSupEtudiant" disable="true" layoutX="701.0" layoutY="698.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Supprimer un étudiant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnAssignerProgramme" disable="true" layoutX="387.0" layoutY="755.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Assigner un programme">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneInscriptionEtudiant" layoutX="391.0" layoutY="75.0" prefHeight="810.0" prefWidth="840.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
+         <children>
+            <Label fx:id="lblTitreInscription" layoutX="317.0" layoutY="61.0">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TbUser" layoutX="232.0" layoutY="578.0" prefHeight="32.0" prefWidth="399.0" promptText="Nom utilisateur">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbPrenom" layoutX="229.0" layoutY="150.0" prefHeight="32.0" prefWidth="399.0" promptText="Prenom">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbNom" layoutX="229.0" layoutY="194.0" prefHeight="32.0" prefWidth="399.0" promptText="Nom">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbTel" layoutX="232.0" layoutY="465.0" prefHeight="32.0" prefWidth="399.0" promptText="Téléphone">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbEmail" layoutX="232.0" layoutY="505.0" prefHeight="32.0" prefWidth="399.0" promptText="Adresse électronique">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbAdresse" layoutX="229.0" layoutY="266.0" prefHeight="32.0" prefWidth="399.0" promptText="Adresse de maison">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbVille" layoutX="229.0" layoutY="308.0" prefHeight="32.0" prefWidth="399.0" promptText="Ville">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbCodePostal" layoutX="229.0" layoutY="350.0" prefHeight="32.0" prefWidth="399.0" promptText="Code Postal">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbProvince" layoutX="229.0" layoutY="392.0" prefHeight="32.0" prefWidth="399.0" promptText="Province">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <Label layoutX="208.0" layoutY="124.0" text="Données personnelles">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="208.0" layoutY="241.0" text="Lieu de résidence">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="210.0" layoutY="439.0" text="Informations de contact">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="210.0" layoutY="550.0" text="Autres informations">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="BtnAjoutEtudiant" layoutX="554.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter étudiant" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnCancelEtudiant" layoutX="405.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="136.0" text="Annuler" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <GridPane layoutX="21.0" layoutY="738.0" prefHeight="53.0" prefWidth="421.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="LblMsgErreurEtudiant" text="Message Erreur/Bon" visible="false">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <Separator layoutX="209.0" layoutY="606.0" prefHeight="6.0" prefWidth="421.0" />
+            <ImageView fx:id="ImgUser" fitHeight="24.0" fitWidth="24.0" layoutX="210.0" layoutY="582.0">
+               <image>
+                  <Image url="@../Photos/User2.png" />
+               </image>
+            </ImageView>
+            <Separator layoutX="207.0" layoutY="534.0" prefHeight="6.0" prefWidth="421.0" />
+            <Separator layoutX="207.0" layoutY="494.0" prefHeight="6.0" prefWidth="421.0" />
+            <ImageView fx:id="ImgEmail" fitHeight="24.0" fitWidth="24.0" layoutX="210.0" layoutY="509.0">
+               <image>
+                  <Image url="@../Photos/mail.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImgTel" layoutX="207.0" layoutY="469.0">
+               <image>
+                  <Image url="@../Photos/tel.png" />
+               </image>
+            </ImageView>
+            <Separator layoutX="207.0" layoutY="421.0" prefHeight="6.0" prefWidth="421.0" />
+            <Separator layoutX="207.0" layoutY="379.0" prefHeight="6.0" prefWidth="421.0" />
+            <Separator layoutX="207.0" layoutY="337.0" prefHeight="6.0" prefWidth="421.0" />
+            <Separator layoutX="207.0" layoutY="295.0" prefHeight="6.0" prefWidth="421.0" />
+            <ImageView fx:id="ImgVille" layoutX="209.0" layoutY="312.0">
+               <image>
+                  <Image url="@../Photos/ville.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImgCodePostal" layoutX="209.0" layoutY="354.0">
+               <image>
+                  <Image url="@../Photos/icons8-code-postal-24.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImgAdresse" layoutX="206.0" layoutY="270.0">
+               <image>
+                  <Image url="@../Photos/Adresse.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImgProvince" layoutX="207.0" layoutY="396.0">
+               <image>
+                  <Image url="@../Photos/icons8-carte-du-canada-24.png" />
+               </image>
+            </ImageView>
+            <Separator layoutX="207.0" layoutY="223.0" prefHeight="6.0" prefWidth="421.0" />
+            <Separator layoutX="207.0" layoutY="179.0" prefHeight="6.0" prefWidth="421.0" />
+            <ImageView fx:id="ImgPrenom" fitHeight="24.0" fitWidth="24.0" layoutX="207.0" layoutY="154.0">
+               <image>
+                  <Image url="@../Photos/User2.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImgNom" fitHeight="24.0" fitWidth="24.0" layoutX="207.0" layoutY="198.0">
+               <image>
+                  <Image url="@../Photos/User2.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="BtnModifEtudiant" layoutX="554.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Modifier étudiant" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnAjoutEnseignant" layoutX="554.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter enseignant" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnCancelEnseignant" layoutX="405.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="136.0" text="Annuler" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnModifEnseignant" layoutX="554.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Modifier enseignant" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnCancelEnseignant1" layoutX="415.0" layoutY="764.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="136.0" text="Annuler" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="ComboBoxProgramme" layoutX="237.0" layoutY="625.0" prefHeight="25.0" prefWidth="383.0" />
+            <CheckBox fx:id="CbLangueProgramme" layoutX="639.0" layoutY="629.0" mnemonicParsing="false" onAction="#OnActionCheckBoxProgramme" selected="true" text="Français" />
+            <Button fx:id="BtnInscription" disable="true" layoutX="14.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="198.0" text="Changer des cours" visible="false">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="CbLangueEtudiant" layoutX="338.0" layoutY="663.0" prefHeight="25.0" prefWidth="187.0" promptText="Langue" />
+            <ComboBox fx:id="CbPosteAdmin" layoutX="335.0" layoutY="625.0" prefHeight="25.0" prefWidth="187.0" promptText="Choisir un poste" visible="false" />
+         </children>
+      </Pane>
+      <Pane fx:id="GrandePaneEnseignant" layoutX="280.0" layoutY="66.0" prefHeight="830.0" prefWidth="1045.0" visible="false">
+         <children>
+            <TableView fx:id="TableViewEnseignant" layoutX="11.0" layoutY="45.0" prefHeight="634.0" prefWidth="1027.0">
+               <columns>
+                  <TableColumn fx:id="TcNomCompletEnseignant" prefWidth="171.0" text="Nom complet" />
+                  <TableColumn fx:id="TcTelEnseignant" prefWidth="214.0" text="Telephone" />
+                  <TableColumn fx:id="TcEmailEnseignant" prefWidth="251.0" text="Email" />
+                  <TableColumn fx:id="TcAdresseEnseignant" prefWidth="231.0" text="Adresse" />
+                  <TableColumn fx:id="TcProvinceEnseignant" prefWidth="159.0" text="Province" />
+               </columns>
+            </TableView>
+            <Button fx:id="BtnAjouterEnseignant" layoutX="389.0" layoutY="694.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter un enseignant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnModifierEnseignant" disable="true" layoutX="77.0" layoutY="694.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Modifier un enseignant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnSupEnseignant" disable="true" layoutX="701.0" layoutY="694.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Supprimer un enseignant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnAssignerProgEns" disable="true" layoutX="389.0" layoutY="751.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Assigner un programme">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneAjoutCours" layoutX="391.0" layoutY="74.0" prefHeight="810.0" prefWidth="840.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
+         <children>
+            <TextField fx:id="TbTitreCours" layoutX="167.0" layoutY="192.0" prefHeight="42.0" prefWidth="513.0" promptText="Titre du nouveau cour">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbCoutCours" layoutX="167.0" layoutY="505.0" prefHeight="42.0" prefWidth="513.0" promptText="Coût du nouveau cour">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbTempsCours" layoutX="165.0" layoutY="565.0" prefHeight="42.0" prefWidth="513.0" promptText="Temps du nouveau cour">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbCreditCours" layoutX="168.0" layoutY="629.0" prefHeight="42.0" prefWidth="513.0" promptText="Crédit du nouveau cour">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <Label layoutX="285.0" layoutY="59.0" text="Ajouter un nouveau cours">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="BtnAjoutCours" layoutX="554.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter cours" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnCancelCours" layoutX="403.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="136.0" text="Annuler" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <TextField fx:id="TbDescriptionCours" layoutX="167.0" layoutY="254.0" prefHeight="42.0" prefWidth="513.0" promptText="Description du nouveau cour">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <Label layoutX="167.0" layoutY="155.0" text="Section français">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="167.0" layoutY="313.0" text="Section anglais">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TbDescriptionAngCours" layoutX="167.0" layoutY="412.0" prefHeight="42.0" prefWidth="513.0" promptText="Description en anglais du nouveau cour">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbTitreAngCours" layoutX="167.0" layoutY="350.0" prefHeight="42.0" prefWidth="513.0" promptText="Titre en anglais du nouveau cour">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <Label layoutX="170.0" layoutY="473.0" text="Autres">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Separator layoutX="131.0" layoutY="233.0" opacity="0.34" prefHeight="3.0" prefWidth="548.0" />
+            <Separator layoutX="131.0" layoutY="295.0" opacity="0.34" prefHeight="3.0" prefWidth="548.0" />
+            <Separator layoutX="131.0" layoutY="391.0" opacity="0.34" prefHeight="3.0" prefWidth="548.0" />
+            <Separator layoutX="131.0" layoutY="453.0" opacity="0.34" prefHeight="3.0" prefWidth="548.0" />
+            <Separator layoutX="131.0" layoutY="546.0" opacity="0.34" prefHeight="3.0" prefWidth="548.0" />
+            <Separator layoutX="131.0" layoutY="606.0" opacity="0.34" prefHeight="3.0" prefWidth="548.0" />
+            <Separator layoutX="131.0" layoutY="670.0" opacity="0.34" prefHeight="3.0" prefWidth="548.0" />
+            <CheckBox fx:id="CheckBoxEtat" layoutX="338.0" layoutY="690.0" mnemonicParsing="false" onAction="#CbEtatOnAction" prefHeight="27.0" prefWidth="165.0" text="Cour actif/Inactif">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </CheckBox>
+            <Button fx:id="BtnModifCours" layoutX="554.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Modifier cours" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnModifCancelCours" layoutX="403.0" layoutY="754.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="136.0" text="Annuler" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneAjoutProgramme" layoutX="410.0" layoutY="133.0" prefHeight="692.0" prefWidth="775.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5; -fx-border-radius: 5;" visible="false">
+         <children>
+            <TextField fx:id="TbTitreProgrammeFr" layoutX="210.0" layoutY="280.0" prefHeight="25.0" prefWidth="356.0" promptText="Titre du programme">
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbTitreProgrammeEN" layoutX="210.0" layoutY="401.0" prefHeight="25.0" prefWidth="356.0" promptText="Program title">
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </TextField>
+            <Label layoutX="210.0" layoutY="253.0" text="Section français">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="210.0" layoutY="380.0" text="Section anglais">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="BtnAjoutProgramme" layoutX="563.0" layoutY="636.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="198.0" text="Ajouter">
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnCancelProgramme" layoutX="436.0" layoutY="636.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="113.0" text="Cancel">
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Button>
+            <Label layoutX="219.0" layoutY="53.0" text="Ajouter un nouveau programme">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="CbProgramme" layoutX="314.0" layoutY="513.0" mnemonicParsing="false" onAction="#CbProgrammeActifProgramme" selected="true" text="Programme actif">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </CheckBox>
+            <Button fx:id="BtnModifProgramme" layoutX="563.0" layoutY="636.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="198.0" text="Modifier" visible="false">
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneAssignerCourProgramme" layoutX="388.0" layoutY="76.0" prefHeight="810.0" prefWidth="831.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5; -fx-border-radius: 5;" visible="false">
+         <children>
+            <ListView fx:id="ListViewCourAttente" layoutX="71.0" layoutY="278.0" prefHeight="357.0" prefWidth="272.0" />
+            <ListView fx:id="ListViewCourAssigner" layoutX="495.0" layoutY="278.0" prefHeight="357.0" prefWidth="272.0" />
+            <Button fx:id="BtnAjouterCoursAuProgramme" layoutX="271.0" layoutY="716.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter les cours">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <GridPane layoutX="163.0" layoutY="144.0" prefHeight="30.0" prefWidth="489.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="LblProgrammeSelectionner" alignment="CENTER" text="Label" textFill="#e85917">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <Label layoutX="183.0" layoutY="109.0" text="Assigner des cours au programme suivant ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="238.0" layoutY="672.0" prefHeight="21.0" prefWidth="338.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="LblMessageProg" alignment="CENTER" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <ImageView fx:id="FlecheDroiteOrange" layoutX="397.0" layoutY="418.0" onMouseClicked="#OnMouseClickFlecheList">
+               <image>
+                  <Image url="@../../../Desktop/Icone%20App%20Etudiant/DroitOrange.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="FlecheGaucheOrange" layoutX="398.0" layoutY="460.0" onMouseClicked="#OnMouseClickFlecheList">
+               <image>
+                  <Image url="@../../../Desktop/Icone%20App%20Etudiant/GaucheOrange.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="782.0" layoutY="8.0">
+               <image>
+                  <Image url="@../bin/Photos/pointInterrogation.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="PanePrincipaleProgramme" layoutX="285.0" layoutY="65.0" prefHeight="830.0" prefWidth="1033.0" visible="false">
+         <children>
+            <TableView fx:id="TableViewProgramme" layoutX="166.0" layoutY="79.0" prefHeight="244.0" prefWidth="702.0">
+              <columns>
+                <TableColumn fx:id="TvCProgrammeTitre" prefWidth="355.0" text="Titre" />
+                <TableColumn fx:id="TvCProgrammeTemps" minWidth="0.0" prefWidth="144.0" text="Temps" />
+                  <TableColumn fx:id="TvCProgrammeCout" minWidth="0.0" prefWidth="202.0" text="Cout" />
+              </columns>
+            </TableView>
+            <Button fx:id="BtnSupProgramme" disable="true" layoutX="693.0" layoutY="373.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Retirer un programme">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnModifierProgramme" disable="true" layoutX="69.0" layoutY="373.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Modifier un programme">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnAjouterProgramme" layoutX="379.0" layoutY="373.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter un programme">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <CheckBox fx:id="CbAfficherProgramme" layoutX="19.0" layoutY="14.0" mnemonicParsing="false" onAction="#OnActionProgramme" selected="true" text="Programme actif">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </CheckBox>
+            <Button fx:id="BtnAssignerCoursProgramme" disable="true" layoutX="747.0" layoutY="774.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Assigner des cours">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+         </children></Pane>
+      <Pane fx:id="PaneAssigneCourEtudiant" layoutX="340.0" layoutY="89.0" prefHeight="782.0" prefWidth="928.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5; -fx-border-radius: 5;" visible="false">
+         <children>
+            <Pane layoutX="75.0" layoutY="25.0" prefHeight="221.0" prefWidth="775.0" style="-fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;">
+               <children>
+                  <Label layoutX="309.0" layoutY="14.0" text="Fiche de l'étudiant" underline="true">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="36.0" layoutY="53.0" prefHeight="79.0" prefWidth="702.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" text="Nom complet">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" text="Numéro de téléphone" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" text="Adresse courriel" GridPane.columnIndex="2">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblNomEtudiant" alignment="CENTER" text="Nom complet" textFill="#e85917" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblTelEtudiant" alignment="CENTER" text="Téléphone" textFill="#e85917" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblEmailEtudiant" alignment="CENTER" text="Email" textFill="#e85917" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </Pane>
+            <ListView fx:id="ListViewEtudiantGauche" layoutX="95.0" layoutY="308.0" prefHeight="349.0" prefWidth="274.0" />
+            <ListView fx:id="ListViewEtudiantDroite" layoutX="556.0" layoutY="308.0" prefHeight="349.0" prefWidth="274.0" />
+            <ImageView fx:id="FlecheGaucheOrange1" layoutX="447.0" layoutY="482.0" onMouseClicked="#OnMouseClickFlecheList">
+               <image>
+                  <Image url="@../../../Desktop/Icone%20App%20Etudiant/GaucheOrange.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="FlecheDroiteOrange1" layoutX="446.0" layoutY="440.0" onMouseClicked="#OnMouseClickFlecheList">
+               <image>
+                  <Image url="@../../../Desktop/Icone%20App%20Etudiant/DroitOrange.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="BtnAjouterEtudiantCour" layoutX="642.0" layoutY="726.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter les cours">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnRetourEtuCour" layoutX="501.0" layoutY="726.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="132.0" text="Précédent">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneGrandCour" layoutX="286.0" layoutY="64.0" prefHeight="830.0" prefWidth="1045.0" visible="false">
+         <children>
+            <TableView fx:id="TableViewCours" layoutX="98.0" layoutY="148.0" prefHeight="368.0" prefWidth="850.0">
+               <columns>
+                  <TableColumn fx:id="TcTitreCours" prefWidth="263.0" text="Titre" />
+                  <TableColumn fx:id="TcTempsCours" prefWidth="186.0" text="Temps" />
+                  <TableColumn fx:id="TcCoutCours" minWidth="0.0" prefWidth="221.0" text="Cout" />
+                  <TableColumn fx:id="TcCreditCours" prefWidth="180.0" text="Credit" />
+               </columns>
+            </TableView>
+            <Button fx:id="BtnSupCours" disable="true" layoutX="699.0" layoutY="567.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Supprimer un cours">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnModifierCours" disable="true" layoutX="75.0" layoutY="567.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Modifier un cours">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnAjouterCours" layoutX="385.0" layoutY="567.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter un cours">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <CheckBox fx:id="CbCoursActifs" layoutX="98.0" layoutY="14.0" mnemonicParsing="false" onAction="#CbCoursActifsOnAction" selected="true" text="Afficher les cours inactifs">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </CheckBox>
+            <Label layoutX="408.0" layoutY="24.0" text="Section Cours">
+               <font>
+                  <Font name="Arial" size="36.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="301.0" layoutY="87.0" prefHeight="55.0" prefWidth="457.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="LblShowCours" alignment="CENTER" contentDisplay="CENTER" text="Cours actifs" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <Button fx:id="BtnAjouterExam" disable="true" layoutX="385.0" layoutY="567.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Ajouter un examen">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnAfficherExamen" layoutX="699.0" layoutY="567.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Afficher les examens">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnAfficherExamenCours" disable="true" layoutX="75.0" layoutY="567.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Afficher les examens du cours">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneEtuProgAssigne" layoutX="398.0" layoutY="86.0" prefHeight="810.0" prefWidth="831.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5; -fx-border-radius: 5;" visible="false">
+         <children>
+            <ListView fx:id="ListViewProgEtuAttente" layoutX="71.0" layoutY="278.0" onMouseClicked="#OnClickListViewEtuProg" prefHeight="357.0" prefWidth="291.0" />
+            <ListView fx:id="ListViewProgEtuAssinger" layoutX="476.0" layoutY="278.0" prefHeight="357.0" prefWidth="291.0" />
+            <Button fx:id="BtnProgEtuAjout" layoutX="591.0" layoutY="760.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="226.0" text="Ajouter le programme">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <GridPane layoutX="163.0" layoutY="144.0" prefHeight="30.0" prefWidth="489.0">
+               <children>
+                  <Label fx:id="LblNomEtudiantProg" alignment="CENTER" text="Label" textFill="#e85917">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <Label layoutX="183.0" layoutY="109.0" text="Assigner un programme à l'étudiant suivant">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="238.0" layoutY="672.0" prefHeight="21.0" prefWidth="338.0">
+               <children>
+                  <Label fx:id="LblMessageProg1" alignment="CENTER" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <Button fx:id="BtnSupProgEtu" layoutX="532.0" layoutY="641.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="198.0" text="Supprimer un cour">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnRetourEtuProg" layoutX="494.0" layoutY="760.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="89.0" text="Précédent">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneAjoutExam" layoutX="285.0" layoutY="58.0" prefHeight="838.0" prefWidth="1033.0" visible="false">
+         <children>
+            <Label layoutX="230.0" layoutY="25.0" text="Vous allez ajouter un examen/projet au cours suivant :">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="235.0" layoutY="52.0" prefHeight="42.0" prefWidth="567.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="LblTitreCoursExam" text="Cours" textFill="#e85917">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <TextField fx:id="TbTitreExamen" layoutX="310.0" layoutY="162.0" prefHeight="42.0" prefWidth="414.0" promptText="Titre de l'examen/projet">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbDescriptionExamen" alignment="TOP_LEFT" layoutX="210.0" layoutY="224.0" prefHeight="244.0" prefWidth="614.0" promptText="Description de l'examen/projet">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TbPonctuationExamen" layoutX="312.0" layoutY="488.0" prefHeight="42.0" prefWidth="414.0" promptText="Ponctuation de l'examen/projet">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextField>
+            <Button fx:id="BtnAjouterExamen" layoutX="774.0" layoutY="782.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Ajouter">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnRetourExamen" layoutX="680.0" layoutY="782.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="89.0" text="Annuler">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneAfficherExamen" layoutX="280.0" layoutY="64.0" prefHeight="838.0" prefWidth="1052.0" visible="false">
+         <children>
+            <Pane fx:id="PaneTableViewExam" layoutX="36.0" layoutY="34.0" prefHeight="665.0" prefWidth="981.0" visible="false">
+               <children>
+                  <TableView fx:id="TableViewExamen" layoutX="91.0" layoutY="84.0" prefHeight="417.0" prefWidth="800.0">
+                     <columns>
+                        <TableColumn fx:id="TableColumnTitreExam" prefWidth="223.0" text="Titre" />
+                        <TableColumn fx:id="TableColumDescExam" prefWidth="270.0" text="Description" />
+                        <TableColumn fx:id="TableColumnPoncExam" prefWidth="85.0" text="Ponctuation" />
+                        <TableColumn fx:id="TableColumnProfExam" prefWidth="221.0" text="Professeur" />
+                     </columns>
+                  </TableView>
+                  <Button fx:id="BtnModifierExam" disable="true" layoutX="208.0" layoutY="509.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Modifier un examen">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="BtnSupprimerExam" disable="true" layoutX="503.0" layoutY="509.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="272.0" text="Supprimer un examen">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <GridPane layoutX="202.0" layoutY="581.0" prefHeight="53.0" prefWidth="578.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="LblMsgErreurExam" textFill="RED">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </Pane>
+            <Pane fx:id="PaneModificationExamen" layoutX="73.0" layoutY="49.0" prefHeight="634.0" prefWidth="920.0" visible="false">
+               <children>
+                  <TextField fx:id="TbModifTitreExam" layoutX="303.0" layoutY="113.0" prefHeight="32.0" prefWidth="316.0" promptText="Modifier le titre ">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="TbModifDescriptionExam" alignment="TOP_LEFT" layoutX="216.0" layoutY="172.0" prefHeight="207.0" prefWidth="489.0" promptText="Modifier la description">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="TbModifPonctuationExam" layoutX="303.0" layoutY="406.0" prefHeight="32.0" prefWidth="316.0" promptText="Modifier la ponctuation">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="BtnModifExam" layoutX="363.0" layoutY="464.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="195.0" text="Modifier un examen">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane fx:id="PaneAjouterNoteExam" layoutX="2.0" layoutY="10.0" prefHeight="830.0" prefWidth="1045.0" visible="false">
+               <children>
+                  <TableView fx:id="TableViewNoteExam" layoutX="72.0" layoutY="80.0" prefHeight="439.0" prefWidth="899.0">
+                    <columns>
+                      <TableColumn fx:id="TcCourNoteExam" minWidth="0.0" prefWidth="364.0" text="Nom du cour" />
+                        <TableColumn fx:id="TcEvalNoteExam" minWidth="0.0" prefWidth="385.0" text="Nom de l'évaluation" />
+                        <TableColumn fx:id="TcResultNoteExam" minWidth="0.0" prefWidth="149.0" text="Résultat" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="BtnPrecedentExam" layoutX="14.0" layoutY="781.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="96.0" text="Précédent">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="338.0" layoutY="14.0" text="Ajouter une note à l'étudiant suivant : ">
+                     <font>
+                        <Font name="Arial" size="22.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="330.0" layoutY="40.0" prefHeight="30.0" prefWidth="383.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="LblNomNoteExam" text="Nom de l'étudiant" textFill="#e85917">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <Pane fx:id="PaneAjouterNote" layoutX="72.0" layoutY="527.0" prefHeight="244.0" prefWidth="899.0" visible="false">
+                     <children>
+                        <Label layoutX="293.0" layoutY="1.0" text="Ajouter une note à l'évaluation suivant :">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <GridPane layoutX="293.0" layoutY="28.0" prefHeight="30.0" prefWidth="314.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label fx:id="LblTitreEvalNote" text="Nom de l'évaluation" textFill="#e85917">
+                                 <font>
+                                    <Font name="Arial" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </GridPane>
+                        <TextField fx:id="TbAjouterNote" layoutX="340.0" layoutY="65.0" prefHeight="30.0" prefWidth="221.0" promptText="Ajouter un résultat...">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="BtnAjoutNoteExam" disable="true" layoutX="352.0" layoutY="105.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="195.0" text="Ajouter/Modifier une note">
+                           <font>
+                              <Font name="Arial" size="12.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="LblNoteAjouter" layoutX="414.0" layoutY="166.0" prefHeight="20.0" prefWidth="74.0" text="Note ajouté" textFill="#2e9000" visible="false">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneAfficherFrais" layoutX="298.0" layoutY="85.0" prefHeight="772.0" prefWidth="1000.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
+         <children>
+            <Pane layoutX="116.0" layoutY="40.0" prefHeight="233.0" prefWidth="768.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: black;">
+               <children>
+                  <GridPane layoutX="27.0" layoutY="91.0" prefHeight="90.0" prefWidth="715.0">
+                     <children>
+                        <Label text="Nom complet">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Numéro de téléphone" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Adresse électronique" GridPane.columnIndex="2">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblNomFrais" text="Label" textFill="#e85917" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblTelephoneFrais" text="Label" textFill="#e85917" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblEmailFrais" text="Label" textFill="#e85917" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="46.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="44.0" valignment="CENTER" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <Label layoutX="279.0" layoutY="26.0" text="Fiche de l'étudiant">
+                     <font>
+                        <Font name="Arial Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="BtnRetourFrais" layoutX="14.0" layoutY="726.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="32.0" prefWidth="146.0" text="Retour">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Pane fx:id="PaneFonctionFrais" layoutX="113.0" layoutY="345.0" prefHeight="286.0" prefWidth="775.0">
+               <children>
+                  <Button fx:id="BtnSupprimerFrais" disable="true" layoutX="493.0" layoutY="231.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="178.0" text="Annuler un paiement">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="BtnModifierFrais" disable="true" layoutX="296.0" layoutY="231.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="178.0" text="Modifier un paiement">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="BtnAjouterFrais" layoutX="98.0" layoutY="231.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="178.0" text="Ajouter un paiement">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <TableView fx:id="TableViewFrais" layoutX="37.0" layoutY="20.0" prefHeight="200.0" prefWidth="702.0">
+                     <columns>
+                        <TableColumn fx:id="TcNCFrais" prefWidth="136.0" text="Nom complet" />
+                        <TableColumn fx:id="TcFFRais" prefWidth="162.0" text="Frais" />
+                        <TableColumn fx:id="TcDescriptionFrais" prefWidth="218.0" text="Description" />
+                        <TableColumn fx:id="TcEtatFrais" prefWidth="185.0" text="État" />
+                     </columns>
+                  </TableView>
+               </children>
+            </Pane>
+            <Pane fx:id="PaneAjoutFrais" layoutX="121.0" layoutY="330.0" prefHeight="317.0" prefWidth="768.0" visible="false">
+               <children>
+                  <TextField fx:id="TbCout" layoutX="215.0" layoutY="65.0" prefHeight="32.0" prefWidth="338.0" promptText="Entrer le cout du paiement">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="TbType" layoutX="215.0" layoutY="127.0" prefHeight="32.0" prefWidth="338.0" promptText="Entrer le type de paiement">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="BtnAjoutFrais" layoutX="608.0" layoutY="271.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="32.0" prefWidth="146.0" text="Ajouter" visible="false">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="BtnAnnulerFrais" layoutX="532.0" layoutY="271.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="32.0" prefWidth="70.0" text="Annuler">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <ComboBox fx:id="CbEtatFrais" layoutX="249.0" layoutY="181.0" prefHeight="25.0" prefWidth="272.0" promptText="Etat" />
+                  <Button fx:id="BtnModifFrais" layoutX="608.0" layoutY="271.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="32.0" prefWidth="146.0" text="Modifier" visible="false">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneFrais" layoutX="319.0" layoutY="96.0" prefHeight="804.0" prefWidth="970.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
+         <children>
+            <TableView fx:id="TableViewEtudiantFrais" layoutX="39.0" layoutY="78.0" prefHeight="617.0" prefWidth="893.0">
+              <columns>
+                <TableColumn fx:id="TcNomCompletEtudiant" prefWidth="892.0" text="Nom complet" />
+              </columns>
+            </TableView>
+            <Button fx:id="BtnAfficherFrais" disable="true" layoutX="363.0" layoutY="707.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Frais étudiant">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneAssignerProgEns" layoutX="356.0" layoutY="90.0" prefHeight="772.0" prefWidth="885.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
+         <children>
+            <Pane layoutX="110.0" layoutY="14.0" prefHeight="184.0" prefWidth="666.0" style="-fx-border-color: black; -fx-background-radius: 5px; -fx-border-radius: 5px;">
+               <children>
+                  <GridPane layoutX="26.0" layoutY="35.0" prefHeight="114.0" prefWidth="614.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Nom complet">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Téléphone" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Adresse courriel" GridPane.columnIndex="2">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblNomEnseignant" text="Nom complet" textFill="#e85917" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblTelEnseignant" text="Téléphone" textFill="#e85917" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblEmailEnseignant" text="Email" textFill="#e85917" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </Pane>
+            <ListView fx:id="ListViewProgEnsDroite" layoutX="519.0" layoutY="283.0" prefHeight="357.0" prefWidth="272.0" />
+            <ListView fx:id="ListViewProgEnsGauche" layoutX="95.0" layoutY="283.0" onMouseClicked="#OnClickListViewProgEns" prefHeight="357.0" prefWidth="272.0" />
+            <Button fx:id="BtnSupCoursEns" layoutX="581.0" layoutY="662.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="157.0" text="Supprimer un cour">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnAjoutCourEns" layoutX="344.0" layoutY="697.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="198.0" text="Ajouter les cours">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="CbProg" layoutX="129.0" layoutY="242.0" onAction="#OnActionCbProgEnseignant" prefHeight="25.0" prefWidth="198.0" promptText="Choisir un programme" />
+            <ImageView fx:id="FlecheEnsProg" layoutX="425.0" layoutY="444.0" onMouseClicked="#OnMouseClickFlecheList">
+               <image>
+                  <Image url="@Photos/DroitOrange.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneNotification" layoutX="286.0" layoutY="65.0" prefHeight="296.0" prefWidth="861.0" style="-fx-background-color: white; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: black;" visible="false">
+         <children>
+            <TableView fx:id="TableViewNotif" layoutX="14.0" layoutY="38.0" prefHeight="200.0" prefWidth="831.0">
+            	<placeholder>
+            		<Label text="Aucune nouvelle notification" />
+            	</placeholder>
+              <columns>
+                <TableColumn fx:id="TableColumnNotifAuteur" prefWidth="191.0" text="Auteur" />
+                <TableColumn fx:id="TableColumnNotifType" prefWidth="232.0" text="Type" />
+                  <TableColumn fx:id="TableColumnNotifTable" prefWidth="195.0" text="Table" />
+                  <TableColumn fx:id="TableColumnNotifDate" prefWidth="212.0" text="Date" />
+              </columns>
+            </TableView>
+            <Button fx:id="BtnNotifLu" disable="true" layoutX="55.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Marquer comme lu" />
+            <Button fx:id="BtnNotifNonLu" disable="true" layoutX="245.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Marquer comme non-lu" />
+            <Button fx:id="BtnNotifSup" disable="true" layoutX="435.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Supprimer" />
+            <Button fx:id="BtnNotifAfficher" layoutX="628.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Voir les notification" />
+            <ImageView fx:id="ImgCloseNotif" layoutX="830.0" layoutY="1.0" onMouseClicked="#OnCloseNotif">
+               <image>
+                  <Image url="@../bin/Photos/XMauve.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImgSetting" layoutX="1.0" layoutY="1.0" onMouseClicked="#OnClickSetting">
+               <image>
+                  <Image url="@../../../Downloads/Setting25.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="LblMsgNotif" layoutX="31.0" layoutY="8.0" text="Notification non-lu">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <Pane fx:id="PaneSettingNotif" layoutX="-1.0" prefHeight="296.0" prefWidth="200.0" style="-fx-background-color: #523d87; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
+               <children>
+                  <Label layoutX="19.0" layoutY="14.0" text="Paramètre de notifications" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="LblFermerSetting" layoutX="75.0" layoutY="266.0" onMouseClicked="#OnClickCloseSetting" text="Fermer" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="CheckBoxNotifNL" layoutX="8.0" layoutY="59.0" mnemonicParsing="false" onAction="#OnActionRBNotif" selected="true" text="Afficher les notifications non lu" textFill="WHITE">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="RDNotif" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="CheckBoxNotifL" layoutX="8.0" layoutY="86.0" mnemonicParsing="false" onAction="#OnActionRBNotif" text="Afficher les notifications lu" textFill="WHITE" toggleGroup="$RDNotif" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneResultat" layoutX="291.0" layoutY="63.0" prefHeight="830.0" prefWidth="1027.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
+         <children>
+            <TableView fx:id="TvNomResult" layoutX="71.0" layoutY="120.0" prefHeight="591.0" prefWidth="885.0" visible="false">
+              <columns>
+                <TableColumn fx:id="TcNomResult" prefWidth="884.0" text="Nom Complet" />
+              </columns>
+            </TableView>
+            <Label layoutX="416.0" layoutY="60.0" text="Résultat étudiant">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="BtnAfficherResult" disable="true" layoutX="409.0" layoutY="736.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="210.0" text="Afficher les résultat" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <TableView fx:id="TvResultatCours" layoutX="72.0" layoutY="120.0" prefHeight="591.0" prefWidth="885.0">
+               <columns>
+                  <TableColumn fx:id="TcCoursResult" prefWidth="442.0" text="Cours" />
+                  <TableColumn fx:id="TcResultat" prefWidth="454.0" text="Résultat" />
+               </columns>
+            </TableView>
+            <Button fx:id="BtnModifierResultat" disable="true" layoutX="206.0" layoutY="718.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="210.0" text="Modifier un résultat">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="BtnSupprimerResultat" disable="true" layoutX="671.0" layoutY="718.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="210.0" text="Supprimer un résultat">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <Pane fx:id="PaneModifResult" layoutX="115.0" layoutY="120.0" prefHeight="515.0" prefWidth="800.0" visible="false">
+               <children>
+                  <Label layoutX="283.0" layoutY="26.0" text="Modification du cour suivant :">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="242.0" layoutY="47.0" prefHeight="30.0" prefWidth="316.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="LblCourChoisi" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="332.0" text="Nom du cour" textAlignment="CENTER" textFill="#e85917">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <TextField fx:id="TbChangeNote" layoutX="284.0" layoutY="110.0" prefHeight="32.0" prefWidth="233.0" promptText="Changement de résultat">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="BtnModifReusltat" layoutX="315.0" layoutY="156.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="26.0" prefWidth="170.0" text="Modifier un résultat">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Pane layoutX="212.0" layoutY="212.0" prefHeight="200.0" prefWidth="392.0" style="-fx-border-color: black; -fx-background-radius: 5px; -fx-border-radius: 5px;">
+                     <children>
+                        <Label layoutX="106.0" layoutY="62.0" prefHeight="16.0" prefWidth="0.0" text="0">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="103.0" layoutY="93.0" text="-1">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="103.0" layoutY="122.0" text="-2">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="140.0" layoutY="62.0" text="Cours commencé / note" textFill="#e85917">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="140.0" layoutY="93.0" text="Cours non commencé" textFill="#e85917">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="140.0" layoutY="122.0" text="Échec/cours annulé" textFill="#e85917">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="171.0" layoutY="24.0" text="Légende">
+                           <font>
+                              <Font name="Arial Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <GridPane layoutX="230.0" layoutY="435.0" prefHeight="53.0" prefWidth="356.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="LblMsgErreurResult" textAlignment="CENTER" textFill="RED" wrapText="true">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </Pane>
+            <Button fx:id="BtnAfficherEvalutation" disable="true" layoutX="440.0" layoutY="718.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="210.0" text="Afficher les évaluations">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneBlack" layoutX="272.0" opacity="0.51" prefHeight="905.0" prefWidth="1061.0" style="-fx-background-color: black;" visible="false" />
+      <Pane fx:id="PaneCommentaire" layoutX="530.0" layoutY="307.0" prefHeight="402.0" prefWidth="567.0" style="-fx-background-color: white; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
+         <children>
+            <GridPane layoutX="27.0" layoutY="27.0" prefHeight="74.0" prefWidth="513.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="TitreCommentaire" text="Label" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <Button fx:id="BtnSupprimerComEtudiant" layoutX="318.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="233.0" text="Confirmer la suppression">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <TextArea fx:id="TbCommentaire" layoutX="17.0" layoutY="110.0" prefHeight="233.0" prefWidth="534.0" promptText="Ajouter un commentaire" wrapText="true">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </TextArea>
+            <Button fx:id="BtnAnnulerComEtudiant" layoutX="234.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="35.0" prefWidth="74.0" text="Annuler">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneMsg" layoutX="537.0" layoutY="301.0" prefHeight="304.0" prefWidth="548.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5;" visible="false">
+         <children>
+            <Button fx:id="BtnContinueMsg" layoutX="164.0" layoutY="252.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="32.0" prefWidth="221.0" text="Continuer">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+            <GridPane layoutX="18.0" layoutY="146.0" prefHeight="89.0" prefWidth="513.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="LblMsg" alignment="CENTER" prefHeight="95.0" prefWidth="503.0" text="Message" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <GridPane layoutX="18.0" layoutY="47.0" prefHeight="42.0" prefWidth="513.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="LblTitreMsg" text="TITRE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <GridPane layoutX="18.0" layoutY="89.0" prefHeight="27.0" prefWidth="513.0">
+               <children>
+                  <Label fx:id="LblMsgPrincProgCour" text="nom prog/cour" textFill="#e85917" visible="false">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <Button fx:id="BtnContinueExam" layoutX="164.0" layoutY="252.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="32.0" prefWidth="221.0" text="Continuer" visible="false">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneBienvenue" layoutX="1065.0" layoutY="151.0" prefHeight="32.0" prefWidth="258.0" style="-fx-background-color: green; -fx-background-radius: 30px; -fx-border-radius: 30px;" visible="false">
+         <children>
+            <GridPane layoutX="24.0" layoutY="2.0" prefHeight="25.0" prefWidth="210.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="LblMsgBienvenue" text="Bienvenue" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+   </children>
+</Pane>
