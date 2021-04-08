@@ -4,10 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-
-import com.sun.scenario.effect.ImageDataRenderer;
-
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -131,6 +129,7 @@ public class Fonction {
 	ObservableList<String> obListPoste = FXCollections.observableArrayList();
 	ObservableList<Examen> obListExamen = FXCollections.observableArrayList();
 	ObservableList<Notification> obListNotif = FXCollections.observableArrayList();
+	ObservableList<Logs> obListNotifDetails = FXCollections.observableArrayList();
 	
 	public Fonction(ConnexionController CC) {
 		this.CC = CC;
@@ -810,6 +809,34 @@ public class Fonction {
 		AC.TableViewNotif.refresh();
 	}
 
+	//Affiche les notifications avec plus de details
+	public void AfficherNotifDetail() {
+		AC.TableViewNotifDetail.getItems().clear();
+		
+		try {
+			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+			RequeteSql = "SELECT Createur, AncienneValeur, NouvelleValeur, Table1, Type1, Date1 FROM `logupdatedeleteaccount` inner join tablenotification on ID = tablenotification.IdLog "
+					+ "where tablenotification.Etat = " + AC.EtatNotif + " and tablenotification.IdAdmin = " + AC.IDAdministrateur;		
+			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				obListNotifDetails.add(
+						new Logs(rs.getString("Createur"), rs.getString("AncienneValeur"), rs.getString("NouvelleValeur"),
+						rs.getString("Table1"), rs.getString("Type1"), rs.getString("Date1")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		AC.TcCreateurNotifDetail.setCellValueFactory(new PropertyValueFactory<>("Createur"));
+		AC.TcAvNotifDetail.setCellValueFactory(new PropertyValueFactory<>("AncienneValeur"));
+		AC.TcNvNotifDetail.setCellValueFactory(new PropertyValueFactory<>("NouvelleValeur"));
+		AC.TcTableNotifDetail.setCellValueFactory(new PropertyValueFactory<>("Table1"));
+		AC.TcTypeNotifDetail.setCellValueFactory(new PropertyValueFactory<>("Type1"));
+		AC.TcDateNotifDetail.setCellValueFactory(new PropertyValueFactory<>("Date1"));
+		AC.TableViewNotifDetail.setItems(obListNotifDetails);
+		AC.TableViewNotifDetail.refresh();
+	}
+	
 	// SECTION SELECT TABLE VIEW
 	public void SelectRowEtudiant() {
 		AC.TableViewEtudiant.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -1131,12 +1158,15 @@ public class Fonction {
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
 			String NomAuteur = "";
 			int IdLog = 0;
-			RequeteSql = "SELECT ID, Createur FROM `logupdatedeleteaccount` order by ID DESC LIMIT 1 ";
+			ArrayList<Integer> IdsLogs = new ArrayList<>();
+			
+			RequeteSql = "SELECT ID, Createur FROM `logupdatedeleteaccount` where NewAdd = 1";
 			preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 			rs = preparedStatement.executeQuery();
-			if (rs.next()) {
+			while(rs.next()) {
 				NomAuteur = rs.getString("Createur");
-				IdLog = rs.getInt("ID");	
+				
+				IdsLogs.add(rs.getInt("ID"));	
 				System.out.println("Nom auteur " + NomAuteur + " IdLog " + IdLog);
 			}
 			
@@ -1144,16 +1174,25 @@ public class Fonction {
 			RequeteSql = "SELECT * FROM `administration` WHERE Poste = 'Administrateur'";
 			preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 			rs = preparedStatement.executeQuery();
+			System.out.println("ArrayList " + IdsLogs.size());
 			while(rs.next()) {
 				IdAdmin = rs.getInt("ID");
-				RequeteSql = "insert into tablenotification (Auteur, IdLog, IdAdmin, Etat) values (?,?,?,?)";
-				preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
-				preparedStatement.setString(1, NomAuteur);
-				preparedStatement.setInt(2, IdLog);
-				preparedStatement.setInt(3, IdAdmin);
-				preparedStatement.setInt(4, 1);
-				preparedStatement.executeUpdate();
+				for(int i = 0; i < IdsLogs.size(); i++) {
+					IdLog = IdsLogs.get(i);
+					RequeteSql = "insert into tablenotification (Auteur, IdLog, IdAdmin, Etat) values (?,?,?,?)";
+					preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
+					preparedStatement.setString(1, NomAuteur);
+					preparedStatement.setInt(2, IdLog);
+					preparedStatement.setInt(3, IdAdmin);
+					preparedStatement.setInt(4, 1);
+					preparedStatement.executeUpdate();
+					System.out.println(RequeteSql);
+				}
 			}
+			
+			RequeteSql = "Update logupdatedeleteaccount set NewAdd = 0";
+			preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
+			preparedStatement.executeUpdate();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -1760,6 +1799,8 @@ public class Fonction {
 			preparedStatement.setString(5, currentTime);
 			preparedStatement.executeUpdate();
 			
+			InsertNotif();
+			
 			ConnexionDB.close();
 			AC.PaneBlack.setVisible(true);
 			AC.PaneMsg.setVisible(true);
@@ -1846,6 +1887,8 @@ public class Fonction {
 					preparedStatement.setString(5, currentTime);
 					preparedStatement.executeUpdate();
 					
+					InsertNotif();
+					
 					ConnexionDB.close();
 					AC.PaneCommentaire.setVisible(false);
 					AC.PaneMsg.setVisible(true);
@@ -1923,7 +1966,9 @@ public class Fonction {
 					preparedStatement.setString(3, "Enseignant");
 					preparedStatement.setString(4, AC.TbCommentaire.getText());
 					preparedStatement.setString(5, currentTime);
-					preparedStatement.executeUpdate();
+					preparedStatement.executeUpdate();				
+					
+					InsertNotif();
 					
 					ConnexionDB.close();
 					AC.PaneCommentaire.setVisible(false);
@@ -1968,6 +2013,8 @@ public class Fonction {
 			preparedStatement.setString(5, currentTime);
 			preparedStatement.executeUpdate();
 			
+			
+			
 			ConnexionDB.close();
 			AC.PaneCommentaire.setVisible(false);
 			AC.PaneAjoutCours.setVisible(false);
@@ -2006,6 +2053,8 @@ public class Fonction {
 			preparedStatement.setString(4, AC.TbCommentaire.getText());
 			preparedStatement.setString(5, currentTime);
 			preparedStatement.executeUpdate();
+			
+			InsertNotif();
 			
 			ConnexionDB.close();
 			AC.PaneCommentaire.setVisible(false);
@@ -2083,6 +2132,8 @@ public class Fonction {
 					visiblePause.play();
 			}
 	
+			InsertNotif();
+			
 			ConnexionDB.close();
 			
 		} catch (Exception e) { 
@@ -2101,6 +2152,8 @@ public class Fonction {
 			preparedStatement.setInt(1, IdLog);
 			preparedStatement.setInt(2, AC.IDAdministrateur);
 			preparedStatement.executeUpdate();
+			
+			InsertNotif();
 			
 			ConnexionDB.close();
 			AfficherNotification();
@@ -2136,7 +2189,9 @@ public class Fonction {
 			preparedStatement.setString(11, AC.CbLangueEtudiant.getValue());
 			preparedStatement.setInt(12, IDEtudiant);
 			preparedStatement.executeUpdate();
-
+			
+			InsertNotif();
+			
 			int TotalCout = 0;
 			RequeteSql = "SELECT ID, Cout FROM cour INNER JOIN programmecours ON cour.ID = programmecours.IdCours where programmecours.IdProgramme = ? order by Ordre";
 			preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
@@ -2210,7 +2265,9 @@ public class Fonction {
 			preparedStatement.setString(9, AC.TbCodePostal.getText());
 			preparedStatement.setInt(10, administration.getID());
 			preparedStatement.executeUpdate();
-
+			
+			InsertNotif();
+			
 			RequeteSql = "Update enseignant set NomUtilisateur=?, Prenom=?, Nom=? where ID = ?";
 			preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 			preparedStatement.setString(1, AC.TbUser.getText());
@@ -2256,6 +2313,9 @@ public class Fonction {
 			}
 			preparedStatement.setInt(9, cour.getID());
 			preparedStatement.executeUpdate();
+			
+			InsertNotif();
+			
 			ConnexionDB.close();
 			AC.PaneAjoutCours.setVisible(false);
 			AC.PaneBlack.setVisible(true);
@@ -2331,6 +2391,9 @@ public class Fonction {
 			}
 			preparedStatement.setInt(4, IdFrais);
 			preparedStatement.executeUpdate();
+			
+			
+			
 			ConnexionDB.close();
 			AC.PaneAjoutCours.setVisible(false);
 			AC.PaneBlack.setVisible(true);
@@ -2362,6 +2425,9 @@ public class Fonction {
 				preparedStatement.setInt(2, IDEtudiant);
 				preparedStatement.setInt(3, IDCour);
 				preparedStatement.executeUpdate();
+				
+				InsertNotif();
+				
 				ConnexionDB.close();
 				AC.PaneResultat.setVisible(false);
 				AC.PaneBlack.setVisible(true);
@@ -2393,6 +2459,9 @@ public class Fonction {
 				preparedStatement.setString(3, AC.TbModifPonctuationExam.getText());
 				preparedStatement.setInt(4, IdProjet);
 				preparedStatement.executeUpdate();
+				
+				InsertNotif();
+				
 				ConnexionDB.close();
 				AC.PaneResultat.setVisible(false);
 				AC.PaneBlack.setVisible(true);
@@ -3163,6 +3232,7 @@ public class Fonction {
 			ConnexionDB.close();
 			
 			AfficherNotification();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

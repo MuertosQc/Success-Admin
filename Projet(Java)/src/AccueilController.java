@@ -32,6 +32,7 @@ public class AccueilController {
 	
 	Fonction f = new Fonction(this);
 	@FXML public int EtatNotif = 1;
+
 	@FXML public String VariableGlobal = ""; //Variable qui sert a savoir qu'elle fonction on utilise si on a plusieurs fonction differente sur un bouton
 	
 	@FXML public Label LblMsgBienvenue;
@@ -68,6 +69,19 @@ public class AccueilController {
     @FXML public RadioButton CheckBoxNotifNL;
     @FXML public RadioButton CheckBoxNotifL;
     @FXML public Label LblMsgNotif;
+    
+    //Section notification detail
+    @FXML public Button BtnPrecedentNotif;
+    @FXML public Pane PaneNotifDetail;
+    @FXML public TableColumn<Logs, String> TcCreateurNotifDetail;
+    @FXML public TableColumn<Logs, String> TcAvNotifDetail;
+    @FXML public TableColumn<Logs, String> TcNvNotifDetail;
+    @FXML public TableColumn<Logs, String> TcTableNotifDetail;
+    @FXML public TableColumn<Logs, String> TcTypeNotifDetail;
+    @FXML public TableColumn<Logs, String> TcDateNotifDetail;
+    @FXML public TableView<Logs> TableViewNotifDetail;
+    @FXML public CheckBox CheckBoxNotifDetail;
+    
     
     //Section commentaire
     @FXML public Pane PaneCommentaire;
@@ -502,6 +516,20 @@ public class AccueilController {
     }
     
     @FXML
+    void OnActionCBNotifDetail(ActionEvent event) {
+    	
+    	if(CheckBoxNotifDetail.isSelected()) {
+    		EtatNotif = 1;
+    		CheckBoxNotifDetail.setText("Afficher les notifications lu");
+    	}
+    	else {
+    		EtatNotif = 0;
+    		CheckBoxNotifDetail.setText("Afficher les notifications non-lu");
+    	}
+    	f.AfficherNotifDetail();
+    }
+    
+    @FXML
     void CbProgrammeActifProgramme(ActionEvent event) {
     	if(CbProgramme.isSelected()) {
     		Etat = 1;
@@ -700,6 +728,7 @@ public class AccueilController {
     	f.formatTextfield();
     	f.ComboBoxProgramme();
     	f.AfficherNotification();
+    
       }
     
     int CouleurBut = 1;
@@ -744,6 +773,7 @@ public class AccueilController {
 	   		break;
 	
   	   	case "BtnAcueil":
+  	   		PaneNotifDetail.setVisible(false);
   	   		PaneNotification.setVisible(false);
   	   		f.BarGraphActifs();
   	   		PaneCommentaire.setVisible(false);
@@ -775,6 +805,8 @@ public class AccueilController {
   	   		//SECTION ETUDIANT
   	   		//Bouton qui affiche la première section des étudiants
   	   	case "BtnEtudiant":
+  	   		PaneNotifDetail.setVisible(false);
+	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Etudiant";
   	   		PaneCommentaire.setVisible(false);	
   	   		PaneAfficherExamen.setVisible(false);
@@ -951,6 +983,8 @@ public class AccueilController {
   		  
   	   		//SECTION ENSEIGNANT
   	   	case "BtnEnseignant":
+  	   		PaneNotifDetail.setVisible(false);
+	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Enseignant";
   	   		PaneCommentaire.setVisible(false);
   	   		PaneAfficherExamen.setVisible(false);
@@ -1036,6 +1070,8 @@ public class AccueilController {
   	   		break;
   	   		//SECTION COURS
   	   	case "BtnCour":
+  	   		PaneNotifDetail.setVisible(false);
+	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Cours";
   	   		PaneCommentaire.setVisible(false);
   	   		PaneAfficherExamen.setVisible(false);
@@ -1159,6 +1195,8 @@ public class AccueilController {
   	   		
   	   		//SECTION PROGRAMME
   	   	case "BtnProgramme":
+  	   		PaneNotifDetail.setVisible(false);
+	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Programme";
   	   		PaneCommentaire.setVisible(false);
   	   		PaneAfficherExamen.setVisible(false);
@@ -1218,6 +1256,8 @@ public class AccueilController {
   	   		break;
   	   		
   	   	case "BtnFrais":
+  	   		PaneNotifDetail.setVisible(false);
+	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Frais";
   	   		PaneCommentaire.setVisible(false);
   	   		PaneAfficherExamen.setVisible(false);
@@ -1286,6 +1326,8 @@ public class AccueilController {
   	   		break;
   	   		//SECTION RESULT
   	   	case "BtnResultat":
+  	   		PaneNotifDetail.setVisible(false);
+	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Resultat";
   	   		PaneCommentaire.setVisible(false);
   	   		PaneAfficherExamen.setVisible(false);
@@ -1353,6 +1395,15 @@ public class AccueilController {
   	   		break;
   	   	case "BtnNotifSup":
   	   		f.SupprimerNotif();
+  	   		break;
+  	   	case "BtnNotifAfficher":
+  	   		PaneNotifDetail.setVisible(true);
+  	   		PaneNotification.setVisible(false);
+  	   		f.AfficherNotifDetail();
+  	   		break;
+  	   	case "BtnPrecedentNotif":
+  	   		PaneNotifDetail.setVisible(false);
+	   		PaneNotification.setVisible(true);
   	   		break;
   	   	}
     }

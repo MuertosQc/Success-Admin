@@ -57,13 +57,14 @@
    	-fx-background-color:   #2d1c58;
 }
 
-#BtnCancelProgramme, #BtnRetourEtuProg, #BtnSupProgEtu, #BtnRetourEtuCour, #BtnRetourExamen, #BtnCancelEnseignant, #BtnAnnulerComEtudiant, #BtnSupCoursEns{
+#BtnCancelProgramme, #BtnRetourEtuProg, #BtnSupProgEtu, #BtnRetourEtuCour, #BtnRetourExamen, #BtnCancelEnseignant, #BtnAnnulerComEtudiant, #BtnSupCoursEns, #BtnPrecedentNotif{
 	-fx-font:14px "Helvetica"; 
 	-fx-background-color: transparent;
 	-fx-text-fill: #523d87;
 }
 
-#BtnCancelProgramme:hover, #BtnRetourEtuProg:hover, #BtnSupProgEtu:hover, #BtnRetourEtuCour:hover, #BtnRetourExamen:hover, #BtnCancelEnseignant:hover, #BtnAnnulerComEtudiant:hover, #BtnSupCoursEns:hover{
+#BtnCancelProgramme:hover, #BtnRetourEtuProg:hover, #BtnSupProgEtu:hover, #BtnRetourEtuCour:hover, #BtnRetourExamen:hover, #BtnCancelEnseignant:hover, #BtnAnnulerComEtudiant:hover, #BtnSupCoursEns:hover, 
+#BtnPrecedentNotif:hover{
 	-fx-text-fill: #2d1c58;
 }
 
