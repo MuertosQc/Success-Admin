@@ -65,6 +65,12 @@
                   <Font name="Arial" size="12.0" />
                </font>
             </Button>
+            <Button fx:id="BtnLogs" layoutX="16.0" layoutY="640.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Logs">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Separator fx:id="LigneDessousBtnFrais11" layoutX="17.0" layoutY="682.0" opacity="0.34" prefHeight="6.0" prefWidth="245.0" />
          </children>
       </Pane>
       <Pane layoutX="272.0" prefHeight="53.0" prefWidth="1061.0" style="-fx-background-color: white;">
@@ -1337,58 +1343,23 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane fx:id="PaneNotification" layoutX="286.0" layoutY="65.0" prefHeight="296.0" prefWidth="861.0" style="-fx-background-color: white; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: black;" visible="false">
+      <Pane fx:id="PaneLogs" layoutX="292.0" layoutY="69.0" prefHeight="818.0" prefWidth="1020.0" visible="false">
          <children>
-            <TableView fx:id="TableViewNotif" layoutX="14.0" layoutY="38.0" prefHeight="200.0" prefWidth="831.0">
-            	<placeholder>
-            		<Label text="Aucune nouvelle notification" />
-            	</placeholder>
+            <TableView fx:id="TableView_Logs" layoutX="68.0" layoutY="119.0" prefHeight="634.0" prefWidth="885.0">
               <columns>
-                <TableColumn fx:id="TableColumnNotifAuteur" prefWidth="191.0" text="Auteur" />
-                <TableColumn fx:id="TableColumnNotifType" prefWidth="232.0" text="Type" />
-                  <TableColumn fx:id="TableColumnNotifTable" prefWidth="195.0" text="Table" />
-                  <TableColumn fx:id="TableColumnNotifDate" prefWidth="212.0" text="Date" />
+                <TableColumn fx:id="TableColumn_Createur" prefWidth="146.0" text="Createur" />
+                <TableColumn fx:id="TableColumn_AV" prefWidth="171.0" text="AncienneValeur" />
+                  <TableColumn fx:id="TableColumn_NV" prefWidth="176.0" text="NouvelleValeur" />
+                  <TableColumn fx:id="TableColumn_Table" prefWidth="144.0" text="Table" />
+                  <TableColumn fx:id="TableColumn_Type" prefWidth="116.0" text="Type" />
+                  <TableColumn fx:id="TableColumn_Date" prefWidth="131.0" text="Date" />
               </columns>
             </TableView>
-            <Button fx:id="BtnNotifLu" disable="true" layoutX="55.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Marquer comme lu" />
-            <Button fx:id="BtnNotifNonLu" disable="true" layoutX="245.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Marquer comme non-lu" />
-            <Button fx:id="BtnNotifSup" disable="true" layoutX="435.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Supprimer" />
-            <Button fx:id="BtnNotifAfficher" layoutX="628.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Voir les notification" />
-            <ImageView fx:id="ImgCloseNotif" layoutX="830.0" layoutY="1.0" onMouseClicked="#OnCloseNotif">
-               <image>
-                  <Image url="@../bin/Photos/XMauve.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="ImgSetting" layoutX="4.0" layoutY="2.0" onMouseClicked="#OnClickSetting">
-               <image>
-                  <Image url="@Photos/Menu24.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="LblMsgNotif" layoutX="31.0" layoutY="8.0" text="Notification non-lu">
+            <Label layoutX="300.0" layoutY="37.0" text="Les logs de modification et suppression">
                <font>
-                  <Font name="Arial" size="14.0" />
+                  <Font name="Arial" size="24.0" />
                </font>
             </Label>
-            <Pane fx:id="PaneSettingNotif" layoutX="-1.0" prefHeight="296.0" prefWidth="200.0" style="-fx-background-color: #523d87; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
-               <children>
-                  <Label layoutX="19.0" layoutY="14.0" text="Paramètre de notifications" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="LblFermerSetting" layoutX="75.0" layoutY="266.0" onMouseClicked="#OnClickCloseSetting" text="Fermer" textFill="WHITE">
-                     <font>
-                        <Font name="Arial" size="14.0" />
-                     </font>
-                  </Label>
-                  <RadioButton fx:id="CheckBoxNotifNL" layoutX="8.0" layoutY="59.0" mnemonicParsing="false" onAction="#OnActionRBNotif" selected="true" text="Afficher les notifications non lu" textFill="WHITE">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="RDNotif" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="CheckBoxNotifL" layoutX="8.0" layoutY="86.0" mnemonicParsing="false" onAction="#OnActionRBNotif" text="Afficher les notifications lu" textFill="WHITE" toggleGroup="$RDNotif" />
-               </children>
-            </Pane>
          </children>
       </Pane>
       <Pane fx:id="PaneResultat" layoutX="291.0" layoutY="63.0" prefHeight="830.0" prefWidth="1027.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
@@ -1659,6 +1630,60 @@
                   <Font name="Arial" size="14.0" />
                </font>
             </CheckBox>
+         </children>
+      </Pane>
+      <Pane fx:id="PaneNotification" layoutX="286.0" layoutY="65.0" prefHeight="296.0" prefWidth="861.0" style="-fx-background-color: white; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: black;" visible="false">
+         <children>
+            <TableView fx:id="TableViewNotif" layoutX="14.0" layoutY="38.0" prefHeight="200.0" prefWidth="831.0">
+            	<placeholder>
+            		<Label text="Aucune nouvelle notification" />
+            	</placeholder>
+              <columns>
+                <TableColumn fx:id="TableColumnNotifAuteur" prefWidth="191.0" text="Auteur" />
+                <TableColumn fx:id="TableColumnNotifType" prefWidth="232.0" text="Type" />
+                  <TableColumn fx:id="TableColumnNotifTable" prefWidth="195.0" text="Table" />
+                  <TableColumn fx:id="TableColumnNotifDate" prefWidth="212.0" text="Date" />
+              </columns>
+            </TableView>
+            <Button fx:id="BtnNotifLu" disable="true" layoutX="55.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Marquer comme lu" />
+            <Button fx:id="BtnNotifNonLu" disable="true" layoutX="245.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Marquer comme non-lu" />
+            <Button fx:id="BtnNotifSup" disable="true" layoutX="435.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Supprimer" />
+            <Button fx:id="BtnNotifAfficher" layoutX="628.0" layoutY="250.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="178.0" text="Voir les notification" />
+            <ImageView fx:id="ImgCloseNotif" layoutX="830.0" layoutY="1.0" onMouseClicked="#OnCloseNotif">
+               <image>
+                  <Image url="@../bin/Photos/XMauve.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImgSetting" layoutX="4.0" layoutY="2.0" onMouseClicked="#OnClickSetting">
+               <image>
+                  <Image url="@Photos/Menu24.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="LblMsgNotif" layoutX="31.0" layoutY="8.0" text="Notification non-lu">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <Pane fx:id="PaneSettingNotif" layoutX="-1.0" prefHeight="296.0" prefWidth="200.0" style="-fx-background-color: #523d87; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
+               <children>
+                  <Label layoutX="19.0" layoutY="14.0" text="Paramètre de notifications" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="LblFermerSetting" layoutX="75.0" layoutY="266.0" onMouseClicked="#OnClickCloseSetting" text="Fermer" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="CheckBoxNotifNL" layoutX="8.0" layoutY="59.0" mnemonicParsing="false" onAction="#OnActionRBNotif" selected="true" text="Afficher les notifications non lu" textFill="WHITE">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="RDNotif" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="CheckBoxNotifL" layoutX="8.0" layoutY="86.0" mnemonicParsing="false" onAction="#OnActionRBNotif" text="Afficher les notifications lu" textFill="WHITE" toggleGroup="$RDNotif" />
+               </children>
+            </Pane>
          </children>
       </Pane>
    </children>

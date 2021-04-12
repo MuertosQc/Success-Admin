@@ -99,37 +99,8 @@ public class Fonction {
 	AccueilController AC;
 	ConnexionController CC;
 	Programme programme;
-
-	// SECTION OBSERVABLELIST
-	// ObservableList utilisé pour les flèche gauche et droite pour transférer le
-	// programme/cour
-
-	public ObservableList<String> obListDroit = FXCollections.observableArrayList();
-	public ObservableList<String> obListGauche = FXCollections.observableArrayList();
-	// ObservableList qui récupère tout les objets Etudiant
-	public ObservableList<Etudiant> obListEtudiant = FXCollections.observableArrayList();
-	// ObservableList qui récupère tout les objets Enseignant
-	public ObservableList<Administration> obListEnseignant = FXCollections.observableArrayList();
-	// ObservableList qui récupère tout les objets Cours
-	public ObservableList<Cour> obListCours = FXCollections.observableArrayList();
-	// ObservableList qui récupère tout les objets Programme
-	public ObservableList<Programme> obListProgramme = FXCollections.observableArrayList();
-	public ObservableList<String> obList5 = FXCollections.observableArrayList();
-	public ObservableList<String> obList6 = FXCollections.observableArrayList();
-	// ObservableList qui récupère tout les programme pour les afficher dans un
-	// combobox
-	ObservableList<String> ObListCbProgramme = FXCollections.observableArrayList();
-	// Choisir le langage qu'un étudiant parle
-	ObservableList<String> ObListCbLangue = FXCollections.observableArrayList();
-	ObservableList<Frais> ObListFrais = FXCollections.observableArrayList();
-	ObservableList<Etudiant> obListNomEtudiantFrais = FXCollections.observableArrayList();
-	ObservableList<String> ObListEtat = FXCollections.observableArrayList();
-	ObservableList<Etudiant> obListNomEtudiantResultat = FXCollections.observableArrayList();
-	ObservableList<EtudiantCour> obListCourResultat = FXCollections.observableArrayList();
-	ObservableList<String> obListPoste = FXCollections.observableArrayList();
-	ObservableList<Examen> obListExamen = FXCollections.observableArrayList();
-	ObservableList<Notification> obListNotif = FXCollections.observableArrayList();
-	ObservableList<Logs> obListNotifDetails = FXCollections.observableArrayList();
+	
+	
 	
 	public Fonction(ConnexionController CC) {
 		this.CC = CC;
@@ -138,6 +109,8 @@ public class Fonction {
 	public Fonction(AccueilController AC) {
 		this.AC = AC;
 	}
+	
+	ObservableListClass OLC = new ObservableListClass(this);
 	
 	// Fonction connexion
 	public void Connexion() {
@@ -460,7 +433,7 @@ public class Fonction {
 
 			rs = Pst.executeQuery();
 			while (rs.next()) {
-				obListEtudiant.add(new Etudiant(rs.getInt("ID"), rs.getString("Utilisateur"), rs.getString("Prenom"),
+				OLC.obListEtudiant.add(new Etudiant(rs.getInt("ID"), rs.getString("Utilisateur"), rs.getString("Prenom"),
 						rs.getString("Nom"), rs.getString("Telephone"), rs.getString("Email"),
 						rs.getString("AdresseDeMaison"), rs.getString("Ville"), rs.getString("Province"),
 						rs.getString("CodePostal"), rs.getInt("IdProgramme"), rs.getString("Langue")));
@@ -475,7 +448,7 @@ public class Fonction {
 		AC.TcEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
 		AC.TcAdresse.setCellValueFactory(new PropertyValueFactory<>("FullAdresse"));
 		AC.TcProvince.setCellValueFactory(new PropertyValueFactory<>("Province"));
-		AC.TableViewEtudiant.setItems(obListEtudiant);
+		AC.TableViewEtudiant.setItems(OLC.obListEtudiant);
 		AC.TableViewEtudiant.refresh();
 	}
 
@@ -488,7 +461,7 @@ public class Fonction {
 			PreparedStatement Pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = Pst.executeQuery();
 			while (rs.next()) {
-				obListEnseignant.add(new Administration(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(5),
+				OLC.obListEnseignant.add(new Administration(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(5),
 						rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10),
 						rs.getString(11), rs.getString(12)));
 			}
@@ -500,7 +473,7 @@ public class Fonction {
 		AC.TcEmailEnseignant.setCellValueFactory(new PropertyValueFactory<>("Email"));
 		AC.TcAdresseEnseignant.setCellValueFactory(new PropertyValueFactory<>("FullAdresse"));
 		AC.TcProvinceEnseignant.setCellValueFactory(new PropertyValueFactory<>("Province"));
-		AC.TableViewEnseignant.setItems(obListEnseignant);
+		AC.TableViewEnseignant.setItems(OLC.obListEnseignant);
 		AC.TableViewEnseignant.refresh();
 	}
 
@@ -523,7 +496,7 @@ public class Fonction {
 			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListCours.add(new Cour(rs.getInt("ID"), rs.getString("Titre"), rs.getString("Description"),
+				OLC.obListCours.add(new Cour(rs.getInt("ID"), rs.getString("Titre"), rs.getString("Description"),
 						rs.getString("TitreAnglais"), rs.getString("DescriptionAnglais"), rs.getString("Temps"),
 						rs.getDouble("Cout"), rs.getInt("Credit"), rs.getInt("Etat")));
 			}
@@ -535,7 +508,7 @@ public class Fonction {
 		AC.TcTempsCours.setCellValueFactory(new PropertyValueFactory<>("Temps"));
 		AC.TcCoutCours.setCellValueFactory(new PropertyValueFactory<>("Cout"));
 		AC.TcCreditCours.setCellValueFactory(new PropertyValueFactory<>("Credit"));
-		AC.TableViewCours.setItems(obListCours);
+		AC.TableViewCours.setItems(OLC.obListCours);
 		AC.TableViewCours.refresh();
 
 	}
@@ -550,7 +523,7 @@ public class Fonction {
 			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListProgramme.add(new Programme(rs.getInt("ID"), rs.getString("Titre"), rs.getString("TitreAnglais"),
+				OLC.obListProgramme.add(new Programme(rs.getInt("ID"), rs.getString("Titre"), rs.getString("TitreAnglais"),
 						rs.getInt("Temps"), rs.getInt("Cout"), rs.getInt("Etat")));
 			}
 		} catch (SQLException e) {
@@ -559,7 +532,7 @@ public class Fonction {
 		AC.TvCProgrammeTitre.setCellValueFactory(new PropertyValueFactory<>("Titre"));
 		AC.TvCProgrammeTemps.setCellValueFactory(new PropertyValueFactory<>("Temps"));
 		AC.TvCProgrammeCout.setCellValueFactory(new PropertyValueFactory<>("Cout"));
-		AC.TableViewProgramme.setItems(obListProgramme);
+		AC.TableViewProgramme.setItems(OLC.obListProgramme);
 		AC.TableViewProgramme.refresh();
 	}
 
@@ -577,7 +550,7 @@ public class Fonction {
 			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListNomEtudiantFrais.add(new Etudiant(rs.getInt("ID"), rs.getString("Prenom"), rs.getString("Nom"),
+				OLC.obListNomEtudiantFrais.add(new Etudiant(rs.getInt("ID"), rs.getString("Prenom"), rs.getString("Nom"),
 						rs.getString("Telephone"), rs.getString("Email")));
 
 			}
@@ -586,7 +559,7 @@ public class Fonction {
 			e.printStackTrace();
 		}
 		AC.TcNomCompletEtudiant.setCellValueFactory(new PropertyValueFactory<>("FullName"));
-		AC.TableViewEtudiantFrais.setItems(obListNomEtudiantFrais);
+		AC.TableViewEtudiantFrais.setItems(OLC.obListNomEtudiantFrais);
 		AC.TableViewEtudiantFrais.refresh();
 	}
 
@@ -604,7 +577,7 @@ public class Fonction {
 			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				ObListFrais.add(new Frais(rs.getInt("IdFrais"), rs.getInt("ID"), rs.getInt("Cout"),
+				OLC.ObListFrais.add(new Frais(rs.getInt("IdFrais"), rs.getInt("ID"), rs.getInt("Cout"),
 						rs.getString("Type"), rs.getString("Nom_Complet"), rs.getString("Etat")));
 
 			}
@@ -616,7 +589,7 @@ public class Fonction {
 		AC.TcFFRais.setCellValueFactory(new PropertyValueFactory<>("Cout"));
 		AC.TcDescriptionFrais.setCellValueFactory(new PropertyValueFactory<>("Type"));
 		AC.TcEtatFrais.setCellValueFactory(new PropertyValueFactory<>("Etat"));
-		AC.TableViewFrais.setItems(ObListFrais);
+		AC.TableViewFrais.setItems(OLC.ObListFrais);
 		AC.TableViewFrais.refresh();
 	}
 
@@ -629,7 +602,7 @@ public class Fonction {
 			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListNomEtudiantResultat.add(new Etudiant(rs.getInt("ID"), rs.getString("Prenom"), rs.getString("Nom"),
+				OLC.obListNomEtudiantResultat.add(new Etudiant(rs.getInt("ID"), rs.getString("Prenom"), rs.getString("Nom"),
 						rs.getString("Telephone"), rs.getString("Email")));
 
 			}
@@ -638,7 +611,7 @@ public class Fonction {
 			e.printStackTrace();
 		}
 		AC.TcNomResult.setCellValueFactory(new PropertyValueFactory<>("FullName"));
-		AC.TvNomResult.setItems(obListNomEtudiantResultat);
+		AC.TvNomResult.setItems(OLC.obListNomEtudiantResultat);
 		AC.TvNomResult.refresh();
 	}
 
@@ -652,7 +625,7 @@ public class Fonction {
 			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListCourResultat.add(
+				OLC.obListCourResultat.add(
 						new EtudiantCour(IDEtudiant, rs.getInt("ID"), rs.getInt("Resultat"), rs.getString("Titre")));
 
 			}
@@ -661,7 +634,7 @@ public class Fonction {
 		}
 		AC.TcCoursResult.setCellValueFactory(new PropertyValueFactory<>("Titre"));
 		AC.TcResultat.setCellValueFactory(new PropertyValueFactory<>("Resultat"));
-		AC.TvResultatCours.setItems(obListCourResultat);
+		AC.TvResultatCours.setItems(OLC.obListCourResultat);
 		AC.TvResultatCours.refresh();
 	}
 
@@ -675,7 +648,7 @@ public class Fonction {
 			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListExamen.add(
+				OLC.obListExamen.add(
 						new Examen(rs.getInt("IdEvalutation"), rs.getInt("IdEnseignant"), rs.getInt("IdCours"),
 						rs.getString("Titre"), rs.getString("Description"), rs.getInt("Ponctuation"), rs.getString("Prenom"), rs.getString("Nom"), "", 0));
 
@@ -687,7 +660,7 @@ public class Fonction {
 		AC.TableColumDescExam.setCellValueFactory(new PropertyValueFactory<>("Description"));
 		AC.TableColumnPoncExam.setCellValueFactory(new PropertyValueFactory<>("Ponctuation"));
 		AC.TableColumnProfExam.setCellValueFactory(new PropertyValueFactory<>("NomComplet"));
-		AC.TableViewExamen.setItems(obListExamen);
+		AC.TableViewExamen.setItems(OLC.obListExamen);
 		AC.TableViewExamen.refresh();
 	}
 	
@@ -710,7 +683,7 @@ public class Fonction {
 			pst.setInt(2, IDCour);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListExamen.add(
+				OLC.obListExamen.add(
 						new Examen(rs.getInt("IdEvalutation"), rs.getInt("IdEnseignant"), rs.getInt("IdCours"),
 						rs.getString("Titre"), rs.getString("Description"), rs.getInt("Ponctuation"), rs.getString("Prenom"), rs.getString("Nom"), rs.getString("TitreEvaluation"),
 						rs.getInt("ResultatFinal")));
@@ -722,7 +695,7 @@ public class Fonction {
 		AC.TcResultNoteExam.setCellValueFactory(new PropertyValueFactory<>("Resultat"));
 		AC.TcEvalNoteExam.setCellValueFactory(new PropertyValueFactory<>("TitreEvaluation"));
 		AC.TcCourNoteExam.setCellValueFactory(new PropertyValueFactory<>("Titre"));
-		AC.TableViewNoteExam.setItems(obListExamen);
+		AC.TableViewNoteExam.setItems(OLC.obListExamen);
 		AC.TableViewNoteExam.refresh();
 	}
 	
@@ -739,7 +712,7 @@ public class Fonction {
 			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListExamen.add(
+				OLC.obListExamen.add(
 						new Examen(rs.getInt("IdEvalutation"), rs.getInt("IdEnseignant"), rs.getInt("IdCours"),
 						rs.getString("Titre"), rs.getString("Description"), rs.getInt("Ponctuation"), rs.getString("Prenom"), rs.getString("Nom"), "", 0));
 			}
@@ -750,7 +723,7 @@ public class Fonction {
 		AC.TableColumDescExam.setCellValueFactory(new PropertyValueFactory<>("Description"));
 		AC.TableColumnPoncExam.setCellValueFactory(new PropertyValueFactory<>("Ponctuation"));
 		AC.TableColumnProfExam.setCellValueFactory(new PropertyValueFactory<>("NomComplet"));
-		AC.TableViewExamen.setItems(obListExamen);
+		AC.TableViewExamen.setItems(OLC.obListExamen);
 		AC.TableViewExamen.refresh();
 	}
 	
@@ -775,7 +748,7 @@ public class Fonction {
 				rs = pst.executeQuery();
 				
 				while (rs.next()) {
-					obListNotif.add(new Notification(rs.getInt("IdNotification"), rs.getString("Auteur"), rs.getInt("IdLog"),
+					OLC.obListNotif.add(new Notification(rs.getInt("IdNotification"), rs.getString("Auteur"), rs.getInt("IdLog"),
 							rs.getInt("IdAdmin"), rs.getInt("Etat"), rs.getString("Type1"), rs.getString("Date1"), rs.getString("Table1")));
 					Tr = true;
 					AC.RondNotif.setVisible(false);
@@ -793,7 +766,7 @@ public class Fonction {
 				rs = pst.executeQuery();
 				
 				while (rs.next()) {
-					obListNotif.add(new Notification(rs.getInt("IdNotification"), rs.getString("Auteur"), rs.getInt("IdLog"),
+					OLC.obListNotif.add(new Notification(rs.getInt("IdNotification"), rs.getString("Auteur"), rs.getInt("IdLog"),
 							rs.getInt("IdAdmin"), rs.getInt("Etat"), rs.getString("Type1"), rs.getString("Date1"), rs.getString("Table1")));
 					
 				}
@@ -805,10 +778,37 @@ public class Fonction {
 		AC.TableColumnNotifType.setCellValueFactory(new PropertyValueFactory<>("Type"));
 		AC.TableColumnNotifTable.setCellValueFactory(new PropertyValueFactory<>("Table"));
 		AC.TableColumnNotifDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
-		AC.TableViewNotif.setItems(obListNotif);
+		AC.TableViewNotif.setItems(OLC.obListNotif);
 		AC.TableViewNotif.refresh();
 	}
 
+	public void AfficherLogs() {
+		AC.TableView_Logs.getItems().clear();
+		
+		try {
+			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+			RequeteSql = "SELECT * FROM logupdatedeleteaccount";
+					
+			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				OLC.obListLogs.add(
+						new Logs(rs.getString("Createur"), rs.getString("AncienneValeur"), rs.getString("NouvelleValeur"),
+						rs.getString("Table1"), rs.getString("Type1"), rs.getString("Date1")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		AC.TableColumn_Createur.setCellValueFactory(new PropertyValueFactory<>("Createur"));
+		AC.TableColumn_AV.setCellValueFactory(new PropertyValueFactory<>("AncienneValeur"));
+		AC.TableColumn_NV.setCellValueFactory(new PropertyValueFactory<>("NouvelleValeur"));
+		AC.TableColumn_Table.setCellValueFactory(new PropertyValueFactory<>("Table1"));
+		AC.TableColumn_Type.setCellValueFactory(new PropertyValueFactory<>("Type1"));
+		AC.TableColumn_Date.setCellValueFactory(new PropertyValueFactory<>("Date1"));
+		AC.TableView_Logs.setItems(OLC.obListLogs);
+		AC.TableView_Logs.refresh();
+	}
+	
 	//Affiche les notifications avec plus de details
 	public void AfficherNotifDetail() {
 		AC.TableViewNotifDetail.getItems().clear();
@@ -820,7 +820,7 @@ public class Fonction {
 			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListNotifDetails.add(
+				OLC.obListNotifDetails.add(
 						new Logs(rs.getString("Createur"), rs.getString("AncienneValeur"), rs.getString("NouvelleValeur"),
 						rs.getString("Table1"), rs.getString("Type1"), rs.getString("Date1")));
 			}
@@ -833,7 +833,7 @@ public class Fonction {
 		AC.TcTableNotifDetail.setCellValueFactory(new PropertyValueFactory<>("Table1"));
 		AC.TcTypeNotifDetail.setCellValueFactory(new PropertyValueFactory<>("Type1"));
 		AC.TcDateNotifDetail.setCellValueFactory(new PropertyValueFactory<>("Date1"));
-		AC.TableViewNotifDetail.setItems(obListNotifDetails);
+		AC.TableViewNotifDetail.setItems(OLC.obListNotifDetails);
 		AC.TableViewNotifDetail.refresh();
 	}
 	
@@ -842,7 +842,7 @@ public class Fonction {
 		AC.TableViewEtudiant.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (obListEtudiant.isEmpty() == false) {
+				if (OLC.obListEtudiant.isEmpty() == false) {
 					etudiant = AC.TableViewEtudiant.getItems()
 							.get(AC.TableViewEtudiant.getSelectionModel().getSelectedIndex());
 					NomEtudiant = AC.TableViewEtudiant.getSelectionModel().getSelectedItem().getFullName();
@@ -850,7 +850,7 @@ public class Fonction {
 					EmailEtudiant = AC.TableViewEtudiant.getSelectionModel().getSelectedItem().getEmail();
 
 					SelectEtudiantIndex = AC.TableViewEtudiant.getSelectionModel().getSelectedIndex();
-					IDEtudiant = obListEtudiant.get(SelectEtudiantIndex).getID();
+					IDEtudiant = OLC.obListEtudiant.get(SelectEtudiantIndex).getID();
 
 					AC.LblNomEtudiant.setText(NomEtudiant);
 					AC.LblTelEtudiant
@@ -873,12 +873,12 @@ public class Fonction {
 		AC.TableViewEtudiantFrais.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (obListNomEtudiantFrais.isEmpty() == false) {
+				if (OLC.obListNomEtudiantFrais.isEmpty() == false) {
 					etudiant = AC.TableViewEtudiantFrais.getItems()
 							.get(AC.TableViewEtudiantFrais.getSelectionModel().getSelectedIndex());
 
 					SelectEtudiantIndex = AC.TableViewEtudiantFrais.getSelectionModel().getSelectedIndex();
-					IDEtudiant = obListNomEtudiantFrais.get(SelectEtudiantIndex).getID();
+					IDEtudiant = OLC.obListNomEtudiantFrais.get(SelectEtudiantIndex).getID();
 					NomEtudiant = AC.TableViewEtudiantFrais.getSelectionModel().getSelectedItem().getFullName();
 					TelEtudiant = AC.TableViewEtudiantFrais.getSelectionModel().getSelectedItem().getTelephone();
 					EmailEtudiant = AC.TableViewEtudiantFrais.getSelectionModel().getSelectedItem().getEmail();
@@ -903,10 +903,10 @@ public class Fonction {
 				@Override
 				public void handle(MouseEvent event) {
 					try {
-						if (obListEnseignant.isEmpty() == false) {
+						if (OLC.obListEnseignant.isEmpty() == false) {
 							administration = AC.TableViewEnseignant.getItems()
 									.get(AC.TableViewEnseignant.getSelectionModel().getSelectedIndex());
-							IDEnseignant = obListEnseignant.get(SelectEnseignantIndex).getID();
+							IDEnseignant = OLC.obListEnseignant.get(SelectEnseignantIndex).getID();
 
 							NomEnseignant = AC.TableViewEnseignant.getSelectionModel().getSelectedItem().getFullName();
 							TelEnseignant = AC.TableViewEnseignant.getSelectionModel().getSelectedItem().getTelephone();
@@ -934,7 +934,7 @@ public class Fonction {
 			AC.TableViewCours.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					if (obListCours.isEmpty() == false) {
+					if (OLC.obListCours.isEmpty() == false) {
 						cour = AC.TableViewCours.getItems().get(AC.TableViewCours.getSelectionModel().getSelectedIndex());
 
 						SelectCourIndex = AC.TableViewCours.getSelectionModel().getSelectedIndex();
@@ -963,12 +963,12 @@ public class Fonction {
 		AC.TableViewProgramme.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (obListProgramme.isEmpty() == false) {
+				if (OLC.obListProgramme.isEmpty() == false) {
 					programme = AC.TableViewProgramme.getItems()
 							.get(AC.TableViewProgramme.getSelectionModel().getSelectedIndex());
 					SelectProgrammeIndex = AC.TableViewProgramme.getSelectionModel().getSelectedIndex();
-					ProgrammeID = obListProgramme.get(SelectProgrammeIndex).getID();
-					TitreProgramme = obListProgramme.get(SelectProgrammeIndex).getTitre();
+					ProgrammeID = OLC.obListProgramme.get(SelectProgrammeIndex).getID();
+					TitreProgramme = OLC.obListProgramme.get(SelectProgrammeIndex).getTitre();
 					SelectTitreProgramme = AC.TableViewProgramme.getSelectionModel().getSelectedItem().getTitre();
 
 					if (AC.ProgrammeActif == 1) {
@@ -993,7 +993,7 @@ public class Fonction {
 		AC.TableViewFrais.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (ObListFrais.isEmpty() == false) {
+				if (OLC.ObListFrais.isEmpty() == false) {
 
 					frais = AC.TableViewFrais.getItems().get(AC.TableViewFrais.getSelectionModel().getSelectedIndex());
 					Etat = AC.TableViewFrais.getSelectionModel().getSelectedItem().getEtat();
@@ -1017,7 +1017,7 @@ public class Fonction {
 			@Override
 			public void handle(MouseEvent event) {
 				try{
-					if (obListNomEtudiantResultat.isEmpty() == false) {
+					if (OLC.obListNomEtudiantResultat.isEmpty() == false) {
 
 						IDEtudiant = AC.TvNomResult.getSelectionModel().getSelectedItem().getID();
 						NomEtudiant = AC.TvNomResult.getSelectionModel().getSelectedItem().getFullName();
@@ -1043,7 +1043,7 @@ public class Fonction {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
-					if (obListNomEtudiantResultat.isEmpty() == false) {
+					if (OLC.obListNomEtudiantResultat.isEmpty() == false) {
 						IDCour = AC.TvResultatCours.getSelectionModel().getSelectedItem().getIdCour();
 						nomCour = AC.TvResultatCours.getSelectionModel().getSelectedItem().getTitre();
 						SelectCourIndex = AC.TvResultatCours.getSelectionModel().getSelectedIndex();
@@ -1070,7 +1070,7 @@ public class Fonction {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
-					if (obListExamen.isEmpty() == false) {
+					if (OLC.obListExamen.isEmpty() == false) {
 						
 						TitreExamen = AC.TableViewExamen.getSelectionModel().getSelectedItem().getTitre();
 						IdProjet = AC.TableViewExamen.getSelectionModel().getSelectedItem().getIdProjet();
@@ -1098,7 +1098,7 @@ public class Fonction {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
-					if (obListExamen.isEmpty() == false) {
+					if (OLC.obListExamen.isEmpty() == false) {
 						
 						TitreEvaluation = AC.TableViewNoteExam.getSelectionModel().getSelectedItem().getTitre();
 						IdTitreEvaluation = AC.TableViewNoteExam.getSelectionModel().getSelectedItem().getIdProjet();
@@ -1124,7 +1124,7 @@ public class Fonction {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
-					if (obListNotif.isEmpty() == false) {
+					if (OLC.obListNotif.isEmpty() == false) {
 						
 						IdLog = AC.TableViewNotif.getSelectionModel().getSelectedItem().getIdLog();
 						selectIdNotif = AC.TableViewNotif.getSelectionModel().getSelectedIndex();
@@ -2549,8 +2549,8 @@ public class Fonction {
 	// SECTION LIST VIEW PROGRAMME-COUR//
 	// Afficher les cours dans la première liste de droites (ListViewCourAttente)
 	public void ListViewProgrammeCour() {
-		obListGauche.clear();
-		obListDroit.clear();
+		OLC.obListGauche.clear();
+		OLC.obListDroit.clear();
 		try {
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
 			PreparedStatement pst;
@@ -2560,7 +2560,7 @@ public class Fonction {
 			pst.setInt(1, ProgrammeID);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListGauche.add(rs.getInt("ID") + " " + rs.getString("Titre"));
+				OLC.obListGauche.add(rs.getInt("ID") + " " + rs.getString("Titre"));
 			}
 
 			RequeteSql = "SELECT * FROM cour where ID in (SELECT IdCours FROM programmecours where IdProgramme = ?) ";
@@ -2568,14 +2568,14 @@ public class Fonction {
 			pst.setInt(1, ProgrammeID);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListDroit.add(rs.getInt("ID") + " " + rs.getString("Titre"));
+				OLC.obListDroit.add(rs.getInt("ID") + " " + rs.getString("Titre"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		AC.ListViewCourAttente.setItems(obListGauche);
-		AC.ListViewCourAssigner.setItems(obListDroit);
+		AC.ListViewCourAttente.setItems(OLC.obListGauche);
+		AC.ListViewCourAssigner.setItems(OLC.obListDroit);
 
 	}
 
@@ -2589,16 +2589,16 @@ public class Fonction {
 
 			// Si un ou plusieurs cour apparaissent déjà dans la listview
 			// ils sont delete
-			if (obListDroit.size() > 0) {
+			if (OLC.obListDroit.size() > 0) {
 				RequeteSql = "delete from programmecours where IdProgramme = ?";
 				preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 				preparedStatement.setInt(1, ProgrammeID);
 				preparedStatement.executeUpdate();
 
-				for (int i = 0; i < obListDroit.size(); i++) {
+				for (int i = 0; i < OLC.obListDroit.size(); i++) {
 					// On fait un substring pour récupérer seulement le ID du cours exemple:
 					// 1 Francais --> IdCour = 1
-					int IdCour = Integer.parseInt(obListDroit.get(i).substring(0, 2).trim());
+					int IdCour = Integer.parseInt(OLC.obListDroit.get(i).substring(0, 2).trim());
 					RequeteSql = "Select * from programmecours where IdProgramme = ? and IdCours = ?";
 					preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 					preparedStatement.setInt(1, ProgrammeID);
@@ -2641,8 +2641,8 @@ public class Fonction {
 		if (selectedItemsGauche == -1) {
 			System.out.println("Aucun cour dans la list");
 		} else {
-			obListDroit.add(obListGauche.get(selectedItemsGauche));
-			obListGauche.remove(selectedItemsGauche);
+			OLC.obListDroit.add(OLC.obListGauche.get(selectedItemsGauche));
+			OLC.obListGauche.remove(selectedItemsGauche);
 			AC.LblMessageProg.setText("Vous venez d'ajouter un cour");
 			AC.ListViewCourAssigner.refresh();
 			AC.ListViewCourAttente.refresh();
@@ -2654,8 +2654,8 @@ public class Fonction {
 		if (selectedItemsDroit == -1) {
 			System.out.println("Aucun cour dans la list");
 		} else {
-			obListGauche.add(obListDroit.get(selectedItemsDroit));
-			obListDroit.remove(selectedItemsDroit);
+			OLC.obListGauche.add(OLC.obListDroit.get(selectedItemsDroit));
+			OLC.obListDroit.remove(selectedItemsDroit);
 			AC.LblMessageProg.setText("Vous venez de retirer un cour");
 			AC.ListViewCourAssigner.refresh();
 			AC.ListViewCourAttente.refresh();
@@ -2665,8 +2665,8 @@ public class Fonction {
 
 	// SECTION LIST VIEW ETUDIANT-COUR//
 	public void ListViewEtudiantCour() {
-		obListGauche.clear();
-		obListDroit.clear();
+		OLC.obListGauche.clear();
+		OLC.obListDroit.clear();
 		try {
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
 			PreparedStatement pst;
@@ -2676,7 +2676,7 @@ public class Fonction {
 			pst.setInt(1, IDEtudiant);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListGauche.add(rs.getInt("ID") + " " + rs.getString("Titre"));
+				OLC.obListGauche.add(rs.getInt("ID") + " " + rs.getString("Titre"));
 			}
 
 			RequeteSql = "SELECT * FROM cour where Etat = 1 and ID in (SELECT IdCour FROM etudiantcour where IdEtudiant = ?) ";
@@ -2684,14 +2684,14 @@ public class Fonction {
 			pst.setInt(1, IDEtudiant);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListDroit.add(rs.getInt("ID") + " " + rs.getString("Titre"));
+				OLC.obListDroit.add(rs.getInt("ID") + " " + rs.getString("Titre"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		AC.ListViewEtudiantGauche.setItems(obListGauche);
-		AC.ListViewEtudiantDroite.setItems(obListDroit);
+		AC.ListViewEtudiantGauche.setItems(OLC.obListGauche);
+		AC.ListViewEtudiantDroite.setItems(OLC.obListDroit);
 	}
 
 	public void FlecheEnvoieDroite() {
@@ -2699,8 +2699,8 @@ public class Fonction {
 		if (selectedIdGauche == -1) {
 			System.out.println("Aucun cour dans la list");
 		} else {
-			obListDroit.add(obListGauche.get(selectedIdGauche));
-			obListGauche.remove(selectedIdGauche);
+			OLC.obListDroit.add(OLC.obListGauche.get(selectedIdGauche));
+			OLC.obListGauche.remove(selectedIdGauche);
 			// AC.LblMessageProg.setText("Vous venez d'ajouter un cour");
 			AC.ListViewEtudiantDroite.refresh();
 			AC.ListViewEtudiantGauche.refresh();
@@ -2713,8 +2713,8 @@ public class Fonction {
 		if (selectedIdGauche == -1) {
 			System.out.println("Aucun cour dans la list");
 		} else {
-			obListDroit.add(obListGauche.get(selectedIdGauche));
-			obListGauche.remove(selectedIdGauche);
+			OLC.obListDroit.add(OLC.obListGauche.get(selectedIdGauche));
+			OLC.obListGauche.remove(selectedIdGauche);
 			// AC.LblMessageProg.setText("Vous venez d'ajouter un cour");
 			AC.ListViewProgEnsDroite.refresh();
 			AC.ListViewProgEnsGauche.refresh();
@@ -2728,8 +2728,8 @@ public class Fonction {
 		if (selectedIdDroit == -1) {
 			System.out.println("Aucun cour dans la list");
 		} else {
-			obListGauche.add(obListDroit.get(selectedIdDroit));
-			obListDroit.remove(selectedIdDroit);
+			OLC.obListGauche.add(OLC.obListDroit.get(selectedIdDroit));
+			OLC.obListDroit.remove(selectedIdDroit);
 			// AC.LblMessageProg.setText("Vous venez de retirer un cour");
 			AC.ListViewEtudiantDroite.refresh();
 			AC.ListViewEtudiantGauche.refresh();
@@ -2745,7 +2745,7 @@ public class Fonction {
 			Class.forName("com.mysql.jdbc.Driver");
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
 
-			if (obListDroit.size() > -1) {
+			if (OLC.obListDroit.size() > -1) {
 				RequeteSql = "delete from etudiantcour where IdEtudiant = ?";
 				preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 				preparedStatement.setInt(1, IDEtudiant);
@@ -2759,9 +2759,9 @@ public class Fonction {
 
 				// Ajoute les frais
 
-				for (int i = 0; i < obListDroit.size(); i++) {
+				for (int i = 0; i < OLC.obListDroit.size(); i++) {
 
-					int IdCour = Integer.parseInt(obListDroit.get(i).substring(0, 2).trim());
+					int IdCour = Integer.parseInt(OLC.obListDroit.get(i).substring(0, 2).trim());
 					RequeteSql = "Select * from etudiantcour where IdEtudiant = ? and IdCour = ?";
 					preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 					preparedStatement.setInt(1, IDEtudiant);
@@ -2902,7 +2902,7 @@ public class Fonction {
 
 	public void ComboBoxProgramme() {
 
-		ObListCbProgramme.clear();
+		OLC.ObListCbProgramme.clear();
 		try {
 			String SQL;
 			Class.forName("com.mysql.jdbc.Driver");
@@ -2911,57 +2911,57 @@ public class Fonction {
 
 			if (AC.CbLangueProgramme.isSelected()) {
 				SQL = "Select concat (ID, '   ', Titre) AS TitreProg from programme where Etat = 1 order by Titre";
-				ObListCbProgramme.add("0 Aucun programme");
+				OLC.ObListCbProgramme.add("0 Aucun programme");
 			} else {
 				SQL = "Select concat (ID, '   ', TitreAnglais) AS TitreProg from programme where Etat = 1 order by TitreAnglais";
-				ObListCbProgramme.add("0 No program");
+				OLC.ObListCbProgramme.add("0 No program");
 			}
 			PreparedStatement pst = ConnexionDB.prepareStatement(SQL);
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-				ObListCbProgramme.add(rs.getString(1));
+				OLC.ObListCbProgramme.add(rs.getString(1));
 			}
-			AC.ComboBoxProgramme.setItems(ObListCbProgramme);
-			AC.CbProg.setItems(ObListCbProgramme);
+			AC.ComboBoxProgramme.setItems(OLC.ObListCbProgramme);
+			AC.CbProg.setItems(OLC.ObListCbProgramme);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void ComboBoxLangage() {
-		ObListCbLangue.clear();
+		OLC.ObListCbLangue.clear();
 		try {
 
-			ObListCbLangue.add("Francais");
-			ObListCbLangue.add("English");
-			AC.CbLangueEtudiant.setItems(ObListCbLangue);
+			OLC.ObListCbLangue.add("Francais");
+			OLC.ObListCbLangue.add("English");
+			AC.CbLangueEtudiant.setItems(OLC.ObListCbLangue);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void ComboBoxEtat() {
-		ObListEtat.clear();
+		OLC.ObListEtat.clear();
 		try {
 
-			ObListEtat.add("Non-Payer"); // On mets 0 dans la db
-			ObListEtat.add("Payer");// On mets 1 dans la db
-			ObListEtat.add("Annuler");
-			AC.CbEtatFrais.setItems(ObListEtat);
+			OLC.ObListEtat.add("Non-Payer"); // On mets 0 dans la db
+			OLC.ObListEtat.add("Payer");// On mets 1 dans la db
+			OLC.ObListEtat.add("Annuler");
+			AC.CbEtatFrais.setItems(OLC.ObListEtat);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void ComboBoxPoste() {
-		obListPoste.clear();
+		OLC.obListPoste.clear();
 		try {
 
-			obListPoste.add("Administrateur"); // On mets 0 dans la db
-			obListPoste.add("Professeur");// On mets 1 dans la db
-			obListPoste.add("Etudiant");
-			AC.CbPosteAdmin.setItems(obListPoste);
+			OLC.obListPoste.add("Administrateur"); // On mets 0 dans la db
+			OLC.obListPoste.add("Professeur");// On mets 1 dans la db
+			OLC.obListPoste.add("Etudiant");
+			AC.CbPosteAdmin.setItems(OLC.obListPoste);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2970,7 +2970,7 @@ public class Fonction {
 	// SECTION LIST VIEW ETUDIANT-PROGRAMME
 	// Liste gauche
 	public void ListViewProgramme() {
-		obListGauche.clear();
+		OLC.obListGauche.clear();
 		// obListDroit.clear();
 		try {
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
@@ -2981,26 +2981,26 @@ public class Fonction {
 			pst.setInt(1, IDEtudiant);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListGauche.add(rs.getInt("ID") + " " + rs.getString("Titre"));
+				OLC.obListGauche.add(rs.getInt("ID") + " " + rs.getString("Titre"));
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		AC.ListViewProgEtuAttente.setItems(obListGauche);
+		AC.ListViewProgEtuAttente.setItems(OLC.obListGauche);
 	}
 
 	// Liste droite
 	public void ListViewCoursProgramme() {
 		// obListGauche.clear();
-		obListDroit.clear();
+		OLC.obListDroit.clear();
 		try {
 			// ObservableList<String> items = AC.ComboBoxProgramme.getItems();
 			// int index = AC.ListViewProgEtuAttente.getSelectionModel().getSelectedIndex();
 			int IdProg = Integer
 					.parseInt(AC.ListViewProgEtuAttente.getSelectionModel().getSelectedItem().substring(0, 2).trim());
-			System.out.println("IdProg " + IdProg);
+			
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
 			PreparedStatement pst;
 
@@ -3010,12 +3010,12 @@ public class Fonction {
 			pst.setInt(1, IdProg);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListDroit.add(rs.getString("TitreCour"));
+				OLC.obListDroit.add(rs.getString("TitreCour"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		AC.ListViewProgEtuAssinger.setItems(obListDroit);
+		AC.ListViewProgEtuAssinger.setItems(OLC.obListDroit);
 	}
 
 	public void SupprimerItemsListView() {
@@ -3023,7 +3023,7 @@ public class Fonction {
 		if (selectedIdDroit == -1) {
 			System.out.println("Aucun cour dans la list");
 		} else {
-			obListDroit.remove(selectedIdDroit);
+			OLC.obListDroit.remove(selectedIdDroit);
 			AC.ListViewProgEtuAssinger.refresh();
 			System.out.println("Cour supprimé");
 		}
@@ -3037,15 +3037,15 @@ public class Fonction {
 			Class.forName("com.mysql.jdbc.Driver");
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
 
-			if (obListDroit.size() > 0) {
+			if (OLC.obListDroit.size() > 0) {
 				RequeteSql = "delete from etudiantcour where IdEtudiant = ?";
 				preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 				preparedStatement.setInt(1, IDEtudiant);
 				preparedStatement.executeUpdate();
 
-				for (int i = 0; i < obListDroit.size(); i++) {
+				for (int i = 0; i < OLC.obListDroit.size(); i++) {
 
-					int IdCour = Integer.parseInt(obListDroit.get(i).substring(0, 2).trim());
+					int IdCour = Integer.parseInt(OLC.obListDroit.get(i).substring(0, 2).trim());
 					RequeteSql = "Select * from etudiantcour where IdEtudiant = ? and IdCour = ?";
 					preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 					preparedStatement.setInt(1, IDEtudiant);
@@ -3089,7 +3089,7 @@ public class Fonction {
 	}
 
 	public void ListViewProgrammeEnseignantGauche(int IdProg) {
-		obListGauche.clear();
+		OLC.obListGauche.clear();
 		try {
 
 			System.out.println("ListViewProgrammeEnseignantGauche " + AC.IdProg);
@@ -3104,16 +3104,16 @@ public class Fonction {
 			pst.setInt(2, IDEnseignant);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListGauche.add(rs.getString("TitreCour"));
+				OLC.obListGauche.add(rs.getString("TitreCour"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		AC.ListViewProgEnsGauche.setItems(obListGauche);
+		AC.ListViewProgEnsGauche.setItems(OLC.obListGauche);
 	}
 
 	public void ListViewProgrammeEnseignantDroite() {
-		obListDroit.clear();
+		OLC.obListDroit.clear();
 		try {
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
 			PreparedStatement pst;
@@ -3124,12 +3124,12 @@ public class Fonction {
 			pst.setInt(1, IDEnseignant);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				obListDroit.add(rs.getString("TitreCour"));
+				OLC.obListDroit.add(rs.getString("TitreCour"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		AC.ListViewProgEnsDroite.setItems(obListDroit);
+		AC.ListViewProgEnsDroite.setItems(OLC.obListDroit);
 
 		// SELECT concat(cour.ID, ' ', cour.Titre) AS TitreCour FROM `cour` à
 		// INNER JOIN programmecours ON cour.ID = programmecours.IdCours where
@@ -3142,7 +3142,7 @@ public class Fonction {
 		if (selectedIdDroit == -1) {
 			System.out.println("Aucun cour dans la list");
 		} else {
-			obListDroit.remove(selectedIdDroit);
+			OLC.obListDroit.remove(selectedIdDroit);
 			AC.ListViewProgEnsDroite.refresh();
 			System.out.println("Cour supprimé");
 		}
@@ -3155,15 +3155,15 @@ public class Fonction {
 			Class.forName("com.mysql.jdbc.Driver");
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
 
-			if (obListDroit.size() > 0) {
+			if (OLC.obListDroit.size() > 0) {
 
 				// On delete les cours de la table EnseignantCour
 				RequeteSql = "delete from EnseignantCour where IdEnseignant = ?";
 				preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 				preparedStatement.setInt(1, IDEnseignant);
 				preparedStatement.executeUpdate();
-				for (int i = 0; i < obListDroit.size(); i++) {
-					int IdCour = Integer.parseInt(obListDroit.get(i).substring(0, 2).trim());
+				for (int i = 0; i < OLC.obListDroit.size(); i++) {
+					int IdCour = Integer.parseInt(OLC.obListDroit.get(i).substring(0, 2).trim());
 
 					// On select le IDEnseignant + le IdCour
 					RequeteSql = "Select * from EnseignantCour where IdEnseignant = ? and IdCour = ?";

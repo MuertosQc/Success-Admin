@@ -49,8 +49,18 @@ public class AccueilController {
     @FXML public Label LblMsgErreurEtudiant;    
     @FXML public Label lblTitreInscription;
     
+    //Section Logs
+    @FXML public Button BtnLogs;
+    @FXML public Pane PaneLogs;
+    @FXML public TableView<Logs> TableView_Logs;
+    @FXML public TableColumn<Logs, String> TableColumn_Createur;
+    @FXML public TableColumn<Logs, String> TableColumn_AV;
+    @FXML public TableColumn<Logs, String> TableColumn_NV;
+    @FXML public TableColumn<Logs, String> TableColumn_Table;
+    @FXML public TableColumn<Logs, String> TableColumn_Type;
+    @FXML public TableColumn<Logs, String> TableColumn_Date;
+    
     //Section notification
-  
     @FXML public Button BtnNotifLu;
     @FXML public Button BtnNotifNonLu;
     @FXML public Button BtnNotifSup;
@@ -742,12 +752,14 @@ public class AccueilController {
   	   	switch(ID) {
   	   	
   	  case "BtnContinueExam":
+  		  	PaneLogs.setVisible(false);
   		  		PaneCommentaire.setVisible(false);
   		  		PaneBlack.setVisible(false);
   		  		PaneMsg.setVisible(false);
   	   		break;
   	   		
   	  case "BtnContinueMsg":
+  		  PaneLogs.setVisible(false);
   		  	PaneCommentaire.setVisible(false);
   		  	PaneAfficherExamen.setVisible(false);
   		  	PaneAjoutExam.setVisible(false);
@@ -773,6 +785,7 @@ public class AccueilController {
 	   		break;
 	
   	   	case "BtnAcueil":
+  	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
   	   		PaneNotification.setVisible(false);
   	   		f.BarGraphActifs();
@@ -805,6 +818,7 @@ public class AccueilController {
   	   		//SECTION ETUDIANT
   	   		//Bouton qui affiche la première section des étudiants
   	   	case "BtnEtudiant":
+  	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Etudiant";
@@ -983,6 +997,7 @@ public class AccueilController {
   		  
   	   		//SECTION ENSEIGNANT
   	   	case "BtnEnseignant":
+  	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Enseignant";
@@ -1070,6 +1085,7 @@ public class AccueilController {
   	   		break;
   	   		//SECTION COURS
   	   	case "BtnCour":
+  	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Cours";
@@ -1195,6 +1211,7 @@ public class AccueilController {
   	   		
   	   		//SECTION PROGRAMME
   	   	case "BtnProgramme":
+  	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Programme";
@@ -1256,6 +1273,7 @@ public class AccueilController {
   	   		break;
   	   		
   	   	case "BtnFrais":
+  	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Frais";
@@ -1326,6 +1344,7 @@ public class AccueilController {
   	   		break;
   	   		//SECTION RESULT
   	   	case "BtnResultat":
+  	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
   	   		VariableGlobal = "Resultat";
@@ -1404,6 +1423,41 @@ public class AccueilController {
   	   	case "BtnPrecedentNotif":
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(true);
+  	   		break;
+  	   		
+  	   	case "BtnLogs":
+  	   		PaneLogs.setVisible(true);
+  	   		PaneNotifDetail.setVisible(false);
+  	   		PaneNotification.setVisible(false);
+	   		VariableGlobal = "Resultat";
+	   		PaneCommentaire.setVisible(false);
+	   		PaneAfficherExamen.setVisible(false);
+	   		PaneAjoutExam.setVisible(false);
+	   		BtnModifierResultat.setVisible(false);
+	   		BtnSupprimerResultat.setVisible(false);
+	   		TvResultatCours.setVisible(false);
+	   		f.SelectRowNomResultat();
+	   		TvNomResult.setVisible(false);
+	   		BtnAfficherResult.setVisible(false);
+	   		PaneResultat.setVisible(false);
+	   		f.AfficherResultatEtudiant();
+	   		PaneAssignerProgEns.setVisible(false);
+	   		PaneAfficherFrais.setVisible(false);
+	   		PaneFrais.setVisible(false);
+	   		PaneEtuProgAssigne.setVisible(false);
+	   		PaneAssigneCourEtudiant.setVisible(false);
+	   		PaneAssignerCourProgramme.setVisible(false);
+	   		PanePrincipaleProgramme.setVisible(false);
+	   		PaneAccueil.setVisible(false);
+	   		GrandePaneEtudiant.setVisible(false);
+	   		GrandePaneEnseignant.setVisible(false);
+	   		PaneInscriptionEtudiant.setVisible(false);
+	   		PaneGrandCour.setVisible(false);
+	   		PaneAjoutCours.setVisible(false);
+	   		PaneAjoutProgramme.setVisible(false);
+	   		PaneModifResult.setVisible(false);
+	   		BtnAfficherEvalutation.setVisible(false);
+	   		f.AfficherLogs();
   	   		break;
   	   	}
     }
