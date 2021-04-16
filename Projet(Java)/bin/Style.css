@@ -7,6 +7,14 @@
 	-fx-font: 14px "Helvetica";
 }
 
+#LblEnvoyeur, #LblReceveur, #LblDate{
+	-fx-font: 14px "Helvetica";
+}
+/*Font bold */
+#LblTitreDate, #LblTitreReceveur, #LblTitreEnvoyeur{
+	-fx-font: 14px "Helvetica";
+	-fx-font-weight: bold;
+}
 #BtnConnexion{
 	-fx-background-color:  #523d87;
 	-fx-text-fill: white;
@@ -32,7 +40,7 @@
 #BtnModifierEtudiant, #BtnAjouterEtudiant, #BtnSupEtudiant, #BtnContinueMsg, #BtnAjouterEnseignant, #BtnModifierEnseignant, #BtnSupEnseignant, #BtnModifEnseignant,  #BtnAjoutEnseignant, #BtnModifEtudiant, #BtnCancelEtudiant, #BtnAjoutEtudiant, #BtnSupCours, #BtnAjouterCours, #BtnModifierCours, #BtnAjoutCours, #BtnCancelCours,
 #BtnModifCours, #BtnSupProgramme, #BtnAjouterProgramme, #BtnModifierProgramme, #BtnAjoutProgramme, #BtnModifProgramme, #BtnAssignerCoursProgramme, #BtnAjouterCoursAuProgramme, #BtnInscription,
 #BtnAjouterEtudiantCour, #BtnAssignerProgramme, #BtnProgEtuAjout, #BtnAjouterExam, #BtnAjouterExamen, #BtnAfficherExamen, #BtnModifierExam, #BtnSupprimerExam, #BtnAfficherExamenCours, #BtnSupprimerComEtudiant,
-#BtnAssignerProgEns, #BtnAjoutCourEns, #BtnNotifLu, #BtnNotifNonLu, #BtnNotifSup, #BtnNotifAfficher{
+#BtnAssignerProgEns, #BtnAjoutCourEns, #BtnNotifLu, #BtnNotifNonLu, #BtnNotifSup, #BtnNotifAfficher, #Btn_FermerMessage, #Btn_RepondreMessage, #Btn_EnvoyerMessage{
 	-fx-font: 14px "Helvetica";
     -fx-padding: 5;
     -fx-text-fill:white;
@@ -47,7 +55,8 @@
 #BtnAjoutEtudiant:hover, #BtnAjouterCours:hover, #BtnModifierCours:hover, #BtnAjoutCours:hover, #BtnCancelCours:hover, #BtnModifCours:hover, #BtnSupProgramme:hover, #BtnAjouterProgramme:hover,
 #BtnModifierProgramme:hover, #BtnAjoutProgramme:hover, #BtnModifProgramme:hover, #BtnAssignerCoursProgramme:hover, #BtnAjouterCoursAuProgramme:hover, #BtnInscription:hover, #BtnAjouterEtudiantCour:hover,
 #BtnAssignerProgramme:hover, #BtnProgEtuAjout:hover, #BtnAjouterExam:hover, #BtnAjouterExamen:hover, #BtnAfficherExamen:hover, #BtnModifierExam:hover, #BtnSupprimerExam:hover, #BtnAfficherExamenCours:hover,
-#BtnSupprimerComEtudiant:hover, #BtnAssignerProgEns:hover, #BtnAjoutCourEns:hover, #BtnNotifLu:hover, #BtnNotifNonLu:hover, #BtnNotifSup:hover, #BtnNotifAfficher:hover{
+#BtnSupprimerComEtudiant:hover, #BtnAssignerProgEns:hover, #BtnAjoutCourEns:hover, #BtnNotifLu:hover, #BtnNotifNonLu:hover, #BtnNotifSup:hover, #BtnNotifAfficher:hover,
+#Btn_FermerMessage:hover, #Btn_RepondreMessage:hover, #Btn_EnvoyerMessage:hover{
 	-fx-font: 14px "Helvetica";
     -fx-padding: 5;
     -fx-text-fill:white;
@@ -57,14 +66,15 @@
    	-fx-background-color:   #2d1c58;
 }
 
-#BtnCancelProgramme, #BtnRetourEtuProg, #BtnSupProgEtu, #BtnRetourEtuCour, #BtnRetourExamen, #BtnCancelEnseignant, #BtnAnnulerComEtudiant, #BtnSupCoursEns, #BtnPrecedentNotif{
+#BtnCancelProgramme, #BtnRetourEtuProg, #BtnSupProgEtu, #BtnRetourEtuCour, #BtnRetourExamen, #BtnCancelEnseignant, #BtnAnnulerComEtudiant, #BtnSupCoursEns, #BtnPrecedentNotif, #Btn_SuivantMessage,
+#Btn_PrecedentMessage{
 	-fx-font:14px "Helvetica"; 
 	-fx-background-color: transparent;
 	-fx-text-fill: #523d87;
 }
 
 #BtnCancelProgramme:hover, #BtnRetourEtuProg:hover, #BtnSupProgEtu:hover, #BtnRetourEtuCour:hover, #BtnRetourExamen:hover, #BtnCancelEnseignant:hover, #BtnAnnulerComEtudiant:hover, #BtnSupCoursEns:hover, 
-#BtnPrecedentNotif:hover{
+#BtnPrecedentNotif:hover, #Btn_SuivantMessage:hover, #Btn_PrecedentMessage:hover{
 	-fx-text-fill: #2d1c58;
 }
 

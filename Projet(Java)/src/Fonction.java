@@ -1,3 +1,4 @@
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -6,6 +7,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
+
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -101,7 +104,6 @@ public class Fonction {
 	Programme programme;
 	
 	
-	
 	public Fonction(ConnexionController CC) {
 		this.CC = CC;
 	}
@@ -112,36 +114,31 @@ public class Fonction {
 	
 	ObservableListClass OLC = new ObservableListClass(this);
 	
+	public static String RandomPassword(String candidateChars, int length) {
+		 StringBuilder sb = new StringBuilder();
+		    Random random = new Random();
+		    for (int i = 0; i < length; i++) {
+		        sb.append(candidateChars.charAt(random.nextInt(candidateChars
+		                .length())));
+		    }
+
+		    return sb.toString();
+	}
+	
 	// Fonction connexion
 	public void Connexion() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
-			RequeteSql = "Select * from administration where NomUtilisateur=? and MotDePasse=?";
-			PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
-			pst.setString(1, CC.TbUser.getText());
-			pst.setString(2, CC.TbMDP.getText());
+			
+			CallableStatement st = ConnexionDB.prepareCall("{call selectConnexion(?,?)}");
+			st.setString(1, CC.TbUser.getText());
+			st.setString(2, CC.TbMDP.getText());
+			rs = st.executeQuery();			
 
-			rs = pst.executeQuery();
-
-			if (CC.TbUser.getText().isEmpty() || CC.TbMDP.getText().isEmpty()) {
-				CC.LblMsgErreur.setText("Entrer un username ou mot de passe valide");
-				TranslateTransition ts = new TranslateTransition(Duration.seconds(0.5), CC.PaneErreur);
-				 ts.setFromX(-330);
-				 ts.setToX(-290);
-				 ts.play();
-				 
-				 CC.PaneErreur.setVisible(true);
-				 PauseTransition visiblePause = new PauseTransition(
-					        Duration.seconds(3)
-					);
-					visiblePause.setOnFinished(
-					        event -> CC.PaneErreur.setVisible(false)
-					);
-					visiblePause.play();
-				
-			} else {
+		
 				if (rs.next()) {
+					
 					// Il manque le rs.getString(2) car on ne récupère pas le mot de passe
 					administration = new Administration(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5),
 							rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10),
@@ -212,7 +209,8 @@ public class Fonction {
 						);
 						visiblePause.play();
 				}
-			}
+			
+			st.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -1202,6 +1200,7 @@ public class Fonction {
 	// SECTION INSERT
 	// Ajouter Enseignant
 	public void InsertEnseignant() {
+		int IdEnseignant = 0;
 		if (AC.TbUser.getText().contentEquals("") || AC.TbPrenom.getText().contentEquals("")
 				|| AC.TbNom.getText().contentEquals("") || AC.TbTel.getText().contentEquals("")
 				|| AC.TbEmail.getText().contentEquals("") || AC.TbAdresse.getText().contentEquals("")
@@ -1246,10 +1245,24 @@ public class Fonction {
 					preparedStatement.setString(11, AC.CbPosteAdmin.getValue());
 
 					preparedStatement.executeUpdate();
+					
+					RequeteSql = "Select max(ID) from administration";
+					preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
+					rs = preparedStatement.executeQuery();
+					int last_IdAdmin = 0;
+					if (rs.next()) {
+						last_IdAdmin = rs.getInt(1);
+					}
 
+					CallableStatement st = ConnexionDB.prepareCall("{call InsertAdminPassWord(?,?)}");
+					st.setString(1, RandomPassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 20));
+					st.setInt(2, last_IdAdmin);					
+					st.execute();
+					st.close();
+					System.out.println(RandomPassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 20));
 					try {
 						if (AC.CbPosteAdmin.getValue().equals("Professeur")) {
-							int IdEnseignant = 0;
+							
 							RequeteSql = "Select max(ID) from administration";
 							preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
 							rs = preparedStatement.executeQuery();

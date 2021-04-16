@@ -92,6 +92,23 @@ public class AccueilController {
     @FXML public TableView<Logs> TableViewNotifDetail;
     @FXML public CheckBox CheckBoxNotifDetail;
     
+    //Section Email
+    @FXML public Pane PaneEmail;
+    @FXML public Label LblEnvoyeur;
+    @FXML public Label LblReceveur;
+    @FXML public Label LblDate;
+    @FXML public Label LblTitreDate;
+    @FXML public Label LblTitreReceveur;
+    @FXML public Label LblTitreEnvoyeur;
+    @FXML public TextField Tb_Object;
+    @FXML public TextArea Tb_Message;
+    @FXML public Button Btn_FermerMessage;
+    @FXML public Button Btn_RepondreMessage;
+    @FXML public Button Btn_EnvoyerMessage;
+    @FXML public Button Btn_SuivantMessage;
+    @FXML public Button Btn_PrecedentMessage;
+    @FXML public TableColumn<?, String> TableColumn_Envoyeur;
+    @FXML public TableView<?> TableView_Email;
     
     //Section commentaire
     @FXML public Pane PaneCommentaire;
@@ -402,6 +419,19 @@ public class AccueilController {
     void OnClickSetting(MouseEvent event) {
     	PaneSettingNotif.setVisible(true);
     	OnActionRBNotif(null);
+    }
+    
+    @FXML
+    void OnMouseClickedClavardage(MouseEvent event) {
+    	PaneEmail.setVisible(true);
+    	PaneLogs.setVisible(false);
+  	   	PaneResultat.setVisible(false);
+  	   	PaneFrais.setVisible(false);
+  	   	PanePrincipaleProgramme.setVisible(false);
+  	   	PaneGrandCour.setVisible(false);
+   		GrandePaneEnseignant.setVisible(false);
+  	  	GrandePaneEtudiant.setVisible(false);
+  	   	PaneAccueil.setVisible(false);
     }
     
     @FXML
@@ -752,6 +782,7 @@ public class AccueilController {
   	   	switch(ID) {
   	   	
   	  case "BtnContinueExam":
+  		PaneEmail.setVisible(false);
   		  	PaneLogs.setVisible(false);
   		  		PaneCommentaire.setVisible(false);
   		  		PaneBlack.setVisible(false);
@@ -759,6 +790,7 @@ public class AccueilController {
   	   		break;
   	   		
   	  case "BtnContinueMsg":
+  		PaneEmail.setVisible(false);
   		  PaneLogs.setVisible(false);
   		  	PaneCommentaire.setVisible(false);
   		  	PaneAfficherExamen.setVisible(false);
@@ -785,6 +817,7 @@ public class AccueilController {
 	   		break;
 	
   	   	case "BtnAcueil":
+  	   	PaneEmail.setVisible(false);
   	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
   	   		PaneNotification.setVisible(false);
@@ -818,6 +851,7 @@ public class AccueilController {
   	   		//SECTION ETUDIANT
   	   		//Bouton qui affiche la première section des étudiants
   	   	case "BtnEtudiant":
+  	   	PaneEmail.setVisible(false);
   	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
@@ -997,6 +1031,7 @@ public class AccueilController {
   		  
   	   		//SECTION ENSEIGNANT
   	   	case "BtnEnseignant":
+  	   	PaneEmail.setVisible(false);
   	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
@@ -1085,6 +1120,7 @@ public class AccueilController {
   	   		break;
   	   		//SECTION COURS
   	   	case "BtnCour":
+  	   	PaneEmail.setVisible(false);
   	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
@@ -1211,6 +1247,7 @@ public class AccueilController {
   	   		
   	   		//SECTION PROGRAMME
   	   	case "BtnProgramme":
+  	   	PaneEmail.setVisible(false);
   	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
@@ -1273,6 +1310,7 @@ public class AccueilController {
   	   		break;
   	   		
   	   	case "BtnFrais":
+  	   	PaneEmail.setVisible(false);
   	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
@@ -1344,6 +1382,7 @@ public class AccueilController {
   	   		break;
   	   		//SECTION RESULT
   	   	case "BtnResultat":
+  	   	PaneEmail.setVisible(false);
   	   		PaneLogs.setVisible(false);
   	   		PaneNotifDetail.setVisible(false);
 	   		PaneNotification.setVisible(false);
@@ -1426,6 +1465,7 @@ public class AccueilController {
   	   		break;
   	   		
   	   	case "BtnLogs":
+  	   	PaneEmail.setVisible(false);
   	   		PaneLogs.setVisible(true);
   	   		PaneNotifDetail.setVisible(false);
   	   		PaneNotification.setVisible(false);
@@ -1458,6 +1498,11 @@ public class AccueilController {
 	   		PaneModifResult.setVisible(false);
 	   		BtnAfficherEvalutation.setVisible(false);
 	   		f.AfficherLogs();
+	   		
+  	   		break;
+  	   	case "Btn_FermerMessage":
+  	   		PaneEmail.setVisible(false);
+  	   		PaneAccueil.setVisible(true);
   	   		break;
   	   	}
     }
