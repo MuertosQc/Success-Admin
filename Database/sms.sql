@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 02 avr. 2021 à 04:59
+-- Généré le : sam. 17 avr. 2021 à 00:51
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP : 7.4.5
 
@@ -21,6 +21,29 @@ SET time_zone = "+00:00";
 -- Base de données : `sms`
 --
 
+DELIMITER $$
+--
+-- Procédures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertAdminPassWord` (IN `MotDePasse` VARCHAR(50), IN `IdAdmin` INT)  BEGIN
+
+set @mykeystr = "AvBgnsd_09m_0ll";
+ set @shahex = SHA2(@mykeystr, 512);
+ SET @key = UNHEX(@shahex);
+
+ update administration set MotDePasse = AES_ENCRYPT(MotDePasse, @key) where ID = IdAdmin;
+ end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `selectConnexion` (IN `Username` VARCHAR(50), IN `MDP` VARCHAR(50))  BEGIN
+set @mykeystr = "AvBgnsd_09m_0ll";
+ set @shahex = SHA2(@mykeystr, 512);
+ SET @key = UNHEX(@shahex);
+
+SELECT * FROM `administration` WHERE NomUtilisateur = Username and MotDePasse = AES_ENCRYPT(MDP, @key);
+ end$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -30,7 +53,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `administration` (
   `ID` int(11) NOT NULL,
   `NomUtilisateur` varchar(30) NOT NULL,
-  `MotDePasse` varchar(30) NOT NULL,
+  `MotDePasse` varbinary(50) NOT NULL,
   `Prenom` varchar(30) NOT NULL,
   `Nom` varchar(30) NOT NULL,
   `Telephone` varchar(15) NOT NULL,
@@ -47,9 +70,10 @@ CREATE TABLE `administration` (
 --
 
 INSERT INTO `administration` (`ID`, `NomUtilisateur`, `MotDePasse`, `Prenom`, `Nom`, `Telephone`, `Email`, `AdresseDeMaison`, `Ville`, `CodePostal`, `Province`, `Poste`) VALUES
-(1, 'Admin', '123', 'Anthony', 'Chicoine', '5148313934', 'anthony.chicoine@live.ca', '60 avenue du parc', 'Ile-Bizard', 'H9C 2N3', 'Quebec', 'Administrateur'),
-(31, 'Admin_1', '123', 'Jean-Denis', 'Chicoine', '5140001234', 'jdc@live.ca', '60 avenue du parc', 'Montreal', 'H9C 2N3', 'Quebec', 'Administrateur'),
-(33, 'JMR76', '123', 'Jean-Marc', 'Robert', '4389010890', 'jeanmarc@live.ca', '109 rue Marick', 'Quebec', 'H9C2N3', 'Quebec', 'Professeur');
+(1, 'Admin', 0xd723031797ae66792a71a179b936a90a, 'Anthony', 'Chicoine', '5148313934', 'anthony.chicoine@live.ca', '60 avenue du parc', 'Ile-Bizard', 'H9C 2N3', 'Quebec', 'Administrateur'),
+(31, 'Admin_1', 0x8bbe2428927dc4e2858c9b8397152457, 'Jean-Denis', 'Chicoine', '5140001234', 'jdc@live.ca', '60 avenue du parc', 'Montreal', 'H9C 2N3', 'Quebec', 'Administrateur'),
+(33, 'JMR76', 0x78530f650de770556a08a7edb2014ecd, 'Jean-Marc', 'Robert', '4389010890', 'jeanmarc@live.ca', '109 rue Marick', 'Quebec', 'H9C2N3', 'Quebec', 'Professeur'),
+(44, 'asd', 0x28f8a59e3c922ace305caa9cd137985206cc08e9eb731663c1c314c4583c8c06, 'sad', 'asd', '12312312', 'asdasd', 'sad', 'asd', 'asd', 'asd', 'Professeur');
 
 --
 -- Déclencheurs `administration`
@@ -139,7 +163,7 @@ DELIMITER ;
 CREATE TABLE `ancienenseignant` (
   `ID` int(11) NOT NULL,
   `NomUtilisateur` varchar(30) NOT NULL,
-  `MotDePasse` varchar(50) NOT NULL,
+  `MotDePasse` varbinary(50) NOT NULL,
   `Prenom` varchar(30) NOT NULL,
   `Nom` varchar(30) NOT NULL,
   `Telephone` varchar(20) NOT NULL,
@@ -156,31 +180,35 @@ CREATE TABLE `ancienenseignant` (
 --
 
 INSERT INTO `ancienenseignant` (`ID`, `NomUtilisateur`, `MotDePasse`, `Prenom`, `Nom`, `Telephone`, `Email`, `AdresseDeMaison`, `Ville`, `CodePostal`, `Province`, `Poste`) VALUES
-(10, 'JMP67', '123', 'Jean-Marc', 'Robert', '5148313935', 'jmp@live.ca', '87 rue Montigny', 'Ile-Bizard', 'H9C2N4', 'Quebec', 'Professeur'),
-(11, 'JMR67', '123', 'Jean-Marc', 'Robert', '5140934231', 'jeanmarc@live.ca', '0 rue inconnue', 'Montreal', 'Y6C8J1', 'Quebec', 'Professeur'),
-(12, 'abc', '123', 'etsd', 'sdt', '2123412312', 'asdasd', 'asdasd', 'asd', 'asd', 'asd', 'Professeur'),
-(13, 'EQ', '123', 'QWE', 'QWEQWE', '12323', 'QWEW', 'QWE', 'QWE', 'QWE', 'QWE', 'Professeur'),
-(14, 'QWEQWE', '123', 'WQE', 'WQE', '2133213221', 'QWSEQWE', 'WQE', 'WEQ', 'WQE', 'WEQ', 'Professeur'),
-(15, 'qweasd', '123', 'wqe', 'wqe', '2314124235', 'sdasda', 'wqe', 'wqe', 'weqwe', 'qweqweqw', 'Professeur'),
-(16, 'WQEQWEWQ', '123', 'QWEQWE', 'WQE', '1231231231', 'QWEQWE', 'WQE', 'WQE', 'WQEEE', 'EEEEE', 'Professeur'),
-(17, 'wqeewqqqqq', '123', 'qwe', 'weq', '123231123', 'ewqe', 'ewqwqe', 'ewqe', 'wqewqe', 'wqe', 'Professeur'),
-(18, 'asd', '123', 'sad', 'asd', '1231266666', 'asd', 'asd', 'asd', 'asd', 'asd', 'Professeur'),
-(19, 'SADASDASDV', '123', 'DDD', 'DDDD', '6655443322', 'DFDDQSD', 'DDD', 'DDDD', 'DD', 'DDD', 'Professeur'),
-(20, 'ASDASD', '123', 'QWEQWE', 'QWE', '1312311112', 'ASASD', 'QWE', 'QWEQ', 'WE', 'QWE', 'Professeur'),
-(21, 'qweqweeee', '123', 'eee', 'eeee', '2221111222', 'ewqeqwe', 'ee', 'eeee', 'ee', 'eeee', 'Professeur'),
-(22, 'qweqw', '123', 'eeqweq', 'eeeeqweq', '123578963', 'qweqwe', 'eeeqeweq', 'weqwe', 'qwe', 'qwe', 'Professeur'),
-(23, 'test', '123', 'test', 'test', '6666666666', 'test', 'test', 'test', 'test', 'test', 'Professeur'),
-(24, 'GB78', '123', 'Goerges', 'Boisvert', '5146713232', 'georges.boisvert@live.ca', '78 rue montigny', 'Ile-Bizard', 'H8C5N4', 'Quebec', 'Professeur'),
-(25, 'QWEWQEQ', '123', 'QWE', 'WQE', '123123123', 'QWSEQWE', 'WQE', 'WQE', 'WQE', 'WEQ', 'Professeur'),
-(26, 'GB78', '123', 'Georges', 'Boisvert', '4386571122', 'georgesboisvert@live.ca', '56 rue montigny', 'Ile-Bizard', 'H7C3N4', 'Quebec', 'Professeur'),
-(27, 'QWEQWE', '123', 'WQE', 'QWE', '213123123', 'QWEQWE', 'WQE', 'WEQ', 'EWQ', 'WEQ', 'Professeur'),
-(28, 'GB78', '123', 'Georges', 'Boisvert', '5146107865', 'georgesboisvert@live.ca', '1001 rue Notre-Dame', 'Montreal', 'G7V8J2', 'Quebec', 'Professeur'),
-(29, 'GB87', '123', 'Georges', 'Boisvert', '5147851923', 'georgesboisvert@live.ca', '789 avenue du parc', 'Montreal', 'H7C4N1', 'Quebec', 'Professeur'),
-(30, 'GB87', '123', 'Georges', 'Boisvert', '5148930921', 'georgesboisvert@live.ca', '789 avenue du parc', 'Montreal', 'H8C2N1', 'Quebec', 'Professeur'),
-(32, 'dqwdqwdqwd', '123', 'wadawd', 'awdaw', '1212312312', 'wdqdqdq', 'dawdad', 'wadawdwad', 'wadawd', 'addwadawd', 'Professeur'),
-(34, 'test', '123', 'test', 'test', '1231212312', 'test', 'test', 'test', 'test', 'test', 'Professeur'),
-(35, 'sdadasd', '123', 'awd', 'awd', '21312312', 'dasdasd', 'awd', 'wad', 'wad', 'wad', 'Professeur'),
-(36, 'test', '123', 'test', 'test', '1231231231', 'test', 'test', 'test', 'test', 'test', 'Professeur');
+(10, 'JMP67', 0x313233, 'Jean-Marc', 'Robert', '5148313935', 'jmp@live.ca', '87 rue Montigny', 'Ile-Bizard', 'H9C2N4', 'Quebec', 'Professeur'),
+(11, 'JMR67', 0x313233, 'Jean-Marc', 'Robert', '5140934231', 'jeanmarc@live.ca', '0 rue inconnue', 'Montreal', 'Y6C8J1', 'Quebec', 'Professeur'),
+(12, 'abc', 0x313233, 'etsd', 'sdt', '2123412312', 'asdasd', 'asdasd', 'asd', 'asd', 'asd', 'Professeur'),
+(13, 'EQ', 0x313233, 'QWE', 'QWEQWE', '12323', 'QWEW', 'QWE', 'QWE', 'QWE', 'QWE', 'Professeur'),
+(14, 'QWEQWE', 0x313233, 'WQE', 'WQE', '2133213221', 'QWSEQWE', 'WQE', 'WEQ', 'WQE', 'WEQ', 'Professeur'),
+(15, 'qweasd', 0x313233, 'wqe', 'wqe', '2314124235', 'sdasda', 'wqe', 'wqe', 'weqwe', 'qweqweqw', 'Professeur'),
+(16, 'WQEQWEWQ', 0x313233, 'QWEQWE', 'WQE', '1231231231', 'QWEQWE', 'WQE', 'WQE', 'WQEEE', 'EEEEE', 'Professeur'),
+(17, 'wqeewqqqqq', 0x313233, 'qwe', 'weq', '123231123', 'ewqe', 'ewqwqe', 'ewqe', 'wqewqe', 'wqe', 'Professeur'),
+(18, 'asd', 0x313233, 'sad', 'asd', '1231266666', 'asd', 'asd', 'asd', 'asd', 'asd', 'Professeur'),
+(19, 'SADASDASDV', 0x313233, 'DDD', 'DDDD', '6655443322', 'DFDDQSD', 'DDD', 'DDDD', 'DD', 'DDD', 'Professeur'),
+(20, 'ASDASD', 0x313233, 'QWEQWE', 'QWE', '1312311112', 'ASASD', 'QWE', 'QWEQ', 'WE', 'QWE', 'Professeur'),
+(21, 'qweqweeee', 0x313233, 'eee', 'eeee', '2221111222', 'ewqeqwe', 'ee', 'eeee', 'ee', 'eeee', 'Professeur'),
+(22, 'qweqw', 0x313233, 'eeqweq', 'eeeeqweq', '123578963', 'qweqwe', 'eeeqeweq', 'weqwe', 'qwe', 'qwe', 'Professeur'),
+(23, 'test', 0x313233, 'test', 'test', '6666666666', 'test', 'test', 'test', 'test', 'test', 'Professeur'),
+(24, 'GB78', 0x313233, 'Goerges', 'Boisvert', '5146713232', 'georges.boisvert@live.ca', '78 rue montigny', 'Ile-Bizard', 'H8C5N4', 'Quebec', 'Professeur'),
+(25, 'QWEWQEQ', 0x313233, 'QWE', 'WQE', '123123123', 'QWSEQWE', 'WQE', 'WQE', 'WQE', 'WEQ', 'Professeur'),
+(26, 'GB78', 0x313233, 'Georges', 'Boisvert', '4386571122', 'georgesboisvert@live.ca', '56 rue montigny', 'Ile-Bizard', 'H7C3N4', 'Quebec', 'Professeur'),
+(27, 'QWEQWE', 0x313233, 'WQE', 'QWE', '213123123', 'QWEQWE', 'WQE', 'WEQ', 'EWQ', 'WEQ', 'Professeur'),
+(28, 'GB78', 0x313233, 'Georges', 'Boisvert', '5146107865', 'georgesboisvert@live.ca', '1001 rue Notre-Dame', 'Montreal', 'G7V8J2', 'Quebec', 'Professeur'),
+(29, 'GB87', 0x313233, 'Georges', 'Boisvert', '5147851923', 'georgesboisvert@live.ca', '789 avenue du parc', 'Montreal', 'H7C4N1', 'Quebec', 'Professeur'),
+(30, 'GB87', 0x313233, 'Georges', 'Boisvert', '5148930921', 'georgesboisvert@live.ca', '789 avenue du parc', 'Montreal', 'H8C2N1', 'Quebec', 'Professeur'),
+(32, 'dqwdqwdqwd', 0x313233, 'wadawd', 'awdaw', '1212312312', 'wdqdqdq', 'dawdad', 'wadawdwad', 'wadawd', 'addwadawd', 'Professeur'),
+(34, 'test', 0x313233, 'test', 'test', '1231212312', 'test', 'test', 'test', 'test', 'test', 'Professeur'),
+(35, 'sdadasd', 0x313233, 'awd', 'awd', '21312312', 'dasdasd', 'awd', 'wad', 'wad', 'wad', 'Professeur'),
+(36, 'test', 0x313233, 'test', 'test', '1231231231', 'test', 'test', 'test', 'test', 'test', 'Professeur'),
+(37, '123123123', 0x313233, 'Antho', 'Chico', '1231231231', '123', '123', '123', '123', '123', 'Professeur'),
+(38, 'qwe', 0x313233, 'wqe', 'wqe', '12321312', 'sqaeqw', 'wqeqwe', 'wqe', 'qwe', 'wqe', 'Professeur'),
+(39, ' sadasdas d', 0x313233, 'wqe', 'qwe', '312331313', 'asd', 'qweeq', 'wqeqw', 'qwe', 'qwe', 'Professeur'),
+(43, 'qwe', 0x50e722da49ee241342581320a5efa453db61261ab727c5f5915403d36494e31b, 'qwe', 'wqe', '12312312', 'edqwewqewqe', 'qwe', 'qwe', 'qwe', 'qwe', 'Professeur');
 
 -- --------------------------------------------------------
 
@@ -242,6 +270,22 @@ CREATE TABLE `ancienexamen` (
 INSERT INTO `ancienexamen` (`IdEtudiant`, `IdCours`, `IdEvalutation`, `ResultatFinal`) VALUES
 (44, 21, 38, 78),
 (44, 21, 39, 89);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `clavardage`
+--
+
+CREATE TABLE `clavardage` (
+  `IdMessage` int(11) NOT NULL,
+  `IdEnvoyeur` int(11) NOT NULL,
+  `IdReceveur` int(11) NOT NULL,
+  `Message` longtext NOT NULL,
+  `Date` date NOT NULL,
+  `Etat` int(11) NOT NULL COMMENT '1 = lu / 0 = non lu',
+  `Reponse` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -418,7 +462,9 @@ CREATE TABLE `enseignant` (
 --
 
 INSERT INTO `enseignant` (`ID`, `NomUtilisateur`, `Prenom`, `Nom`) VALUES
-(33, 'JMR76', 'Jean-Marc', 'Robert');
+(33, 'JMR76', 'Jean-Marc', 'Robert'),
+(41, 'adssdadsa', 'qwe', 'wqe'),
+(44, 'asd', 'sad', 'asd');
 
 --
 -- Déclencheurs `enseignant`
@@ -534,8 +580,8 @@ INSERT INTO `enseignantprogramme` (`IdEnseignant`, `IdProgramme`) VALUES
 (11, 2),
 (28, 2),
 (33, 1),
-(33, 0),
-(33, 2);
+(33, 2),
+(33, 0);
 
 -- --------------------------------------------------------
 
@@ -587,7 +633,7 @@ INSERT INTO `etudiant` (`ID`, `Utilisateur`, `Prenom`, `Nom`, `Telephone`, `Emai
 (40, 'Charles98', 'Charles', 'Colins', '4389091823', 'charles.colins@live.ca', '1610 avenue du parc', 'Montreal', 'Quebec', 'H9C7N6', 1, 'Francais'),
 (41, 'DavyD98', 'Davy', 'Dawson', '4509010232', 'dawson.davy@hotmail.ca', '89 rue de Laval', 'Montreal', 'Quebec', 'G9C3N4', 2, 'Francais'),
 (42, 'Charlie89', 'Charlie', 'Loukas', '5148100293', 'charlie@hotmail.com', '791 rue Du Manoir', 'Montréal', 'Quebec', 'H7C3N1', 1, 'Francais'),
-(43, 'Ame_boyer', 'Amélie', 'Boyer', '4389010293', 'amelou@hotmail.ca', '112 rue du Dollars', 'Chateauguay', 'Quebec', '8J12N3', 2, 'Francais');
+(43, 'Ame_boyer1', 'Amélie', 'Boyer', '4389010293', 'amelou@hotmail.ca', '112 rue du Dollard', 'Chateauguay', 'Quebec', '8J12N3', 2, 'English');
 
 --
 -- Déclencheurs `etudiant`
@@ -611,7 +657,7 @@ CREATE TRIGGER `after_update_etudiant` AFTER UPDATE ON `etudiant` FOR EACH ROW B
     
     IF OLD.Utilisateur <> new.Utilisateur THEN
         INSERT INTO logupdatedeleteaccount(Createur, AncienneValeur, NouvelleValeur, Table1, Type1, Date1)
-        VALUES (Utilisateur, OLD.Utilisateur, new.Utilisateur, "Etudiant", "Modification", CURRENT_DATE );
+        VALUES (Utilisateur, OLD.Utilisateur, new.Utilisateur, "Etudiant", "Modification", CURRENT_DATE);
         
     END IF;
     IF OLD.Prenom <> new.Prenom THEN
@@ -686,26 +732,6 @@ CREATE TABLE `etudiantcour` (
 --
 
 INSERT INTO `etudiantcour` (`IdResultat`, `IdEtudiant`, `IdCour`, `Resultat`) VALUES
-(1, 37, 2, 60),
-(2, 37, 3, -2),
-(3, 37, 4, -2),
-(4, 37, 5, -2),
-(5, 37, 7, -2),
-(6, 37, 8, 0),
-(7, 37, 9, 0),
-(8, 37, 10, 0),
-(9, 37, 12, 0),
-(10, 37, 13, 0),
-(11, 37, 15, 0),
-(12, 37, 1, 0),
-(13, 37, 6, 0),
-(14, 37, 11, 0),
-(15, 37, 14, 0),
-(16, 37, 16, 0),
-(17, 37, 17, 0),
-(18, 37, 18, 0),
-(19, 37, 19, 0),
-(20, 37, 20, 0),
 (21, 40, 2, 0),
 (22, 40, 3, 0),
 (23, 40, 4, 0),
@@ -727,7 +753,27 @@ INSERT INTO `etudiantcour` (`IdResultat`, `IdEtudiant`, `IdCour`, `Resultat`) VA
 (39, 40, 19, 0),
 (40, 40, 20, 0),
 (41, 41, 21, 0),
-(62, 43, 21, 0);
+(64, 43, 21, 0),
+(125, 37, 2, 0),
+(126, 37, 3, 0),
+(127, 37, 4, 0),
+(128, 37, 5, 0),
+(129, 37, 7, 0),
+(130, 37, 8, 0),
+(131, 37, 9, 0),
+(132, 37, 10, 0),
+(133, 37, 12, 0),
+(134, 37, 13, 0),
+(135, 37, 15, 0),
+(136, 37, 1, 0),
+(137, 37, 6, 0),
+(138, 37, 11, 0),
+(139, 37, 14, 0),
+(140, 37, 16, 0),
+(141, 37, 17, 0),
+(142, 37, 18, 0),
+(143, 37, 19, 0),
+(144, 37, 20, 0);
 
 --
 -- Déclencheurs `etudiantcour`
@@ -795,14 +841,13 @@ CREATE TABLE `frais` (
 INSERT INTO `frais` (`IdFrais`, `IdEtudiant`, `Cout`, `Type`, `Etat`) VALUES
 (21, 22, 0, 'Paiement cours', 0),
 (37, 35, 0, 'Paiement cours', 0),
-(40, 37, 3950, 'Paiement cours', 0),
-(42, 37, 250, 'Cout administratif', 0),
 (48, 39, 0, 'Paiement cours', 0),
 (49, 40, 3950, 'Paiement cours', 0),
 (50, 41, 175, 'Paiement cours', 0),
-(52, 43, 175, 'Paiement cours', 0),
 (54, 44, 0, 'Paiement cours', 0),
-(55, 42, 0, 'Paiement cours', 0);
+(55, 42, 0, 'Paiement cours', 0),
+(56, 43, 175, 'Paiement cours', 0),
+(60, 37, 3975, 'Paiement cours', 0);
 
 --
 -- Déclencheurs `frais`
@@ -875,7 +920,10 @@ INSERT INTO `logcreatedaccount` (`Id`, `Createur`, `IdUtilisateur`, `TypeAccount
 (18, 'Anthony Chicoine', 43, 'Etudiant', '2021-03-25'),
 (19, 'Anthony Chicoine', 44, 'Etudiant', '2021-03-25'),
 (20, 'Anthony Chicoine', 35, 'Professeur', '2021-03-29'),
-(21, 'Anthony Chicoine', 36, 'Professeur', '2021-03-29');
+(21, 'Anthony Chicoine', 36, 'Professeur', '2021-03-29'),
+(22, 'Jean-Denis Chicoine', 41, 'Professeur', '2021-04-14'),
+(23, 'Anthony Chicoine', 43, 'Professeur', '2021-04-14'),
+(24, 'Anthony Chicoine', 44, 'Professeur', '2021-04-14');
 
 -- --------------------------------------------------------
 
@@ -916,145 +964,210 @@ CREATE TABLE `logupdatedeleteaccount` (
   `NouvelleValeur` varchar(255) NOT NULL,
   `Table1` varchar(50) NOT NULL,
   `Type1` varchar(50) NOT NULL,
-  `Date1` date NOT NULL
+  `Date1` date NOT NULL,
+  `NewAdd` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `logupdatedeleteaccount`
 --
 
-INSERT INTO `logupdatedeleteaccount` (`ID`, `Createur`, `AncienneValeur`, `NouvelleValeur`, `Table1`, `Type1`, `Date1`) VALUES
-(45, 'Anthony Chicoine', 'Morin91', 'Morin97', 'Etudiant', 'Modification', '2021-03-18'),
-(46, 'Anthony Chicoine', '678 rue Sainte-Catherine1', '678 rue Sainte-Catherine', 'Etudiant', 'Modification', '2021-03-18'),
-(47, 'Anthony Chicoine', 'JMR67', 'JMR671', 'Administration', 'Modification', '2021-03-18'),
-(48, 'Anthony Chicoine', 'Jean-Marc', 'Jean-Marc1', 'Administration', 'Modification', '2021-03-18'),
-(49, 'Anthony Chicoine', 'Robert', 'Robert1', 'Administration', 'Modification', '2021-03-18'),
-(50, 'Anthony Chicoine', '5140934232', '5140934231', 'Administration', 'Modification', '2021-03-18'),
-(51, 'Anthony Chicoine', 'jeanmarc@live.ca', 'jeanmarc@live.com', 'Administration', 'Modification', '2021-03-18'),
-(52, 'Anthony Chicoine', '0 rue inconnue', '0 rue inconnue1', 'Administration', 'Modification', '2021-03-18'),
-(53, 'Anthony Chicoine', 'Montreal', 'Montreal1', 'Administration', 'Modification', '2021-03-18'),
-(54, 'Anthony Chicoine', 'Quebec', 'Quebec1', 'Administration', 'Modification', '2021-03-18'),
-(55, 'Anthony Chicoine', 'Y6C8J0', 'Y6C8J1', 'Administration', 'Modification', '2021-03-18'),
-(56, 'Anthony Chicoine', 'JMR67', 'JMR671', 'Enseignant', 'Modification', '2021-03-18'),
-(57, 'Anthony Chicoine', 'Jean-Marc', 'Jean-Marc1', 'Enseignant', 'Modification', '2021-03-18'),
-(58, 'Anthony Chicoine', 'Robert', 'Robert1', 'Enseignant', 'Modification', '2021-03-18'),
-(59, 'Anthony Chicoine', 'JMR671', 'JMR67', 'Administration', 'Modification', '2021-03-18'),
-(60, 'Anthony Chicoine', 'Jean-Marc1', 'Jean-Marc', 'Administration', 'Modification', '2021-03-18'),
-(61, 'Anthony Chicoine', 'Robert1', 'Robert', 'Administration', 'Modification', '2021-03-18'),
-(62, 'Anthony Chicoine', 'jeanmarc@live.com', 'jeanmarc@live.ca', 'Administration', 'Modification', '2021-03-18'),
-(63, 'Anthony Chicoine', '0 rue inconnue1', '0 rue inconnue', 'Administration', 'Modification', '2021-03-18'),
-(64, 'Anthony Chicoine', 'Montreal1', 'Montreal', 'Administration', 'Modification', '2021-03-18'),
-(65, 'Anthony Chicoine', 'Quebec1', 'Quebec', 'Administration', 'Modification', '2021-03-18'),
-(66, 'Anthony Chicoine', 'JMR671', 'JMR67', 'Enseignant', 'Modification', '2021-03-18'),
-(67, 'Anthony Chicoine', 'Jean-Marc1', 'Jean-Marc', 'Enseignant', 'Modification', '2021-03-18'),
-(68, 'Anthony Chicoine', 'Robert1', 'Robert', 'Enseignant', 'Modification', '2021-03-18'),
-(69, 'Anthony Chicoine', 'GB871', 'GB87', 'Administration', 'Modification', '2021-03-18'),
-(70, 'Anthony Chicoine', 'Georges1', 'Georges', 'Administration', 'Modification', '2021-03-18'),
-(71, 'Anthony Chicoine', 'Boisvert1', 'Boisvert', 'Administration', 'Modification', '2021-03-18'),
-(72, 'Anthony Chicoine', 'georgesboisvert@live.com', 'georgesboisvert@live.ca', 'Administration', 'Modification', '2021-03-18'),
-(73, 'Anthony Chicoine', '789 avenue du parc1', '789 avenue du parc', 'Administration', 'Modification', '2021-03-18'),
-(74, 'Anthony Chicoine', 'Montreal1', 'Montreal', 'Administration', 'Modification', '2021-03-18'),
-(75, 'Anthony Chicoine', 'Quebec1', 'Quebec', 'Administration', 'Modification', '2021-03-18'),
-(76, 'Anthony Chicoine', 'GB871', 'GB87', 'Enseignant', 'Modification', '2021-03-18'),
-(77, 'Anthony Chicoine', 'Georges1', 'Georges', 'Enseignant', 'Modification', '2021-03-18'),
-(78, 'Anthony Chicoine', 'Boisvert1', 'Boisvert', 'Enseignant', 'Modification', '2021-03-18'),
-(79, 'Jean-Denis Chicoine', 'Morin97', 'Morin99', 'Etudiant', 'Modification', '2021-03-19'),
-(80, 'Jean-Denis Chicoine', '', '', 'Etudiant', 'Modification', '2021-03-19'),
-(81, 'Jean-Denis Chicoine', '2', '0', 'Etudiant', 'Modification', '2021-03-19'),
-(82, 'Jean-Denis Chicoine', 'Morin99', '', 'Etudiant', 'Suppression', '2021-03-19'),
-(83, 'Anthony Chicoine', 'GB87', '', 'Administration', 'Suppression', '2021-03-19'),
-(84, 'Anthony Chicoine', 'GB87', '', 'Enseignant', 'Suppression', '2021-03-19'),
-(85, 'Anthony Chicoine', '1', '0', 'Etudiant', 'Modification', '2021-03-20'),
-(86, 'Anthony Chicoine', 'antho7642', '', 'Etudiant', 'Suppression', '2021-03-20'),
-(87, 'Anthony Chicoine', 'JMR67', '', 'Administration', 'Suppression', '2021-03-22'),
-(88, 'Anthony Chicoine', 'JMR67', '', 'Enseignant', 'Suppression', '2021-03-22'),
-(89, 'Anthony Chicoine', '12321312312', 'MuertosQc', 'Etudiant', 'Modification', '2021-03-22'),
-(90, 'Anthony Chicoine', 'wqe', 'Anthony', 'Etudiant', 'Modification', '2021-03-22'),
-(91, 'Anthony Chicoine', 'qwe', 'Chicoine', 'Etudiant', 'Modification', '2021-03-22'),
-(92, 'Anthony Chicoine', '21312312', '5148313934', 'Etudiant', 'Modification', '2021-03-22'),
-(93, 'Anthony Chicoine', 'qwqweqw', 'anthony.chicoine@live.ca', 'Etudiant', 'Modification', '2021-03-22'),
-(94, 'Anthony Chicoine', 'qwe', '60 avenue du parc', 'Etudiant', 'Modification', '2021-03-22'),
-(95, 'Anthony Chicoine', 'wqe', 'Ile-Bizard', 'Etudiant', 'Modification', '2021-03-22'),
-(96, 'Anthony Chicoine', 'qwe', 'Quebec', 'Etudiant', 'Modification', '2021-03-22'),
-(97, 'Anthony Chicoine', 'qwe', 'H9C2N3', 'Etudiant', 'Modification', '2021-03-22'),
-(98, 'Anthony Chicoine', '2', '1', 'Etudiant', 'Modification', '2021-03-22'),
-(99, 'Anthony Chicoine', '2', '0', 'Etudiant', 'Modification', '2021-03-22'),
-(100, 'Anthony Chicoine', '123123123qwdq', '', 'Etudiant', 'Suppression', '2021-03-22'),
-(101, 'Anthony Chicoine', 'dqwdqwdqwd', '', 'Administration', 'Suppression', '2021-03-22'),
-(102, 'Anthony Chicoine', 'dqwdqwdqwd', '', 'Enseignant', 'Suppression', '2021-03-22'),
-(103, 'Test', 'Test', 'Test', 'Etudiant', 'Modification', '2021-03-23'),
-(104, 'Anthony Chicoine', '123456', '132421', 'Etudiant', 'Modification', '2021-03-23'),
-(105, 'Anthony', 'adams98', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(106, 'Anthony', 'Adams', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(107, 'Anthony', 'Abbott', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(108, 'Anthony', '609 rue Notre dame', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(109, 'Anthony', '132421', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(110, 'Anthony', 'adamsabb@hotmail.com', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(111, 'Anthony', '1', '4', 'Etudiant', 'Modification', '2021-03-23'),
-(112, 'Anthony', 'Francais', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(113, 'Anthony', 'Quebec', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(114, 'Anthony', '5147861023', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(115, 'Anthony', 'Montréal', 'Adams97', 'Etudiant', 'Modification', '2021-03-23'),
-(116, 'Anthony Chicoine', 'Adams97', '', 'Etudiant', 'Suppression', '2021-03-23'),
-(117, 'Anthony Chicoine', 'CC98', 'Charles98', 'Etudiant', 'Modification', '2021-03-23'),
-(118, 'Anthony Chicoine', 'DD98', 'DavyD98', 'Etudiant', 'Modification', '2021-03-24'),
-(119, 'Anthony Chicoine', 'test', '', 'Administration', 'Suppression', '2021-03-25'),
-(120, 'Anthony Chicoine', 'test', '', 'Enseignant', 'Suppression', '2021-03-25'),
-(121, 'Anthony Chicoine', '325', '350', 'Cours', 'Modification', '2021-03-26'),
-(122, 'Anthony Chicoine', '1', '0', 'Programme', 'Modification', '2021-03-26'),
-(123, 'Anthony Chicoine', '0', '1', 'Programme', 'Modification', '2021-03-26'),
-(124, 'Anthony Chicoine', '1', '0', 'Cours', 'Modification', '2021-03-26'),
-(125, 'Anthony Chicoine', '0', '1', 'Cours', 'Modification', '2021-03-26'),
-(126, 'Anthony Chicoine', 'wqe', '', 'Cours', 'Suppression', '2021-03-26'),
-(127, 'Anthony Chicoine', '1', '0', 'Cours', 'Modification', '2021-03-26'),
-(128, 'Anthony Chicoine', 'wqe', '', 'Cours', 'Suppression', '2021-03-26'),
-(129, 'Anthony Chicoine', '175', '1750', 'Frais', 'Modification', '2021-03-26'),
-(130, 'Anthony Chicoine', '1750', '0', 'Frais', 'Modification', '2021-03-26'),
-(131, 'Anthony Chicoine', '0', '-1', 'Frais', 'Modification', '2021-03-26'),
-(132, 'Anthony Chicoine', '53', '', 'Frais', 'Suppression', '2021-03-26'),
-(134, 'Anthony Chicoine', '0', '-2', 'Resultat', 'Modification', '2021-03-26'),
-(139, 'Anthony Chicoine', '0', '-2', 'Resultat', 'Modification', '2021-03-26'),
-(140, 'Anthony Chicoine', '4', '', 'Resultat', 'Suppression', '2021-03-26'),
-(141, 'Anthony Chicoine', '-2', '0', 'Resultat', 'Modification', '2021-03-26'),
-(142, 'Anthony Chicoine', '2', '', 'Resultat', 'Suppression', '2021-03-26'),
-(143, 'Anthony Chicoine', '0', '100', 'Resultat', 'Modification', '2021-03-26'),
-(144, 'Anthony Chicoine', '2', '', 'Resultat', 'Suppression', '2021-03-26'),
-(145, 'Anthony Chicoine', '100', '-2', 'Resultat', 'Modification', '2021-03-26'),
-(146, 'Anthony Chicoine', '40', '', 'Resultat', 'Suppression', '2021-03-26'),
-(147, 'Anthony Chicoine', '0', '-2', 'Resultat', 'Modification', '2021-03-26'),
-(148, 'Anthony Chicoine', '37 7', '', 'Resultat', 'Suppression', '2021-03-26'),
-(149, 'Jean-Marc Robert', 'Créer un site internet avec HTML/CSS. Veuillez commenter votre code(15 points)', 'Creer un site internet en HTML/CSS', 'CoursDetails', 'Modification', '2021-03-26'),
-(150, 'Jean-Marc Robert', 'Creer un site internet en HTML/CSS', 'Creer un site internet en HTML/CSS. Veuillez commenter votre code(15 points)', 'CoursDetails', 'Modification', '2021-03-26'),
-(151, 'Jean-Marc Robert', '1', '0', 'Cours', 'Modification', '2021-03-28'),
-(154, 'Jean-Marc Robert', '36', '', 'CoursDetails', 'Suppression', '2021-03-28'),
-(155, 'Anthony Chicoine', 'Bases de la création d’un site web. Emploi d’un langage de balisage conçu pour représenter les pages web (HTML). Feuilles de style en cascade (CSS). Création d’applications Web. Utilisation de scripts pour valider l’intégrité des données. Règles d’ergonom', 'Bases de la création d’un site web. Emploi d’un langage de balisage con?u pour représenter les pages web (HTML). Feuilles de style en cascade (CSS). Création d’applications Web. Utilisation de scripts pour valider l’intégrité des données. R?gles d’ergonom', 'Cours', 'Modification', '2021-03-28'),
-(156, 'Anthony Chicoine', '0', '1', 'Cours', 'Modification', '2021-03-28'),
-(157, 'Anthony Chicoine', 'Développement web 1', '', 'Cours', 'Suppression', '2021-03-28'),
-(158, 'Jean-Marc Robert', '37', '', 'CoursDetails', 'Suppression', '2021-03-28'),
-(159, 'Anthony Chicoine', 'sdadasd', '', 'Administration', 'Suppression', '2021-03-29'),
-(160, 'Anthony Chicoine', 'sdadasd', '', 'Enseignant', 'Suppression', '2021-03-29'),
-(161, 'Anthony Chicoine', 'test', '', 'Administration', 'Suppression', '2021-03-29'),
-(162, 'Anthony Chicoine', 'test', '', 'Enseignant', 'Suppression', '2021-03-29'),
-(163, 'Anthony Chicoine', '-1', '1', 'Cours', 'Modification', '2021-03-29'),
-(164, 'Anthony Chicoine', 'Profession de gestionnaire en résautique', '', 'Cours', 'Suppression', '2021-03-29'),
-(165, 'Anthony Chicoine', '0', '31', 'Resultat', 'Modification', '2021-03-29'),
-(166, 'Anthony Chicoine', '44 21', '', 'Resultat', 'Suppression', '2021-03-29'),
-(167, 'Anthony Chicoine', '44 21', '', 'Resultat', 'Suppression', '2021-03-29'),
-(168, 'Anthony Chicoine', '31', '84', 'Resultat', 'Modification', '2021-03-29'),
-(169, 'Anthony Chicoine', '44 21', '', 'Resultat', 'Suppression', '2021-03-29'),
-(170, 'Anthony Chicoine', 'Tim98', '', 'Etudiant', 'Suppression', '2021-03-29'),
-(171, 'Anthony Chicoine', '1', '0', 'Cours', 'Modification', '2021-03-30'),
-(172, 'Anthony Chicoine', '1', '0', 'Cours', 'Suppression', '2021-03-30'),
-(173, 'Anthony Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30'),
-(174, 'Anthony Chicoine', '1', '0', 'Programme', 'Suppression', '2021-03-30'),
-(175, 'Anthony Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30'),
-(176, 'Anthony Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30'),
-(177, 'Antho', '1', '0', 'Programme', 'Suppression', '2021-03-30'),
-(178, 'Anthony Chicoine', '1', '0', 'Programme', 'Suppression', '2021-03-30'),
-(179, 'Jean-Denis Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30'),
-(180, 'Jean-Denis Chicoine', '1', '0', 'Programme', 'Suppression', '2021-03-30'),
-(181, 'Anthony Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30'),
-(182, 'Anthony Chicoine', '1', '0', 'Programme', 'Suppression', '2021-03-30');
+INSERT INTO `logupdatedeleteaccount` (`ID`, `Createur`, `AncienneValeur`, `NouvelleValeur`, `Table1`, `Type1`, `Date1`, `NewAdd`) VALUES
+(45, 'Anthony Chicoine', 'Morin91', 'Morin97', 'Etudiant', 'Modification', '2021-03-18', 0),
+(46, 'Anthony Chicoine', '678 rue Sainte-Catherine1', '678 rue Sainte-Catherine', 'Etudiant', 'Modification', '2021-03-18', 0),
+(47, 'Anthony Chicoine', 'JMR67', 'JMR671', 'Administration', 'Modification', '2021-03-18', 0),
+(48, 'Anthony Chicoine', 'Jean-Marc', 'Jean-Marc1', 'Administration', 'Modification', '2021-03-18', 0),
+(49, 'Anthony Chicoine', 'Robert', 'Robert1', 'Administration', 'Modification', '2021-03-18', 0),
+(50, 'Anthony Chicoine', '5140934232', '5140934231', 'Administration', 'Modification', '2021-03-18', 0),
+(51, 'Anthony Chicoine', 'jeanmarc@live.ca', 'jeanmarc@live.com', 'Administration', 'Modification', '2021-03-18', 0),
+(52, 'Anthony Chicoine', '0 rue inconnue', '0 rue inconnue1', 'Administration', 'Modification', '2021-03-18', 0),
+(53, 'Anthony Chicoine', 'Montreal', 'Montreal1', 'Administration', 'Modification', '2021-03-18', 0),
+(54, 'Anthony Chicoine', 'Quebec', 'Quebec1', 'Administration', 'Modification', '2021-03-18', 0),
+(55, 'Anthony Chicoine', 'Y6C8J0', 'Y6C8J1', 'Administration', 'Modification', '2021-03-18', 0),
+(56, 'Anthony Chicoine', 'JMR67', 'JMR671', 'Enseignant', 'Modification', '2021-03-18', 0),
+(57, 'Anthony Chicoine', 'Jean-Marc', 'Jean-Marc1', 'Enseignant', 'Modification', '2021-03-18', 0),
+(58, 'Anthony Chicoine', 'Robert', 'Robert1', 'Enseignant', 'Modification', '2021-03-18', 0),
+(59, 'Anthony Chicoine', 'JMR671', 'JMR67', 'Administration', 'Modification', '2021-03-18', 0),
+(60, 'Anthony Chicoine', 'Jean-Marc1', 'Jean-Marc', 'Administration', 'Modification', '2021-03-18', 0),
+(61, 'Anthony Chicoine', 'Robert1', 'Robert', 'Administration', 'Modification', '2021-03-18', 0),
+(62, 'Anthony Chicoine', 'jeanmarc@live.com', 'jeanmarc@live.ca', 'Administration', 'Modification', '2021-03-18', 0),
+(63, 'Anthony Chicoine', '0 rue inconnue1', '0 rue inconnue', 'Administration', 'Modification', '2021-03-18', 0),
+(64, 'Anthony Chicoine', 'Montreal1', 'Montreal', 'Administration', 'Modification', '2021-03-18', 0),
+(65, 'Anthony Chicoine', 'Quebec1', 'Quebec', 'Administration', 'Modification', '2021-03-18', 0),
+(66, 'Anthony Chicoine', 'JMR671', 'JMR67', 'Enseignant', 'Modification', '2021-03-18', 0),
+(67, 'Anthony Chicoine', 'Jean-Marc1', 'Jean-Marc', 'Enseignant', 'Modification', '2021-03-18', 0),
+(68, 'Anthony Chicoine', 'Robert1', 'Robert', 'Enseignant', 'Modification', '2021-03-18', 0),
+(69, 'Anthony Chicoine', 'GB871', 'GB87', 'Administration', 'Modification', '2021-03-18', 0),
+(70, 'Anthony Chicoine', 'Georges1', 'Georges', 'Administration', 'Modification', '2021-03-18', 0),
+(71, 'Anthony Chicoine', 'Boisvert1', 'Boisvert', 'Administration', 'Modification', '2021-03-18', 0),
+(72, 'Anthony Chicoine', 'georgesboisvert@live.com', 'georgesboisvert@live.ca', 'Administration', 'Modification', '2021-03-18', 0),
+(73, 'Anthony Chicoine', '789 avenue du parc1', '789 avenue du parc', 'Administration', 'Modification', '2021-03-18', 0),
+(74, 'Anthony Chicoine', 'Montreal1', 'Montreal', 'Administration', 'Modification', '2021-03-18', 0),
+(75, 'Anthony Chicoine', 'Quebec1', 'Quebec', 'Administration', 'Modification', '2021-03-18', 0),
+(76, 'Anthony Chicoine', 'GB871', 'GB87', 'Enseignant', 'Modification', '2021-03-18', 0),
+(77, 'Anthony Chicoine', 'Georges1', 'Georges', 'Enseignant', 'Modification', '2021-03-18', 0),
+(78, 'Anthony Chicoine', 'Boisvert1', 'Boisvert', 'Enseignant', 'Modification', '2021-03-18', 0),
+(79, 'Jean-Denis Chicoine', 'Morin97', 'Morin99', 'Etudiant', 'Modification', '2021-03-19', 0),
+(80, 'Jean-Denis Chicoine', '', '', 'Etudiant', 'Modification', '2021-03-19', 0),
+(81, 'Jean-Denis Chicoine', '2', '0', 'Etudiant', 'Modification', '2021-03-19', 0),
+(82, 'Jean-Denis Chicoine', 'Morin99', '', 'Etudiant', 'Suppression', '2021-03-19', 0),
+(83, 'Anthony Chicoine', 'GB87', '', 'Administration', 'Suppression', '2021-03-19', 0),
+(84, 'Anthony Chicoine', 'GB87', '', 'Enseignant', 'Suppression', '2021-03-19', 0),
+(85, 'Anthony Chicoine', '1', '0', 'Etudiant', 'Modification', '2021-03-20', 0),
+(86, 'Anthony Chicoine', 'antho7642', '', 'Etudiant', 'Suppression', '2021-03-20', 0),
+(87, 'Anthony Chicoine', 'JMR67', '', 'Administration', 'Suppression', '2021-03-22', 0),
+(88, 'Anthony Chicoine', 'JMR67', '', 'Enseignant', 'Suppression', '2021-03-22', 0),
+(89, 'Anthony Chicoine', '12321312312', 'MuertosQc', 'Etudiant', 'Modification', '2021-03-22', 0),
+(90, 'Anthony Chicoine', 'wqe', 'Anthony', 'Etudiant', 'Modification', '2021-03-22', 0),
+(91, 'Anthony Chicoine', 'qwe', 'Chicoine', 'Etudiant', 'Modification', '2021-03-22', 0),
+(92, 'Anthony Chicoine', '21312312', '5148313934', 'Etudiant', 'Modification', '2021-03-22', 0),
+(93, 'Anthony Chicoine', 'qwqweqw', 'anthony.chicoine@live.ca', 'Etudiant', 'Modification', '2021-03-22', 0),
+(94, 'Anthony Chicoine', 'qwe', '60 avenue du parc', 'Etudiant', 'Modification', '2021-03-22', 0),
+(95, 'Anthony Chicoine', 'wqe', 'Ile-Bizard', 'Etudiant', 'Modification', '2021-03-22', 0),
+(96, 'Anthony Chicoine', 'qwe', 'Quebec', 'Etudiant', 'Modification', '2021-03-22', 0),
+(97, 'Anthony Chicoine', 'qwe', 'H9C2N3', 'Etudiant', 'Modification', '2021-03-22', 0),
+(98, 'Anthony Chicoine', '2', '1', 'Etudiant', 'Modification', '2021-03-22', 0),
+(99, 'Anthony Chicoine', '2', '0', 'Etudiant', 'Modification', '2021-03-22', 0),
+(100, 'Anthony Chicoine', '123123123qwdq', '', 'Etudiant', 'Suppression', '2021-03-22', 0),
+(101, 'Anthony Chicoine', 'dqwdqwdqwd', '', 'Administration', 'Suppression', '2021-03-22', 0),
+(102, 'Anthony Chicoine', 'dqwdqwdqwd', '', 'Enseignant', 'Suppression', '2021-03-22', 0),
+(103, 'Test', 'Test', 'Test', 'Etudiant', 'Modification', '2021-03-23', 0),
+(104, 'Anthony Chicoine', '123456', '132421', 'Etudiant', 'Modification', '2021-03-23', 0),
+(105, 'Anthony', 'adams98', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(106, 'Anthony', 'Adams', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(107, 'Anthony', 'Abbott', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(108, 'Anthony', '609 rue Notre dame', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(109, 'Anthony', '132421', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(110, 'Anthony', 'adamsabb@hotmail.com', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(111, 'Anthony', '1', '4', 'Etudiant', 'Modification', '2021-03-23', 0),
+(112, 'Anthony', 'Francais', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(113, 'Anthony', 'Quebec', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(114, 'Anthony', '5147861023', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(115, 'Anthony', 'Montréal', 'Adams97', 'Etudiant', 'Modification', '2021-03-23', 0),
+(116, 'Anthony Chicoine', 'Adams97', '', 'Etudiant', 'Suppression', '2021-03-23', 0),
+(117, 'Anthony Chicoine', 'CC98', 'Charles98', 'Etudiant', 'Modification', '2021-03-23', 0),
+(118, 'Anthony Chicoine', 'DD98', 'DavyD98', 'Etudiant', 'Modification', '2021-03-24', 0),
+(119, 'Anthony Chicoine', 'test', '', 'Administration', 'Suppression', '2021-03-25', 0),
+(120, 'Anthony Chicoine', 'test', '', 'Enseignant', 'Suppression', '2021-03-25', 0),
+(121, 'Anthony Chicoine', '325', '350', 'Cours', 'Modification', '2021-03-26', 0),
+(122, 'Anthony Chicoine', '1', '0', 'Programme', 'Modification', '2021-03-26', 0),
+(123, 'Anthony Chicoine', '0', '1', 'Programme', 'Modification', '2021-03-26', 0),
+(124, 'Anthony Chicoine', '1', '0', 'Cours', 'Modification', '2021-03-26', 0),
+(125, 'Anthony Chicoine', '0', '1', 'Cours', 'Modification', '2021-03-26', 0),
+(126, 'Anthony Chicoine', 'wqe', '', 'Cours', 'Suppression', '2021-03-26', 0),
+(127, 'Anthony Chicoine', '1', '0', 'Cours', 'Modification', '2021-03-26', 0),
+(128, 'Anthony Chicoine', 'wqe', '', 'Cours', 'Suppression', '2021-03-26', 0),
+(129, 'Anthony Chicoine', '175', '1750', 'Frais', 'Modification', '2021-03-26', 0),
+(130, 'Anthony Chicoine', '1750', '0', 'Frais', 'Modification', '2021-03-26', 0),
+(131, 'Anthony Chicoine', '0', '-1', 'Frais', 'Modification', '2021-03-26', 0),
+(132, 'Anthony Chicoine', '53', '', 'Frais', 'Suppression', '2021-03-26', 0),
+(134, 'Anthony Chicoine', '0', '-2', 'Resultat', 'Modification', '2021-03-26', 0),
+(139, 'Anthony Chicoine', '0', '-2', 'Resultat', 'Modification', '2021-03-26', 0),
+(140, 'Anthony Chicoine', '4', '', 'Resultat', 'Suppression', '2021-03-26', 0),
+(141, 'Anthony Chicoine', '-2', '0', 'Resultat', 'Modification', '2021-03-26', 0),
+(142, 'Anthony Chicoine', '2', '', 'Resultat', 'Suppression', '2021-03-26', 0),
+(143, 'Anthony Chicoine', '0', '100', 'Resultat', 'Modification', '2021-03-26', 0),
+(144, 'Anthony Chicoine', '2', '', 'Resultat', 'Suppression', '2021-03-26', 0),
+(145, 'Anthony Chicoine', '100', '-2', 'Resultat', 'Modification', '2021-03-26', 0),
+(146, 'Anthony Chicoine', '40', '', 'Resultat', 'Suppression', '2021-03-26', 0),
+(147, 'Anthony Chicoine', '0', '-2', 'Resultat', 'Modification', '2021-03-26', 0),
+(148, 'Anthony Chicoine', '37 7', '', 'Resultat', 'Suppression', '2021-03-26', 0),
+(149, 'Jean-Marc Robert', 'Créer un site internet avec HTML/CSS. Veuillez commenter votre code(15 points)', 'Creer un site internet en HTML/CSS', 'CoursDetails', 'Modification', '2021-03-26', 0),
+(150, 'Jean-Marc Robert', 'Creer un site internet en HTML/CSS', 'Creer un site internet en HTML/CSS. Veuillez commenter votre code(15 points)', 'CoursDetails', 'Modification', '2021-03-26', 0),
+(151, 'Jean-Marc Robert', '1', '0', 'Cours', 'Modification', '2021-03-28', 0),
+(154, 'Jean-Marc Robert', '36', '', 'CoursDetails', 'Suppression', '2021-03-28', 0),
+(155, 'Anthony Chicoine', 'Bases de la création d’un site web. Emploi d’un langage de balisage conçu pour représenter les pages web (HTML). Feuilles de style en cascade (CSS). Création d’applications Web. Utilisation de scripts pour valider l’intégrité des données. Règles d’ergonom', 'Bases de la création d’un site web. Emploi d’un langage de balisage con?u pour représenter les pages web (HTML). Feuilles de style en cascade (CSS). Création d’applications Web. Utilisation de scripts pour valider l’intégrité des données. R?gles d’ergonom', 'Cours', 'Modification', '2021-03-28', 0),
+(156, 'Anthony Chicoine', '0', '1', 'Cours', 'Modification', '2021-03-28', 0),
+(157, 'Anthony Chicoine', 'Développement web 1', '', 'Cours', 'Suppression', '2021-03-28', 0),
+(158, 'Jean-Marc Robert', '37', '', 'CoursDetails', 'Suppression', '2021-03-28', 0),
+(159, 'Anthony Chicoine', 'sdadasd', '', 'Administration', 'Suppression', '2021-03-29', 0),
+(160, 'Anthony Chicoine', 'sdadasd', '', 'Enseignant', 'Suppression', '2021-03-29', 0),
+(161, 'Anthony Chicoine', 'test', '', 'Administration', 'Suppression', '2021-03-29', 0),
+(162, 'Anthony Chicoine', 'test', '', 'Enseignant', 'Suppression', '2021-03-29', 0),
+(163, 'Anthony Chicoine', '-1', '1', 'Cours', 'Modification', '2021-03-29', 0),
+(164, 'Anthony Chicoine', 'Profession de gestionnaire en résautique', '', 'Cours', 'Suppression', '2021-03-29', 0),
+(165, 'Anthony Chicoine', '0', '31', 'Resultat', 'Modification', '2021-03-29', 0),
+(166, 'Anthony Chicoine', '44 21', '', 'Resultat', 'Suppression', '2021-03-29', 0),
+(167, 'Anthony Chicoine', '44 21', '', 'Resultat', 'Suppression', '2021-03-29', 0),
+(168, 'Anthony Chicoine', '31', '84', 'Resultat', 'Modification', '2021-03-29', 0),
+(169, 'Anthony Chicoine', '44 21', '', 'Resultat', 'Suppression', '2021-03-29', 0),
+(170, 'Anthony Chicoine', 'Tim98', '', 'Etudiant', 'Suppression', '2021-03-29', 0),
+(171, 'Anthony Chicoine', '1', '0', 'Cours', 'Modification', '2021-03-30', 0),
+(172, 'Anthony Chicoine', '1', '0', 'Cours', 'Suppression', '2021-03-30', 0),
+(173, 'Anthony Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30', 0),
+(174, 'Anthony Chicoine', '1', '0', 'Programme', 'Suppression', '2021-03-30', 0),
+(175, 'Anthony Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30', 0),
+(176, 'Anthony Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30', 0),
+(177, 'Antho', '1', '0', 'Programme', 'Suppression', '2021-03-30', 0),
+(178, 'Anthony Chicoine', '1', '0', 'Programme', 'Suppression', '2021-03-30', 0),
+(179, 'Jean-Denis Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30', 0),
+(180, 'Jean-Denis Chicoine', '1', '0', 'Programme', 'Suppression', '2021-03-30', 0),
+(181, 'Anthony Chicoine', '0', '1', 'Programme', 'Suppression', '2021-03-30', 0),
+(182, 'Anthony Chicoine', '1', '0', 'Programme', 'Suppression', '2021-03-30', 0),
+(183, 'Anthony Chicoine', 'Ame_boyer', 'Ame_boyer1', 'Etudiant', 'Modification', '2021-04-08', 0),
+(184, 'Anthony Chicoine', '112 rue du Dollars', '112 rue du Dollard', 'Etudiant', 'Modification', '2021-04-08', 0),
+(185, 'Anthony Chicoine', 'Francais', 'English', 'Etudiant', 'Modification', '2021-04-08', 0),
+(186, 'Anthony Chicoine', '52', '', 'Frais', 'Suppression', '2021-04-08', 0),
+(187, 'Anthony Chicoine', 'MuertosQc', 'Muertos', 'Etudiant', 'Modification', '2021-04-08', 0),
+(188, 'Anthony Chicoine', '5148313934', '5148313933', 'Etudiant', 'Modification', '2021-04-08', 0),
+(191, 'Anthony Chicoine', 'Muertos', 'MuertosQc', 'Etudiant', 'Modification', '2021-04-08', 0),
+(192, 'Anthony Chicoine', '5148313933', '5148313934', 'Etudiant', 'Modification', '2021-04-08', 0),
+(193, 'Anthony Chicoine', 'Francais', 'English', 'Etudiant', 'Modification', '2021-04-08', 0),
+(194, 'Anthony Chicoine', '57', '', 'Frais', 'Suppression', '2021-04-08', 0),
+(195, 'Anthony Chicoine', 'MuertosQc', 'Muertos', 'Etudiant', 'Modification', '2021-04-08', 0),
+(196, 'Anthony Chicoine', '5148313934', '5148313933', 'Etudiant', 'Modification', '2021-04-08', 0),
+(197, 'Anthony Chicoine', 'English', 'Francais', 'Etudiant', 'Modification', '2021-04-08', 0),
+(198, 'Anthony Chicoine', '58', '', 'Frais', 'Suppression', '2021-04-08', 0),
+(199, 'Anthony Chicoine', 'Muertos', 'MuertosQc', 'Etudiant', 'Modification', '2021-04-08', 0),
+(200, 'Anthony Chicoine', '5148313933', '5148313934', 'Etudiant', 'Modification', '2021-04-08', 0),
+(201, 'Anthony Chicoine', '59', '', 'Frais', 'Suppression', '2021-04-08', 0),
+(202, 'Anthony Chicoine', '123', 'cf83e1357eefb8bdf1542850d66d80', 'Administration', 'Modification', '2021-04-12', 0),
+(203, 'Anthony Chicoine', 'cf83e1357eefb8bdf1542850d66d80', '??.?r=?g?_o.5', 'Administration', 'Modification', '2021-04-13', 0),
+(204, 'Anthony Chicoine', '??.?r=?g?_o.5', '123', 'Administration', 'Modification', '2021-04-13', 0),
+(205, 'Anthony Chicoine', '123', '??.?r=?g?_o.5', 'Administration', 'Modification', '2021-04-13', 0),
+(206, 'Anthony Chicoine', '??.?r=?g?_o.5', '123', 'Administration', 'Modification', '2021-04-13', 0),
+(207, 'Anthony Chicoine', '123', '?Մ???L???q???', 'Administration', 'Modification', '2021-04-13', 0),
+(208, 'Anthony Chicoine', '?Մ???L???q???', '123', 'Administration', 'Modification', '2021-04-13', 0),
+(209, 'Anthony Chicoine', '123', 'uUG5i?N?Ȅ?C?\'', 'Administration', 'Modification', '2021-04-13', 0),
+(210, 'Anthony Chicoine', 'uUG5i?N?Ȅ?C?\'', '123', 'Administration', 'Modification', '2021-04-13', 0),
+(211, 'Anthony Chicoine', '123', 'uUG5i?N?Ȅ?C?\'', 'Administration', 'Modification', '2021-04-13', 0),
+(212, 'Anthony Chicoine', 'uUG5i?N?Ȅ?C?\'', '123', 'Administration', 'Modification', '2021-04-13', 0),
+(213, 'Anthony Chicoine', '123', 'uUG5i?N?Ȅ?C?\'', 'Administration', 'Modification', '2021-04-13', 0),
+(214, 'Anthony Chicoine', 'uUG5i?N?Ȅ?C?\'', '123', 'Administration', 'Modification', '2021-04-13', 0),
+(215, 'Anthony Chicoine', '123', 'uUG5i?N?Ȅ?C?\'', 'Administration', 'Modification', '2021-04-13', 0),
+(216, 'Anthony Chicoine', 'uUG5i?N?Ȅ?C?\'', '123', 'Administration', 'Modification', '2021-04-13', 0),
+(217, 'Anthony Chicoine', '123', 'uUG5i?N?Ȅ?C?\'', 'Administration', 'Modification', '2021-04-13', 0),
+(218, 'Anthony Chicoine', 'uUG5i?N?Ȅ?C?\'', 'Qu???+\Z?(?q?????', 'Administration', 'Modification', '2021-04-13', 0),
+(219, 'Anthony Chicoine', 'Qu???+\Z?(?q?????', '??%\"baN?1?\ZG', 'Administration', 'Modification', '2021-04-13', 0),
+(220, 'Anthony Chicoine', '??%\"baN?1?\ZG', '#', 'Administration', 'Modification', '2021-04-13', 0),
+(221, 'Anthony Chicoine', '#', '\Z4?;d?w:?#9?o?~', 'Administration', 'Modification', '2021-04-13', 0),
+(222, 'Anthony Chicoine', '\Z4?;d?w:?#9?o?~', '?Y???9=?yI???nh?', 'Administration', 'Modification', '2021-04-13', 0),
+(223, 'Anthony Chicoine', '?Y???9=?yI???nh?', '', 'Administration', 'Modification', '2021-04-14', 0),
+(224, 'Anthony Chicoine', '', 'E?Y??ҦW??Y?:	', 'Administration', 'Modification', '2021-04-14', 0),
+(225, 'Jean-Denis Chicoine', '123123123', '', 'Administration', 'Suppression', '2021-04-14', 0),
+(226, 'Jean-Denis Chicoine', 'qwe', '', 'Administration', 'Suppression', '2021-04-14', 0),
+(227, 'Jean-Denis Chicoine', ' sadasdas d', '', 'Administration', 'Suppression', '2021-04-14', 0),
+(228, 'Jean-Denis Chicoine', '123', 'E?Y??ҦW??Y?:	', 'Administration', 'Modification', '2021-04-14', 0),
+(229, 'Jean-Denis Chicoine', '123', '#E', 'Administration', 'Modification', '2021-04-14', 0),
+(230, 'Jean-Denis Chicoine', '123', '#!21#1#', 'Administration', 'Modification', '2021-04-14', 0),
+(231, 'Jean-Denis Chicoine', '123', '!1#', 'Administration', 'Modification', '2021-04-14', 0),
+(232, 'Jean-Denis Chicoine', 'E?Y??ҦW??Y?:	', '#', 'Administration', 'Modification', '2021-04-14', 0),
+(233, 'Jean-Denis Chicoine', '#E', '#', 'Administration', 'Modification', '2021-04-14', 0),
+(234, 'Jean-Denis Chicoine', 'eqw', '', 'Administration', 'Suppression', '2021-04-14', 0),
+(235, 'Jean-Denis Chicoine', 'adssdadsa', '', 'Administration', 'Suppression', '2021-04-14', 0),
+(236, 'Jean-Denis Chicoine', 'Admin_2', '', 'Administration', 'Suppression', '2021-04-14', 0),
+(237, 'Jean-Denis Chicoine', '#', 'E?Y??ҦW??Y?:	', 'Administration', 'Modification', '2021-04-14', 0),
+(238, 'Jean-Denis Chicoine', '#!21#1#', '*<*??|l]?؃?Պ?', 'Administration', 'Modification', '2021-04-14', 0),
+(239, 'Jean-Denis Chicoine', '!1#', '?^?\r???ہ$f??O?', 'Administration', 'Modification', '2021-04-14', 0),
+(240, 'Jean-Denis Chicoine', 'E?Y??ҦW??Y?:	', '?#??fy*q?y?6?\n', 'Administration', 'Modification', '2021-04-14', 0),
+(241, 'Jean-Denis Chicoine', '*<*??|l]?؃?Պ?', '??$(?}?⅌???$W', 'Administration', 'Modification', '2021-04-14', 0),
+(242, 'Jean-Denis Chicoine', '?^?\r???ہ$f??O?', 'xSe\r?pUj???N?', 'Administration', 'Modification', '2021-04-14', 0),
+(243, 'Jean-Denis Chicoine', '?#??fy*q?y?6?\n', '4', 'Administration', 'Modification', '2021-04-14', 0),
+(244, 'Jean-Denis Chicoine', '4', '?#??fy*q?y?6?\n', 'Administration', 'Modification', '2021-04-14', 0),
+(245, 'Jean-Denis Chicoine', '123', 'P?\"?I?$BX ???S?a&\Z?\'???T?d??', 'Administration', 'Modification', '2021-04-14', 0),
+(246, 'Anthony Chicoine', 'qwe', '', 'Administration', 'Suppression', '2021-04-14', 0),
+(247, 'Anthony Chicoine', 'qwe', '', 'Enseignant', 'Suppression', '2021-04-14', 0),
+(248, 'Anthony Chicoine', '123', '(???<?*?0\\???7?R???sc???X<?', 'Administration', 'Modification', '2021-04-14', 1);
 
 -- --------------------------------------------------------
 
@@ -1203,7 +1316,11 @@ INSERT INTO `tablecommentaire` (`IdCommentaire`, `Createur`, `ID`, `Type`, `Comm
 (28, 'Anthony Chicoine', 0, 'Programme', 'test', '2021-03-30'),
 (29, 'Anthony Chicoine', 0, 'Programme', 'test', '2021-03-30'),
 (30, 'Jean-Denis Chicoine', 0, 'Programme', 'test', '2021-03-30'),
-(31, 'Anthony Chicoine', 0, 'Programme', 'test', '2021-03-30');
+(31, 'Anthony Chicoine', 0, 'Programme', 'test', '2021-03-30'),
+(32, 'Jean-Denis Chicoine', 37, 'Enseignant', 'qwe', '2021-04-14'),
+(33, 'Jean-Denis Chicoine', 39, 'Enseignant', 'qwe', '2021-04-14'),
+(34, 'Jean-Denis Chicoine', 39, 'Enseignant', 'qwe', '2021-04-14'),
+(35, 'Anthony Chicoine', 43, 'Enseignant', 'test', '2021-04-14');
 
 -- --------------------------------------------------------
 
@@ -1224,9 +1341,104 @@ CREATE TABLE `tablenotification` (
 --
 
 INSERT INTO `tablenotification` (`IdNotification`, `Auteur`, `IdLog`, `IdAdmin`, `Etat`) VALUES
-(5, 'Anthony Chicoine', 178, 1, 0),
-(9, 'Anthony Chicoine', 182, 1, 0),
-(10, 'Anthony Chicoine', 182, 31, 0);
+(1, 'Anthony Chicoine', 199, 1, 1),
+(2, 'Anthony Chicoine', 200, 1, 1),
+(3, 'Anthony Chicoine', 199, 31, 1),
+(4, 'Anthony Chicoine', 200, 31, 1),
+(5, 'Jean-Denis Chicoine', 201, 1, 1),
+(6, 'Jean-Denis Chicoine', 202, 1, 1),
+(7, 'Jean-Denis Chicoine', 203, 1, 1),
+(8, 'Jean-Denis Chicoine', 204, 1, 1),
+(9, 'Jean-Denis Chicoine', 205, 1, 1),
+(10, 'Jean-Denis Chicoine', 206, 1, 1),
+(11, 'Jean-Denis Chicoine', 207, 1, 1),
+(12, 'Jean-Denis Chicoine', 208, 1, 1),
+(13, 'Jean-Denis Chicoine', 209, 1, 1),
+(14, 'Jean-Denis Chicoine', 210, 1, 1),
+(15, 'Jean-Denis Chicoine', 211, 1, 1),
+(16, 'Jean-Denis Chicoine', 212, 1, 1),
+(17, 'Jean-Denis Chicoine', 213, 1, 1),
+(18, 'Jean-Denis Chicoine', 214, 1, 1),
+(19, 'Jean-Denis Chicoine', 215, 1, 1),
+(20, 'Jean-Denis Chicoine', 216, 1, 1),
+(21, 'Jean-Denis Chicoine', 217, 1, 1),
+(22, 'Jean-Denis Chicoine', 218, 1, 1),
+(23, 'Jean-Denis Chicoine', 219, 1, 1),
+(24, 'Jean-Denis Chicoine', 220, 1, 1),
+(25, 'Jean-Denis Chicoine', 221, 1, 1),
+(26, 'Jean-Denis Chicoine', 222, 1, 1),
+(27, 'Jean-Denis Chicoine', 223, 1, 1),
+(28, 'Jean-Denis Chicoine', 224, 1, 1),
+(29, 'Jean-Denis Chicoine', 225, 1, 1),
+(30, 'Jean-Denis Chicoine', 201, 31, 1),
+(31, 'Jean-Denis Chicoine', 202, 31, 1),
+(32, 'Jean-Denis Chicoine', 203, 31, 1),
+(33, 'Jean-Denis Chicoine', 204, 31, 1),
+(34, 'Jean-Denis Chicoine', 205, 31, 1),
+(35, 'Jean-Denis Chicoine', 206, 31, 1),
+(36, 'Jean-Denis Chicoine', 207, 31, 1),
+(37, 'Jean-Denis Chicoine', 208, 31, 1),
+(38, 'Jean-Denis Chicoine', 209, 31, 1),
+(39, 'Jean-Denis Chicoine', 210, 31, 1),
+(40, 'Jean-Denis Chicoine', 211, 31, 1),
+(41, 'Jean-Denis Chicoine', 212, 31, 1),
+(42, 'Jean-Denis Chicoine', 213, 31, 1),
+(43, 'Jean-Denis Chicoine', 214, 31, 1),
+(44, 'Jean-Denis Chicoine', 215, 31, 1),
+(45, 'Jean-Denis Chicoine', 216, 31, 1),
+(46, 'Jean-Denis Chicoine', 217, 31, 1),
+(47, 'Jean-Denis Chicoine', 218, 31, 1),
+(48, 'Jean-Denis Chicoine', 219, 31, 1),
+(49, 'Jean-Denis Chicoine', 220, 31, 1),
+(50, 'Jean-Denis Chicoine', 221, 31, 1),
+(51, 'Jean-Denis Chicoine', 222, 31, 1),
+(52, 'Jean-Denis Chicoine', 223, 31, 1),
+(53, 'Jean-Denis Chicoine', 224, 31, 1),
+(54, 'Jean-Denis Chicoine', 225, 31, 1),
+(55, 'Jean-Denis Chicoine', 226, 1, 1),
+(56, 'Jean-Denis Chicoine', 226, 31, 1),
+(57, 'Jean-Denis Chicoine', 227, 1, 1),
+(58, 'Jean-Denis Chicoine', 227, 31, 1),
+(59, 'Anthony Chicoine', 228, 1, 1),
+(60, 'Anthony Chicoine', 229, 1, 1),
+(61, 'Anthony Chicoine', 230, 1, 1),
+(62, 'Anthony Chicoine', 231, 1, 1),
+(63, 'Anthony Chicoine', 232, 1, 1),
+(64, 'Anthony Chicoine', 233, 1, 1),
+(65, 'Anthony Chicoine', 234, 1, 1),
+(66, 'Anthony Chicoine', 235, 1, 1),
+(67, 'Anthony Chicoine', 236, 1, 1),
+(68, 'Anthony Chicoine', 237, 1, 1),
+(69, 'Anthony Chicoine', 238, 1, 1),
+(70, 'Anthony Chicoine', 239, 1, 1),
+(71, 'Anthony Chicoine', 240, 1, 1),
+(72, 'Anthony Chicoine', 241, 1, 1),
+(73, 'Anthony Chicoine', 242, 1, 1),
+(74, 'Anthony Chicoine', 243, 1, 1),
+(75, 'Anthony Chicoine', 244, 1, 1),
+(76, 'Anthony Chicoine', 245, 1, 1),
+(77, 'Anthony Chicoine', 246, 1, 1),
+(78, 'Anthony Chicoine', 247, 1, 1),
+(79, 'Anthony Chicoine', 228, 31, 1),
+(80, 'Anthony Chicoine', 229, 31, 1),
+(81, 'Anthony Chicoine', 230, 31, 1),
+(82, 'Anthony Chicoine', 231, 31, 1),
+(83, 'Anthony Chicoine', 232, 31, 1),
+(84, 'Anthony Chicoine', 233, 31, 1),
+(85, 'Anthony Chicoine', 234, 31, 1),
+(86, 'Anthony Chicoine', 235, 31, 1),
+(87, 'Anthony Chicoine', 236, 31, 1),
+(88, 'Anthony Chicoine', 237, 31, 1),
+(89, 'Anthony Chicoine', 238, 31, 1),
+(90, 'Anthony Chicoine', 239, 31, 1),
+(91, 'Anthony Chicoine', 240, 31, 1),
+(92, 'Anthony Chicoine', 241, 31, 1),
+(93, 'Anthony Chicoine', 242, 31, 1),
+(94, 'Anthony Chicoine', 243, 31, 1),
+(95, 'Anthony Chicoine', 244, 31, 1),
+(96, 'Anthony Chicoine', 245, 31, 1),
+(97, 'Anthony Chicoine', 246, 31, 1),
+(98, 'Anthony Chicoine', 247, 31, 1);
 
 -- --------------------------------------------------------
 
@@ -1266,6 +1478,12 @@ ALTER TABLE `ancienenseignant`
 --
 ALTER TABLE `ancienetudiant`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `clavardage`
+--
+ALTER TABLE `clavardage`
+  ADD PRIMARY KEY (`IdMessage`);
 
 --
 -- Index pour la table `cour`
@@ -1347,19 +1565,25 @@ ALTER TABLE `tablenotification`
 -- AUTO_INCREMENT pour la table `administration`
 --
 ALTER TABLE `administration`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT pour la table `ancienenseignant`
 --
 ALTER TABLE `ancienenseignant`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT pour la table `ancienetudiant`
 --
 ALTER TABLE `ancienetudiant`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
+-- AUTO_INCREMENT pour la table `clavardage`
+--
+ALTER TABLE `clavardage`
+  MODIFY `IdMessage` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `cour`
@@ -1383,19 +1607,19 @@ ALTER TABLE `etudiant`
 -- AUTO_INCREMENT pour la table `etudiantcour`
 --
 ALTER TABLE `etudiantcour`
-  MODIFY `IdResultat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `IdResultat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT pour la table `frais`
 --
 ALTER TABLE `frais`
-  MODIFY `IdFrais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `IdFrais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT pour la table `logcreatedaccount`
 --
 ALTER TABLE `logcreatedaccount`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pour la table `logcreatedprogcours`
@@ -1407,7 +1631,7 @@ ALTER TABLE `logcreatedprogcours`
 -- AUTO_INCREMENT pour la table `logupdatedeleteaccount`
 --
 ALTER TABLE `logupdatedeleteaccount`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
 
 --
 -- AUTO_INCREMENT pour la table `programme`
@@ -1419,13 +1643,13 @@ ALTER TABLE `programme`
 -- AUTO_INCREMENT pour la table `tablecommentaire`
 --
 ALTER TABLE `tablecommentaire`
-  MODIFY `IdCommentaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `IdCommentaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT pour la table `tablenotification`
 --
 ALTER TABLE `tablenotification`
-  MODIFY `IdNotification` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `IdNotification` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
