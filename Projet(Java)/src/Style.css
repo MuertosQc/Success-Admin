@@ -40,7 +40,7 @@
 #BtnModifierEtudiant, #BtnAjouterEtudiant, #BtnSupEtudiant, #BtnContinueMsg, #BtnAjouterEnseignant, #BtnModifierEnseignant, #BtnSupEnseignant, #BtnModifEnseignant,  #BtnAjoutEnseignant, #BtnModifEtudiant, #BtnCancelEtudiant, #BtnAjoutEtudiant, #BtnSupCours, #BtnAjouterCours, #BtnModifierCours, #BtnAjoutCours, #BtnCancelCours,
 #BtnModifCours, #BtnSupProgramme, #BtnAjouterProgramme, #BtnModifierProgramme, #BtnAjoutProgramme, #BtnModifProgramme, #BtnAssignerCoursProgramme, #BtnAjouterCoursAuProgramme, #BtnInscription,
 #BtnAjouterEtudiantCour, #BtnAssignerProgramme, #BtnProgEtuAjout, #BtnAjouterExam, #BtnAjouterExamen, #BtnAfficherExamen, #BtnModifierExam, #BtnSupprimerExam, #BtnAfficherExamenCours, #BtnSupprimerComEtudiant,
-#BtnAssignerProgEns, #BtnAjoutCourEns, #BtnNotifLu, #BtnNotifNonLu, #BtnNotifSup, #BtnNotifAfficher, #Btn_FermerMessage, #Btn_RepondreMessage, #Btn_EnvoyerMessage{
+#BtnAssignerProgEns, #BtnAjoutCourEns, #BtnNotifLu, #BtnNotifNonLu, #BtnNotifSup, #BtnNotifAfficher, #Btn_FermerMessage, #Btn_RepondreMessage, #Btn_EnvoyerMessage, #Btn_SupEmail{
 	-fx-font: 14px "Helvetica";
     -fx-padding: 5;
     -fx-text-fill:white;
@@ -56,7 +56,7 @@
 #BtnModifierProgramme:hover, #BtnAjoutProgramme:hover, #BtnModifProgramme:hover, #BtnAssignerCoursProgramme:hover, #BtnAjouterCoursAuProgramme:hover, #BtnInscription:hover, #BtnAjouterEtudiantCour:hover,
 #BtnAssignerProgramme:hover, #BtnProgEtuAjout:hover, #BtnAjouterExam:hover, #BtnAjouterExamen:hover, #BtnAfficherExamen:hover, #BtnModifierExam:hover, #BtnSupprimerExam:hover, #BtnAfficherExamenCours:hover,
 #BtnSupprimerComEtudiant:hover, #BtnAssignerProgEns:hover, #BtnAjoutCourEns:hover, #BtnNotifLu:hover, #BtnNotifNonLu:hover, #BtnNotifSup:hover, #BtnNotifAfficher:hover,
-#Btn_FermerMessage:hover, #Btn_RepondreMessage:hover, #Btn_EnvoyerMessage:hover{
+#Btn_FermerMessage:hover, #Btn_RepondreMessage:hover, #Btn_EnvoyerMessage:hover, #Btn_SupEmail:hover{
 	-fx-font: 14px "Helvetica";
     -fx-padding: 5;
     -fx-text-fill:white;
@@ -83,7 +83,7 @@
 	-fx-background-color : transparent;
 }
 /*Menu Accueil */
-#BtnAcueil,#BtnEtudiant, #BtnEnseignant, #BtnCour, #BtnProgramme,  #BtnResultat, #BtnFrais, #BtnLogs{
+#BtnAcueil,#BtnEtudiant, #BtnEnseignant, #BtnCour, #BtnProgramme,  #BtnResultat, #BtnFrais, #BtnLogs, #Btn_BoiteRecep, #Btn_MessageEnvoyer, #Btn_MessageSup, #Btn_NouveauMessage{
 	-fx-font: 14px "Helvetica";
     -fx-padding: 5;
     -fx-text-fill:white;
@@ -92,7 +92,28 @@
    	-fx-border-radius: 5px;
    	-fx-background-color:  #523d87;
 }
-#BtnAcueil:hover,#BtnEtudiant:hover, #BtnEnseignant:hover, #BtnCour:hover, #BtnProgramme:hover, #BtnResultat:hover, #BtnFrais:hover, #BtnLogs:hover{
+
+#Btn_MessageNonLu{
+	-fx-font: 14px "Helvetica";
+	-fx-text-fill:white;
+   	-fx-transition-duration: 0.9s;
+   	-fx-background-color:  #523d87;
+	-fx-border-radius: 5 0 0 0;
+	-fx-background-radius: 5 0 0 0;
+	
+}
+
+#Btn_MessageLu{
+	-fx-font: 14px "Helvetica";
+	-fx-text-fill:white;
+   	-fx-transition-duration: 0.9s;
+   	-fx-background-color:  #523d87;
+	-fx-border-radius: 0 5 0 0;
+	-fx-background-radius: 0 5 0 0;
+}
+
+#BtnAcueil:hover,#BtnEtudiant:hover, #BtnEnseignant:hover, #BtnCour:hover, #BtnProgramme:hover, #BtnResultat:hover, #BtnFrais:hover, #BtnLogs:hover, #Btn_BoiteRecep:hover, #Btn_MessageEnvoyer:hover, #Btn_MessageSup:hover,
+#Btn_NouveauMessage:hover{
 	-fx-background-color:  #7253bf;
     	-fx-text-fill: white;
 }
@@ -128,13 +149,10 @@
     
 }
 
-.table-row-cell:filled:hover {
-	
+.table-row-cell:filled:hover {	
     -fx-size:50;
     -fx-alignment: CENTER;
     -fx-text-alignment: center;
-
-
 }
 .table-view:row-selection {
     -fx-background-color: transparent;
@@ -248,3 +266,5 @@
 .jfx-rippler {
     -jfx-rippler-fill: red;
 }
+
+

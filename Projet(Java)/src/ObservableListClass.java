@@ -38,5 +38,6 @@ public class ObservableListClass {
 	public ObservableList<Notification> obListNotif = FXCollections.observableArrayList();
 	public ObservableList<Logs> obListNotifDetails = FXCollections.observableArrayList();
 	public ObservableList<Logs> obListLogs = FXCollections.observableArrayList();
+	public ObservableList<Email> obListEmail = FXCollections.observableArrayList();
 	
 }

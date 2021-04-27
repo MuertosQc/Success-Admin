@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,25 +8,29 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
-
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.Style;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 public class Fonction {
@@ -92,7 +97,17 @@ public class Fonction {
 	int selectedIdGauche = 0; // Selectionner un item dans la liste gauche couretudiant
 	int selectedIdDroit = 0; // Selectionner un item dans la liste droite couretudiant
 	
-
+	//section email
+	int IdMessage = 0;
+	int selectIdEmail = 0;
+	int IdEnvoyeur = 0;
+	String Sujet = "";
+	String Message = "";
+	String NomEnvoyeur = "";
+	String NomReceveur = "";
+	String date = "";
+	int EtatEmail = 0;
+	
 	// SECTION CLASS
 	Etudiant etudiant;
 	Enseignant enseignant;
@@ -102,7 +117,7 @@ public class Fonction {
 	AccueilController AC;
 	ConnexionController CC;
 	Programme programme;
-	
+	Email email;
 	
 	public Fonction(ConnexionController CC) {
 		this.CC = CC;
@@ -835,6 +850,82 @@ public class Fonction {
 		AC.TableViewNotifDetail.refresh();
 	}
 	
+	public void AfficherNomEmail() {
+		AC.TableView_Email.getItems().clear();
+		
+		try {
+			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+			
+			//iMessage = 0 (Message non lu) ou iMessageLu = 1 (Message lu)
+			if(AC.iMessageLu != 2 && AC.iMessageLu != 3) {
+				int MessageCount = 0;
+				
+				RequeteSql = "SELECT IdMessage, concat(administration.Prenom, ' ' ,administration.nom) as NomComplet, IdEnvoyeur, IdReceveur, Sujet, Message, Date, Etat, IdReponse"
+						+ " FROM `clavardage` INNER JOIN administration ON administration.ID = IdEnvoyeur where IdReceveur = " + AC.IDAdministrateur + " and Etat = ?"; 
+				PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
+				pst.setInt(1, AC.iMessageLu);
+				rs = pst.executeQuery();
+				while (rs.next()) {
+					
+					if(AC.iMessageLu == 0) {
+						MessageCount += 1;
+					}
+					
+					OLC.obListEmail.add(
+							new Email(rs.getInt("IdMessage"), rs.getString("NomComplet"), rs.getInt("IdEnvoyeur"),
+							rs.getInt("IdReceveur"), rs.getString("Sujet"), rs.getString("Message"), rs.getString("Date"), rs.getInt("Etat"), rs.getInt("IdReponse")));
+					
+				}
+				AC.LblCountMessage.setText(""+MessageCount);
+			}
+			//iMessageLu = 2 (Nouveau message)
+			else if(AC.iMessageLu == 2){
+				RequeteSql = "SELECT concat(Prenom, ' ' ,Nom) as NomComplet, ID FROM administration";
+				PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
+				rs = pst.executeQuery();
+				while (rs.next()) {
+					
+					OLC.obListEmail.add(
+							new Email(rs.getString("NomComplet"), rs.getInt("ID")));
+				}
+			}
+			//iMessage = 3 (Message envoyé)
+			else if(AC.iMessageLu == 3) {
+				RequeteSql = "SELECT IdMessage, concat(administration.Prenom, ' ' ,administration.nom) as NomComplet, IdEnvoyeur, IdReceveur, Sujet, Message, Date, Etat, IdReponse "
+						+ "FROM `clavardage` INNER JOIN administration ON administration.ID = IdReceveur where IdEnvoyeur = " + AC.IDAdministrateur; 
+				PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
+				rs = pst.executeQuery();
+				while (rs.next()) {
+				
+					OLC.obListEmail.add(
+							new Email(rs.getInt("IdMessage"), rs.getString("NomComplet"), rs.getInt("IdEnvoyeur"),
+							rs.getInt("IdReceveur"), rs.getString("Sujet"), rs.getString("Message"), rs.getString("Date"), rs.getInt("Etat"), rs.getInt("IdReponse")));
+					
+				}
+			}
+			//iMessage = -1 (Message supprimé)
+			else if(AC.iMessageLu == -1) {
+				RequeteSql = "SELECT IdMessage, concat(administration.Prenom, ' ' ,administration.nom) as NomComplet, IdEnvoyeur, IdReceveur, Sujet, Message, Date, Etat, IdReponse "
+						+ "FROM `clavardage` INNER JOIN administration ON administration.ID = IdEnvoyeur where IdReceveur = " + AC.IDAdministrateur + " and Etat = -1"; 
+				PreparedStatement pst = ConnexionDB.prepareStatement(RequeteSql);
+				rs = pst.executeQuery();
+				while (rs.next()) {
+				
+					OLC.obListEmail.add(
+							new Email(rs.getInt("IdMessage"), rs.getString("NomComplet"), rs.getInt("IdEnvoyeur"),
+							rs.getInt("IdReceveur"), rs.getString("Sujet"), rs.getString("Message"), rs.getString("Date"), rs.getInt("Etat"), rs.getInt("IdReponse")));
+					
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		AC.TableColumn_Envoyeur.setCellValueFactory(new PropertyValueFactory<>("NomComplet"));		
+		AC.TableView_Email.setItems(OLC.obListEmail);
+		AC.TableView_Email.refresh();
+	}
+	
+	
 	// SECTION SELECT TABLE VIEW
 	public void SelectRowEtudiant() {
 		AC.TableViewEtudiant.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -1145,6 +1236,83 @@ public class Fonction {
 					
 				}
 				
+			}
+		});
+	}
+	
+	public void SelectEmail() {
+		
+		AC.TableView_Email.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				try {
+					if (!OLC.obListEmail.isEmpty()) {
+						
+						IdMessage = AC.TableView_Email.getSelectionModel().getSelectedItem().getIdMessage();
+						IdEnvoyeur = AC.TableView_Email.getSelectionModel().getSelectedItem().getIdEnvoyeur();
+						selectIdEmail = AC.TableView_Email.getSelectionModel().getSelectedIndex();
+						Sujet = AC.TableView_Email.getSelectionModel().getSelectedItem().getSujet();
+						Message = AC.TableView_Email.getSelectionModel().getSelectedItem().getMessage();
+						NomEnvoyeur = AC.TableView_Email.getSelectionModel().getSelectedItem().getNomComplet();
+						date = AC.TableView_Email.getSelectionModel().getSelectedItem().getDate();
+						EtatEmail = AC.TableView_Email.getSelectionModel().getSelectedItem().getEtat();
+						//String pattern = "dd MMMM yyyy";
+						//SimpleDateFormat simpleDateFormat =new SimpleDateFormat(pattern, new Locale("fr", "FR"));
+						AC.Btn_SupEmail.setDisable(false);
+						if(AC.iMessageLu == 2) {
+							AC.Tb_Object.setText(Sujet);
+							AC.Tb_Message.setText(Message);
+							AC.Tb_Message.setEditable(true);
+							AC.LblEnvoyeur.setText(AC.NomAdministrateur);
+							AC.LblReceveur.setText(NomEnvoyeur);
+							AC.LblDate.setText(date);
+							AC.Btn_EnvoyerMessage.setText("Envoyer");
+							AC.Btn_EnvoyerMessage.setLayoutY(480);
+							
+							AC.Btn_EnvoyerMessage.setVisible(true);
+						}
+						else if(AC.iMessageLu == 1){
+							AC.Tb_Object.setText(Sujet);
+							AC.Tb_Message.setText(Message);
+							AC.Tb_Message.setEditable(false);
+							AC.LblEnvoyeur.setText(NomEnvoyeur);
+							AC.LblReceveur.setText(AC.NomAdministrateur);
+							AC.LblDate.setText(date);
+							AC.Btn_EnvoyerMessage.setText("Répondre");
+							AC.Btn_EnvoyerMessage.setLayoutY(792);
+							AC.Tb_MessageReponse.setVisible(true);
+							AC.Btn_EnvoyerMessage.setVisible(true);
+						}
+						else if(AC.iMessageLu == 3) {
+							AC.Tb_Object.setText(Sujet);
+							AC.Tb_Message.setText(Message);
+							AC.Tb_Message.setEditable(false);
+							AC.LblEnvoyeur.setText(NomEnvoyeur);
+							AC.LblReceveur.setText(AC.NomAdministrateur);
+							AC.LblDate.setText(date);
+							AC.Btn_EnvoyerMessage.setText("Répondre");
+							AC.Btn_EnvoyerMessage.setLayoutY(792);
+							AC.Tb_MessageReponse.setVisible(true);
+							AC.Btn_EnvoyerMessage.setVisible(true);
+						}
+						else if(AC.iMessageLu == -1) {
+							AC.Tb_Object.setText(Sujet);
+							AC.Tb_Message.setText(Message);
+							AC.Tb_Message.setEditable(false);
+							AC.Tb_MessageReponse.setVisible(false);
+							AC.LblEnvoyeur.setText(NomEnvoyeur);
+							AC.LblReceveur.setText(AC.NomAdministrateur);
+							AC.LblDate.setText(date);
+							AC.Btn_EnvoyerMessage.setVisible(true);
+							AC.Btn_EnvoyerMessage.setText("Transférer");
+							AC.Btn_EnvoyerMessage.setLayoutY(480);
+							
+						}
+					}
+				}
+				catch(Exception e) {
+					System.out.println("Veuillez cliquer sur une notification");
+				}
 			}
 		});
 	}
@@ -1747,6 +1915,77 @@ public class Fonction {
 		}
 	}
 
+	public void InsertRepondreMessage() {
+		try {
+			PreparedStatement preparedStatement = null;
+			Class.forName("com.mysql.jdbc.Driver");
+			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+			//Inserer le nouveau projet/exam dans la table CoursDetails
+			RequeteSql = "Insert into Clavardage (IdEnvoyeur, IdReceveur, Sujet, Message, Date, Etat, IdReponse) values (?,?,?,?,?,?,?) ";
+			
+			preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
+			preparedStatement.setInt(1, AC.IDAdministrateur);
+			preparedStatement.setInt(2, IdEnvoyeur);
+			preparedStatement.setString(3, AC.Tb_Object.getText());
+			preparedStatement.setString(4, AC.Tb_Message.getText() + "\n\n____________________________________ \n\nDe : " + AC.NomAdministrateur + "\nEnvoyé le : " + currentTime +
+					"\nSujet : " + Sujet + "\n\n"+ AC.Tb_MessageReponse.getText());
+			preparedStatement.setString(5, currentTime);
+			preparedStatement.setInt(6, 0);
+			preparedStatement.setInt(7, IdMessage);
+			preparedStatement.executeUpdate();
+			
+			RequeteSql = "Update Clavardage set Etat = ? where IdMessage = " + IdMessage;
+			preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
+			preparedStatement.setInt(1, 1);
+			preparedStatement.executeUpdate();
+			
+			AC.Tb_MessageReponse.setVisible(false);
+			AC.Btn_EnvoyerMessage.setVisible(false);
+			AC.Tb_MessageReponse.setText("");
+			AC.Tb_Message.setText("");
+			AC.Tb_Object.setText("");
+			AC.PaneEmail.setVisible(false);
+			AC.PaneAccueil.setVisible(true);
+			AC.PaneEmailSousMenu.setVisible(false);
+		}
+		catch(Exception e) {
+			System.out.println("Message non-envoyer");
+		}
+	}
+
+	public void InsertNouveauMessage() {
+		try {
+			PreparedStatement preparedStatement = null;
+			Class.forName("com.mysql.jdbc.Driver");
+			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+			//Inserer le nouveau projet/exam dans la table CoursDetails
+			RequeteSql = "Insert into Clavardage (IdEnvoyeur, IdReceveur, Sujet, Message, Date, Etat, IdReponse) values (?,?,?,?,?,?,?) ";
+			
+			preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
+			preparedStatement.setInt(1, AC.IDAdministrateur);
+			preparedStatement.setInt(2, IdEnvoyeur);
+			preparedStatement.setString(3, AC.Tb_Object.getText());
+			preparedStatement.setString(4, "\nDe : " + AC.NomAdministrateur + "\nEnvoyé le : " + currentTime +
+					"\nSujet : " + AC.Tb_Object.getText() + "\n\n" + AC.Tb_Message.getText());
+			preparedStatement.setString(5, currentTime);
+			preparedStatement.setInt(6, 0);
+			preparedStatement.setInt(7, 0);
+			preparedStatement.executeUpdate();
+			
+			AC.Tb_MessageReponse.setVisible(false);
+			AC.Btn_EnvoyerMessage.setVisible(false);
+			AC.Tb_MessageReponse.setText("");
+			AC.Tb_Message.setText("");
+			AC.Tb_Object.setText("");
+			AC.PaneEmail.setVisible(false);
+			AC.PaneAccueil.setVisible(true);
+			AC.PaneEmailSousMenu.setVisible(false);
+		}
+		catch(Exception e) {
+			System.out.println("Message non-envoyer");
+		}
+	}
+	
 	// SECTION DELETE
 	// Supprimer Programme
 	public void SupprimerProgramme() {
@@ -2175,6 +2414,22 @@ public class Fonction {
 		}
 	}
 	
+	public void SupprimerEmail() {
+		try {
+			PreparedStatement preparedStatement = null;
+			Class.forName("com.mysql.jdbc.Driver");
+			ConnexionDB = DriverManager.getConnection("jdbc:mysql://localhost:3306/sms", "root", "");
+			
+			RequeteSql = "update Clavardage set Etat = -1 where IdMessage = " + IdMessage;
+			preparedStatement = ConnexionDB.prepareStatement(RequeteSql);
+			preparedStatement.executeUpdate();
+			ConnexionDB.close();
+			AfficherNomEmail();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// SECTION UPDATE
 	// Modifier Etudiant
 	public void ModifierEtudiant() {
@@ -2513,7 +2768,7 @@ public class Fonction {
 		}
 
 	}
-
+	
 	public void ShowInfoEnseignant() {
 		AC.TbUser.setText(administration.getNomUtilisateur());
 		AC.TbPrenom.setText(administration.getPrenom());
@@ -3272,5 +3527,4 @@ public class Fonction {
 			e.printStackTrace();
 		}
 	}
-	
 }

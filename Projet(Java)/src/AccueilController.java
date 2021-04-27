@@ -34,6 +34,7 @@ public class AccueilController {
 	@FXML public int EtatNotif = 1;
 
 	@FXML public String VariableGlobal = ""; //Variable qui sert a savoir qu'elle fonction on utilise si on a plusieurs fonction differente sur un bouton
+	@FXML public int iMessageLu = 0;
 	
 	@FXML public Label LblMsgBienvenue;
 	@FXML public Pane PaneBienvenue;
@@ -94,6 +95,8 @@ public class AccueilController {
     
     //Section Email
     @FXML public Pane PaneEmail;
+    @FXML public Pane PaneEmailSousMenu;
+    @FXML public Pane PaneReponseMessage;
     @FXML public Label LblEnvoyeur;
     @FXML public Label LblReceveur;
     @FXML public Label LblDate;
@@ -105,10 +108,19 @@ public class AccueilController {
     @FXML public Button Btn_FermerMessage;
     @FXML public Button Btn_RepondreMessage;
     @FXML public Button Btn_EnvoyerMessage;
-    @FXML public Button Btn_SuivantMessage;
-    @FXML public Button Btn_PrecedentMessage;
-    @FXML public TableColumn<?, String> TableColumn_Envoyeur;
-    @FXML public TableView<?> TableView_Email;
+    @FXML public TableColumn<Email, String> TableColumn_Envoyeur;
+    @FXML public TableView<Email> TableView_Email;
+    @FXML public TextArea Tb_MessageReponse;
+    @FXML public Button Btn_BoiteRecep;
+    @FXML public Button Btn_MessageEnvoyer;
+    @FXML public Button Btn_MessageSup;
+    @FXML public Button Btn_NouveauMessage;
+    @FXML public Button Btn_MessageLu;
+    @FXML public Button Btn_MessageNonLu;
+    @FXML public Pane PaneLblContact;
+    @FXML public Label LblCountMessage;
+    @FXML public Label LblTitreEmail;
+    @FXML public Button Btn_SupEmail;
     
     //Section commentaire
     @FXML public Pane PaneCommentaire;
@@ -422,7 +434,15 @@ public class AccueilController {
     }
     
     @FXML
-    void OnMouseClickedClavardage(MouseEvent event) {
+    void OnMouseClickedClavardage(MouseEvent event) {  	
+    	VariableGlobal = "Boite_de_recep";
+	   		if(VariableGlobal.equals("Boite_de_recep")) {
+	   			Btn_BoiteRecep.setStyle("-fx-background-color:#2d1c58;");
+	   			Btn_MessageEnvoyer.setStyle("-fx-background-color:#523d87;");
+	   			Btn_MessageSup.setStyle("-fx-background-color:#523d87;");
+	   			Btn_NouveauMessage.setStyle("-fx-background-color:#523d87;");
+	   		}
+    	PaneLblContact.setVisible(false);
     	PaneEmail.setVisible(true);
     	PaneLogs.setVisible(false);
   	   	PaneResultat.setVisible(false);
@@ -432,6 +452,13 @@ public class AccueilController {
    		GrandePaneEnseignant.setVisible(false);
   	  	GrandePaneEtudiant.setVisible(false);
   	   	PaneAccueil.setVisible(false);
+  	   	PaneEmailSousMenu.setVisible(true);
+  	   	iMessageLu = 0;
+  	   	f.AfficherNomEmail();
+  	   	Btn_MessageNonLu.setStyle("-fx-background-color:#2d1c58;");
+ 		Btn_MessageLu.setStyle("-fx-background-color:#523d87;");
+ 		Btn_MessageNonLu.setVisible(true);
+	   	Btn_MessageLu.setVisible(true);
     }
     
     @FXML
@@ -620,7 +647,9 @@ public class AccueilController {
     }
     
     public void setInfo(Administration administration) {
- 
+    	
+    	
+    	
     	file = new File("src\\Photos\\XMauve.png");
     	icn = new Image(file.toURI().toString());
     	ImgClose.setImage(icn);
@@ -768,8 +797,9 @@ public class AccueilController {
     	f.formatTextfield();
     	f.ComboBoxProgramme();
     	f.AfficherNotification();
-    
-      }
+    	f.SelectEmail();
+    	f.AfficherNomEmail();
+    	}
     
     int CouleurBut = 1;
     @FXML
@@ -1501,8 +1531,129 @@ public class AccueilController {
 	   		
   	   		break;
   	   	case "Btn_FermerMessage":
+  	   		Btn_MessageNonLu.setVisible(true);
+	   		Btn_MessageLu.setVisible(true);
   	   		PaneEmail.setVisible(false);
+  	   		PaneEmailSousMenu.setVisible(false);
   	   		PaneAccueil.setVisible(true);
+  	   		Btn_EnvoyerMessage.setVisible(false);
+  	   		f.AfficherNomEmail();
+  	   		break;
+  	   	case "Btn_EnvoyerMessage":
+  	   		//Envoyer un nouveau message (iMessageLu == 2)
+  	   		if(iMessageLu == 2) {
+  	   			f.InsertNouveauMessage();
+  	   		}
+  	   		//Si iMessageLu == 1 (Repondre a message lu) sinon iMessageLu == 0 (Repondre a un message non lu)
+  	   		else if(iMessageLu == 0 || iMessageLu == 1){
+  	   			f.InsertRepondreMessage();
+  	   			f.AfficherNomEmail();
+  	   		}
+  	   		//iMessageLu == -1 (Transfère message supprimer)
+  	   		else if(iMessageLu == -1) {
+  	   			System.out.println("Message transféré");
+  	   		}
+  	   		break;
+  	   		
+  	   	//Sous menu email
+  	   	case "Btn_BoiteRecep":
+  	   		VariableGlobal = "Boite_de_recep";
+  	   		if(VariableGlobal.equals("Boite_de_recep")) {
+  	   			Btn_BoiteRecep.setStyle("-fx-background-color:#2d1c58;");
+  	   			Btn_MessageEnvoyer.setStyle("-fx-background-color:#523d87;");
+  	   			Btn_MessageSup.setStyle("-fx-background-color:#523d87;");
+  	   			Btn_NouveauMessage.setStyle("-fx-background-color:#523d87;");
+  	   		}
+  	   		PaneLblContact.setVisible(false);
+  	   		Btn_MessageNonLu.setVisible(true);
+	   		Btn_MessageLu.setVisible(true);
+	   		iMessageLu = 0;
+  	   		f.AfficherNomEmail();
+  	   		Tb_MessageReponse.setVisible(false);
+	   		Btn_EnvoyerMessage.setVisible(false);
+	   		Tb_Message.setText("");
+	   		Tb_Object.setText("");
+	   		Tb_MessageReponse.setText("");
+	   		Tb_Message.setEditable(true);
+	   		Tb_Message.setFocusTraversable(true);
+	   		Btn_MessageNonLu.setStyle("-fx-background-color:#2d1c58;");
+	   		Btn_MessageLu.setStyle("-fx-background-color:#523d87;");
+  	   		break;
+  	   	case "Btn_MessageEnvoyer":
+  	   			VariableGlobal = "Message_envoyer";
+  	   			if(VariableGlobal.equals("Message_envoyer")) {
+  	   				Btn_BoiteRecep.setStyle("-fx-background-color:#523d87;");
+  	   				Btn_MessageEnvoyer.setStyle("-fx-background-color:#2d1c58;");
+  	   				Btn_MessageSup.setStyle("-fx-background-color:#523d87;");
+  	   				Btn_NouveauMessage.setStyle("-fx-background-color:#523d87;");
+  	   			}
+  	   			iMessageLu = 3;
+  	   			Btn_MessageNonLu.setVisible(false);
+  	   			Btn_MessageLu.setVisible(false);
+  	   			PaneLblContact.setVisible(true);
+  	   			LblTitreEmail.setText("Messages Envoyés");
+  	   			f.AfficherNomEmail();
+  	   		break;
+  	   	case "Btn_MessageSup":
+  	   		VariableGlobal = "Message_sup";
+  	   			if(VariableGlobal.equals("Message_sup")) {
+ 					Btn_BoiteRecep.setStyle("-fx-background-color:#523d87;");
+ 					Btn_MessageEnvoyer.setStyle("-fx-background-color:#523d87;");
+ 					Btn_MessageSup.setStyle("-fx-background-color:#2d1c58;");
+ 					Btn_NouveauMessage.setStyle("-fx-background-color:#523d87;");
+ 				}
+  	   			iMessageLu = -1;
+  	   			Btn_MessageNonLu.setVisible(false);
+	   			Btn_MessageLu.setVisible(false);
+	   			PaneLblContact.setVisible(true);
+	   			LblTitreEmail.setText("Messages Supprimés");
+  	   			f.AfficherNomEmail();
+  	   			
+  	   		break;
+  	   	case "Btn_NouveauMessage":
+  	   		VariableGlobal = "Nouveau_msg";
+ 			if(VariableGlobal.equals("Nouveau_msg")) {
+				Btn_BoiteRecep.setStyle("-fx-background-color:#523d87;");
+				Btn_MessageEnvoyer.setStyle("-fx-background-color:#523d87;");
+				Btn_MessageSup.setStyle("-fx-background-color:#523d87;");
+				Btn_NouveauMessage.setStyle("-fx-background-color:#2d1c58;");
+			}	
+  	   		iMessageLu = 2;
+  	   		Tb_MessageReponse.setVisible(false);
+  	   		Btn_EnvoyerMessage.setVisible(true);
+  	   		Btn_EnvoyerMessage.setLayoutY(480);
+  	   		Btn_EnvoyerMessage.setText("Envoyer");
+  	   		Tb_Message.setText("");
+  	   		Tb_Object.setText("");
+  	   		Tb_MessageReponse.setText("");
+  	   		Tb_Message.setEditable(true);
+  	   		Tb_Message.setFocusTraversable(true);
+  	   		f.AfficherNomEmail();
+  	   		Btn_MessageNonLu.setVisible(false);
+  	   		Btn_MessageLu.setVisible(false);
+  	   		PaneLblContact.setVisible(true);
+  	   		LblTitreEmail.setText("Contact");
+  	   		break;
+  	   	case "Btn_SupEmail":
+  	   			f.SupprimerEmail();
+  	   		break;
+  	   	case "Btn_MessageNonLu":
+  	   		iMessageLu = 0;
+  	   		
+  	   		f.AfficherNomEmail();
+  	   		if(iMessageLu == 0) {
+  	   			Btn_MessageNonLu.setStyle("-fx-background-color:#2d1c58;");
+  	   			Btn_MessageLu.setStyle("-fx-background-color:#523d87;");
+  	   		}
+  	   		break;
+  	   		
+  	   	case "Btn_MessageLu":
+  	   		iMessageLu = 1;
+  	   		f.AfficherNomEmail();
+  	   		if(iMessageLu == 1) {
+  	   			Btn_MessageNonLu.setStyle("-fx-background-color:#523d87;");
+	   			Btn_MessageLu.setStyle("-fx-background-color:#2d1c58;");
+  	   		}
   	   		break;
   	   	}
     }

@@ -71,6 +71,34 @@
                </font>
             </Button>
             <Separator fx:id="LigneDessousBtnFrais11" layoutX="17.0" layoutY="682.0" opacity="0.34" prefHeight="6.0" prefWidth="245.0" />
+            <Pane fx:id="PaneEmailSousMenu" layoutY="122.0" prefHeight="783.0" prefWidth="272.0" style="-fx-background-color: #523d87;" visible="false">
+               <children>
+                  <Button fx:id="Btn_BoiteRecep" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Boite de réception">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="Btn_MessageEnvoyer" layoutX="14.0" layoutY="126.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Messages envoyés">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="Btn_MessageSup" layoutX="14.0" layoutY="187.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Messages supprimés">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Separator layoutX="14.0" layoutY="106.0" opacity="0.34" prefHeight="3.0" prefWidth="245.0" />
+                  <Separator layoutX="14.0" layoutY="167.0" opacity="0.34" prefHeight="3.0" prefWidth="245.0" />
+                  <Separator layoutX="14.0" layoutY="228.0" opacity="0.34" prefHeight="3.0" prefWidth="245.0" />
+                  <Separator layoutX="14.0" layoutY="291.0" opacity="0.34" prefHeight="3.0" prefWidth="245.0" />
+                  <Button fx:id="Btn_NouveauMessage" layoutX="14.0" layoutY="248.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="42.0" prefWidth="245.0" text="Envoyer un nouveau message">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
          </children>
       </Pane>
       <Pane layoutX="272.0" prefHeight="53.0" prefWidth="1061.0" style="-fx-background-color: white;">
@@ -111,9 +139,14 @@
                   <Image url="@Photos/icons8-bavarder-24.png" />
                </image>
             </ImageView>
+            <Label fx:id="LblCountMessage" layoutX="64.0" layoutY="9.0" text="0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Pane fx:id="PaneAccueil" layoutX="281.0" layoutY="86.0" prefHeight="788.0" prefWidth="1045.0" visible="false">
+      <Pane fx:id="PaneAccueil" layoutX="281.0" layoutY="86.0" prefHeight="788.0" prefWidth="1045.0">
          <children>
             <Pane fx:id="PaneCour" layoutX="292.0" layoutY="47.0" prefHeight="135.0" prefWidth="221.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5;">
                <children>
@@ -1362,101 +1395,121 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="PaneEmail" layoutX="272.0" layoutY="86.0" prefHeight="824.0" prefWidth="1061.0" visible="false">
+      <Pane fx:id="PaneEmail" layoutX="272.0" layoutY="51.0" prefHeight="856.0" prefWidth="1061.0" visible="false">
          <children>
-            <GridPane layoutX="260.0" layoutY="55.0" prefHeight="60.0" prefWidth="301.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="101.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="237.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label fx:id="LblTitreEnvoyeur" text="Envoyeur :" underline="true">
-                     <font>
-                        <Font name="Arial" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="LblTitreReceveur" text="Receveur :" underline="true" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Arial Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="LblEnvoyeur" text="Anthony Chicoine" textFill="#e85917" GridPane.columnIndex="1">
-                     <font>
-                        <Font name="Arial" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="LblReceveur" text="John Doe" textFill="#e85917" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Arial" size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </GridPane>
-            <GridPane layoutX="787.0" layoutY="50.0" prefHeight="35.0" prefWidth="226.0">
-               <children>
-                  <Label fx:id="LblTitreDate" prefHeight="16.0" prefWidth="107.0" text="Date d'envoie :" underline="true">
-                     <font>
-                        <Font name="Arial Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="LblDate" text="21 janvier 2021" textFill="#e85917" GridPane.columnIndex="1">
-                     <font>
-                        <Font name="Arial" size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="146.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="145.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-            <TextField fx:id="Tb_Object" layoutX="260.0" layoutY="139.0" prefHeight="32.0" prefWidth="768.0" promptText="Object :">
-               <font>
-                  <Font name="Arial" size="14.0" />
-               </font>
-            </TextField>
-            <TextArea fx:id="Tb_Message" layoutX="260.0" layoutY="171.0" prefHeight="460.0" prefWidth="768.0" promptText="Message : ">
-               <font>
-                  <Font name="Arial" size="14.0" />
-               </font>
-            </TextArea>
-            <Button fx:id="Btn_RepondreMessage" layoutX="617.0" layoutY="774.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="200.0" text="Répondre">
-               <font>
-                  <Font name="Arial" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="Btn_EnvoyerMessage" layoutX="828.0" layoutY="774.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="200.0" text="Envoyer">
-               <font>
-                  <Font name="Arial" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="Btn_SuivantMessage" layoutX="663.0" layoutY="639.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="89.0" text="Suivant">
-               <font>
-                  <Font name="Arial" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="Btn_PrecedentMessage" layoutX="564.0" layoutY="639.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="89.0" text="Précédent">
-               <font>
-                  <Font name="Arial" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="Btn_FermerMessage" layoutX="260.0" layoutY="774.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="143.0" text="Fermer">
-               <font>
-                  <Font name="Arial" size="14.0" />
-               </font>
-            </Button>
-            <TableView fx:id="TableView_Email" layoutX="12.0" layoutY="1.0" prefHeight="818.0" prefWidth="233.0">
+            <TableView fx:id="TableView_Email" layoutY="71.0" prefHeight="772.0" prefWidth="276.0">
               <columns>
-                <TableColumn fx:id="TableColumn_Envoyeur" prefWidth="232.0" text="Envoyeur" />
+                <TableColumn fx:id="TableColumn_Envoyeur" prefWidth="275.0" text="Envoyeur" />
               </columns>
             </TableView>
+            <Pane layoutX="243.0" layoutY="14.0" prefHeight="838.0" prefWidth="809.0">
+               <children>
+                  <TextArea fx:id="Tb_Message" layoutX="42.0" layoutY="113.0" prefHeight="357.0" prefWidth="768.0" promptText="Message : " wrapText="true">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </TextArea>
+                  <TextField fx:id="Tb_Object" layoutX="42.0" layoutY="81.0" prefHeight="32.0" prefWidth="768.0" promptText="Object :">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </TextField>
+                  <GridPane layoutX="569.0" layoutY="-8.0" prefHeight="35.0" prefWidth="226.0">
+                     <children>
+                        <Label fx:id="LblTitreDate" prefHeight="16.0" prefWidth="107.0" text="Date d'envoie :" underline="true">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblDate" textFill="#e85917" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="146.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="145.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="42.0" layoutY="-3.0" prefHeight="60.0" prefWidth="301.0">
+                     <children>
+                        <Label fx:id="LblTitreEnvoyeur" text="Envoyeur :" underline="true">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblTitreReceveur" text="Receveur :" underline="true" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblEnvoyeur" textFill="#e85917" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="LblReceveur" textFill="#e85917" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="101.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="237.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <Button fx:id="Btn_FermerMessage" layoutX="42.0" layoutY="792.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="143.0" text="Fermer">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <TextArea fx:id="Tb_MessageReponse" layoutX="42.0" layoutY="478.0" prefHeight="304.0" prefWidth="768.0" promptText="Message : " visible="false" wrapText="true">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </TextArea>
+                  <Button fx:id="Btn_EnvoyerMessage" layoutX="326.0" layoutY="792.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="200.0" text="Envoyer" visible="false">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="Btn_SupEmail" disable="true" layoutX="652.0" layoutY="792.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="36.0" prefWidth="143.0" text="Supprimer">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+            <Button fx:id="Btn_MessageNonLu" layoutX="10.0" layoutY="41.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="128.0" text="Message non-lu" visible="false" />
+            <Button fx:id="Btn_MessageLu" layoutX="138.0" layoutY="41.0" mnemonicParsing="false" onAction="#OnActionPrincipal" prefHeight="30.0" prefWidth="128.0" text="Message Lu" visible="false" />
+            <Pane fx:id="PaneLblContact" layoutX="38.0" layoutY="29.0" prefHeight="42.0" prefWidth="200.0" style="-fx-background-color: #523d87; -fx-border-radius: 5 5 0 0; -fx-background-radius: 5 5 0 0;">
+               <children>
+                  <GridPane layoutX="19.0" layoutY="6.0" prefHeight="30.0" prefWidth="162.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="LblTitreEmail" alignment="CENTER" contentDisplay="CENTER" text="Contact" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </Pane>
          </children>
       </Pane>
       <Pane fx:id="PaneResultat" layoutX="291.0" layoutY="63.0" prefHeight="830.0" prefWidth="1027.0" style="-fx-background-color: ebebeb; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
