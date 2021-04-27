@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 17 avr. 2021 à 00:51
+-- Généré le : mar. 27 avr. 2021 à 04:52
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP : 7.4.5
 
@@ -281,11 +281,28 @@ CREATE TABLE `clavardage` (
   `IdMessage` int(11) NOT NULL,
   `IdEnvoyeur` int(11) NOT NULL,
   `IdReceveur` int(11) NOT NULL,
+  `Sujet` longtext NOT NULL,
   `Message` longtext NOT NULL,
   `Date` date NOT NULL,
   `Etat` int(11) NOT NULL COMMENT '1 = lu / 0 = non lu',
-  `Reponse` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `IdReponse` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `clavardage`
+--
+
+INSERT INTO `clavardage` (`IdMessage`, `IdEnvoyeur`, `IdReceveur`, `Sujet`, `Message`, `Date`, `Etat`, `IdReponse`) VALUES
+(27, 1, 31, 'Importante modification', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Jean-Denis,\n\nPour demain, il faut que les étudiants suivant aient des modifications apporté\n\nÉtudiants\nJean-Marc Robert\nAmélie Boyer\n\nModification\nNom d\'utilisateur\nMot de passe\nAdresse de maison\nNuméro de téléphone\n\nMerci,\nAnthony Chicoine', '2021-04-24', 1, 0),
+(28, 31, 1, 'Importante modification', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Jean-Denis,\n\nPour demain, il faut que les étudiants suivant aient des modifications apporté\n\nÉtudiants\nJean-Marc Robert\nAmélie Boyer\n\nModification\nNom d\'utilisateur\nMot de passe\nAdresse de maison\nNuméro de téléphone\n\nMerci,\nAnthony Chicoine\n\n____________________________________ \n\nDe : Jean-Denis Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Anthony, \n\nJe vais faire ?a tout de suites,\n\nJe t\'envoie un email d?s que c\'est fait\n\nBonne journée', '2021-04-24', 1, 27),
+(29, 1, 31, 'Test', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Test\n\n123', '2021-04-26', 1, 0),
+(30, 31, 1, 'Test', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Test\n\n123\n\n____________________________________ \n\nDe : Jean-Denis Chicoine\nEnvoyé le : 2021-04-26\nSujet : Test\n\ntest', '2021-04-26', 1, 29),
+(31, 1, 31, 'Test', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Test\n\n123\n\n____________________________________ \n\nDe : Jean-Denis Chicoine\nEnvoyé le : 2021-04-26\nSujet : Test\n\ntest\n\n____________________________________ \n\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Test\n\nparfait', '2021-04-26', 0, 30),
+(32, 1, 31, 'Importante modification', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Jean-Denis,\n\nPour demain, il faut que les étudiants suivant aient des modifications apporté\n\nÉtudiants\nJean-Marc Robert\nAmélie Boyer\n\nModification\nNom d\'utilisateur\nMot de passe\nAdresse de maison\nNuméro de téléphone\n\nMerci,\nAnthony Chicoine\n\n____________________________________ \n\nDe : Jean-Denis Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Anthony, \n\nJe vais faire ?a tout de suites,\n\nJe t\'envoie un email d?s que c\'est fait\n\nBonne journée\n\n____________________________________ \n\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Importante modification\n\nMerci', '2021-04-26', 1, 28),
+(33, 31, 1, 'Importante modification', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Jean-Denis,\n\nPour demain, il faut que les étudiants suivant aient des modifications apporté\n\nÉtudiants\nJean-Marc Robert\nAmélie Boyer\n\nModification\nNom d\'utilisateur\nMot de passe\nAdresse de maison\nNuméro de téléphone\n\nMerci,\nAnthony Chicoine\n\n____________________________________ \n\nDe : Jean-Denis Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Anthony, \n\nJe vais faire ?a tout de suites,\n\nJe t\'envoie un email d?s que c\'est fait\n\nBonne journée\n\n____________________________________ \n\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Importante modification\n\nMerci\n\n____________________________________ \n\nDe : Jean-Denis Chicoine\nEnvoyé le : 2021-04-26\nSujet : Importante modification\n\ntest', '2021-04-26', -1, 32),
+(34, 1, 31, 'Importante modification', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Jean-Denis,\n\nPour demain, il faut que les étudiants suivant aient des modifications apporté\n\nÉtudiants\nJean-Marc Robert\nAmélie Boyer\n\nModification\nNom d\'utilisateur\nMot de passe\nAdresse de maison\nNuméro de téléphone\n\nMerci,\nAnthony Chicoine\n\n____________________________________ \n\nDe : Jean-Denis Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Anthony, \n\nJe vais faire ?a tout de suites,\n\nJe t\'envoie un email d?s que c\'est fait\n\nBonne journée\n\n____________________________________ \n\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Importante modification\n\nMerci\n\n____________________________________ \n\nDe : Jean-Denis Chicoine\nEnvoyé le : 2021-04-26\nSujet : Importante modification\n\ntest\n\n____________________________________ \n\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Importante modification\n\nok', '2021-04-26', 0, 33),
+(35, 1, 33, 'Important message ', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Important message \n\nBonjour Jean-Marc\n\nJe vous écrit pour vous dire que certains étudiants trouve votre facon d\'enseigné n\'est pas approprié\nVenez me voir demain ? 10:30\n\nMerci Anthony', '2021-04-26', 1, 0),
+(36, 1, 31, 'Importante modification', '\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Jean-Denis,\n\nPour demain, il faut que les étudiants suivant aient des modifications apporté\n\nÉtudiants\nJean-Marc Robert\nAmélie Boyer\n\nModification\nNom d\'utilisateur\nMot de passe\nAdresse de maison\nNuméro de téléphone\n\nMerci,\nAnthony Chicoine\n\n____________________________________ \n\nDe : Jean-Denis Chicoine\nEnvoyé le : 2021-04-24\nSujet : Importante modification\n\nSalut Anthony, \n\nJe vais faire ?a tout de suites,\n\nJe t\'envoie un email d?s que c\'est fait\n\nBonne journée\n\n____________________________________ \n\nDe : Anthony Chicoine\nEnvoyé le : 2021-04-26\nSujet : Importante modification\n\n', '2021-04-26', 0, 28);
 
 -- --------------------------------------------------------
 
@@ -633,7 +650,7 @@ INSERT INTO `etudiant` (`ID`, `Utilisateur`, `Prenom`, `Nom`, `Telephone`, `Emai
 (40, 'Charles98', 'Charles', 'Colins', '4389091823', 'charles.colins@live.ca', '1610 avenue du parc', 'Montreal', 'Quebec', 'H9C7N6', 1, 'Francais'),
 (41, 'DavyD98', 'Davy', 'Dawson', '4509010232', 'dawson.davy@hotmail.ca', '89 rue de Laval', 'Montreal', 'Quebec', 'G9C3N4', 2, 'Francais'),
 (42, 'Charlie89', 'Charlie', 'Loukas', '5148100293', 'charlie@hotmail.com', '791 rue Du Manoir', 'Montréal', 'Quebec', 'H7C3N1', 1, 'Francais'),
-(43, 'Ame_boyer1', 'Amélie', 'Boyer', '4389010293', 'amelou@hotmail.ca', '112 rue du Dollard', 'Chateauguay', 'Quebec', '8J12N3', 2, 'English');
+(43, 'Ame_boyer', 'Amélie', 'Boyer', '4389010293', 'amelou@hotmail.ca', '112 rue du Dollard', 'Chateauguay', 'Quebec', '8J12N3', 2, 'Francais');
 
 --
 -- Déclencheurs `etudiant`
@@ -753,7 +770,6 @@ INSERT INTO `etudiantcour` (`IdResultat`, `IdEtudiant`, `IdCour`, `Resultat`) VA
 (39, 40, 19, 0),
 (40, 40, 20, 0),
 (41, 41, 21, 0),
-(64, 43, 21, 0),
 (125, 37, 2, 0),
 (126, 37, 3, 0),
 (127, 37, 4, 0),
@@ -773,7 +789,8 @@ INSERT INTO `etudiantcour` (`IdResultat`, `IdEtudiant`, `IdCour`, `Resultat`) VA
 (141, 37, 17, 0),
 (142, 37, 18, 0),
 (143, 37, 19, 0),
-(144, 37, 20, 0);
+(144, 37, 20, 0),
+(145, 43, 21, 0);
 
 --
 -- Déclencheurs `etudiantcour`
@@ -846,8 +863,8 @@ INSERT INTO `frais` (`IdFrais`, `IdEtudiant`, `Cout`, `Type`, `Etat`) VALUES
 (50, 41, 175, 'Paiement cours', 0),
 (54, 44, 0, 'Paiement cours', 0),
 (55, 42, 0, 'Paiement cours', 0),
-(56, 43, 175, 'Paiement cours', 0),
-(60, 37, 3975, 'Paiement cours', 0);
+(60, 37, 3975, 'Paiement cours', 0),
+(61, 43, 175, 'Paiement cours', 0);
 
 --
 -- Déclencheurs `frais`
@@ -1167,7 +1184,10 @@ INSERT INTO `logupdatedeleteaccount` (`ID`, `Createur`, `AncienneValeur`, `Nouve
 (245, 'Jean-Denis Chicoine', '123', 'P?\"?I?$BX ???S?a&\Z?\'???T?d??', 'Administration', 'Modification', '2021-04-14', 0),
 (246, 'Anthony Chicoine', 'qwe', '', 'Administration', 'Suppression', '2021-04-14', 0),
 (247, 'Anthony Chicoine', 'qwe', '', 'Enseignant', 'Suppression', '2021-04-14', 0),
-(248, 'Anthony Chicoine', '123', '(???<?*?0\\???7?R???sc???X<?', 'Administration', 'Modification', '2021-04-14', 1);
+(248, 'Anthony Chicoine', '123', '(???<?*?0\\???7?R???sc???X<?', 'Administration', 'Modification', '2021-04-14', 0),
+(249, 'Anthony Chicoine', 'Ame_boyer1', 'Ame_boyer', 'Etudiant', 'Modification', '2021-04-22', 0),
+(250, 'Anthony Chicoine', 'English', 'Francais', 'Etudiant', 'Modification', '2021-04-22', 0),
+(251, 'Anthony Chicoine', '56', '', 'Frais', 'Suppression', '2021-04-22', 1);
 
 -- --------------------------------------------------------
 
@@ -1341,104 +1361,12 @@ CREATE TABLE `tablenotification` (
 --
 
 INSERT INTO `tablenotification` (`IdNotification`, `Auteur`, `IdLog`, `IdAdmin`, `Etat`) VALUES
-(1, 'Anthony Chicoine', 199, 1, 1),
-(2, 'Anthony Chicoine', 200, 1, 1),
-(3, 'Anthony Chicoine', 199, 31, 1),
-(4, 'Anthony Chicoine', 200, 31, 1),
-(5, 'Jean-Denis Chicoine', 201, 1, 1),
-(6, 'Jean-Denis Chicoine', 202, 1, 1),
-(7, 'Jean-Denis Chicoine', 203, 1, 1),
-(8, 'Jean-Denis Chicoine', 204, 1, 1),
-(9, 'Jean-Denis Chicoine', 205, 1, 1),
-(10, 'Jean-Denis Chicoine', 206, 1, 1),
-(11, 'Jean-Denis Chicoine', 207, 1, 1),
-(12, 'Jean-Denis Chicoine', 208, 1, 1),
-(13, 'Jean-Denis Chicoine', 209, 1, 1),
-(14, 'Jean-Denis Chicoine', 210, 1, 1),
-(15, 'Jean-Denis Chicoine', 211, 1, 1),
-(16, 'Jean-Denis Chicoine', 212, 1, 1),
-(17, 'Jean-Denis Chicoine', 213, 1, 1),
-(18, 'Jean-Denis Chicoine', 214, 1, 1),
-(19, 'Jean-Denis Chicoine', 215, 1, 1),
-(20, 'Jean-Denis Chicoine', 216, 1, 1),
-(21, 'Jean-Denis Chicoine', 217, 1, 1),
-(22, 'Jean-Denis Chicoine', 218, 1, 1),
-(23, 'Jean-Denis Chicoine', 219, 1, 1),
-(24, 'Jean-Denis Chicoine', 220, 1, 1),
-(25, 'Jean-Denis Chicoine', 221, 1, 1),
-(26, 'Jean-Denis Chicoine', 222, 1, 1),
-(27, 'Jean-Denis Chicoine', 223, 1, 1),
-(28, 'Jean-Denis Chicoine', 224, 1, 1),
-(29, 'Jean-Denis Chicoine', 225, 1, 1),
-(30, 'Jean-Denis Chicoine', 201, 31, 1),
-(31, 'Jean-Denis Chicoine', 202, 31, 1),
-(32, 'Jean-Denis Chicoine', 203, 31, 1),
-(33, 'Jean-Denis Chicoine', 204, 31, 1),
-(34, 'Jean-Denis Chicoine', 205, 31, 1),
-(35, 'Jean-Denis Chicoine', 206, 31, 1),
-(36, 'Jean-Denis Chicoine', 207, 31, 1),
-(37, 'Jean-Denis Chicoine', 208, 31, 1),
-(38, 'Jean-Denis Chicoine', 209, 31, 1),
-(39, 'Jean-Denis Chicoine', 210, 31, 1),
-(40, 'Jean-Denis Chicoine', 211, 31, 1),
-(41, 'Jean-Denis Chicoine', 212, 31, 1),
-(42, 'Jean-Denis Chicoine', 213, 31, 1),
-(43, 'Jean-Denis Chicoine', 214, 31, 1),
-(44, 'Jean-Denis Chicoine', 215, 31, 1),
-(45, 'Jean-Denis Chicoine', 216, 31, 1),
-(46, 'Jean-Denis Chicoine', 217, 31, 1),
-(47, 'Jean-Denis Chicoine', 218, 31, 1),
-(48, 'Jean-Denis Chicoine', 219, 31, 1),
-(49, 'Jean-Denis Chicoine', 220, 31, 1),
-(50, 'Jean-Denis Chicoine', 221, 31, 1),
-(51, 'Jean-Denis Chicoine', 222, 31, 1),
-(52, 'Jean-Denis Chicoine', 223, 31, 1),
-(53, 'Jean-Denis Chicoine', 224, 31, 1),
-(54, 'Jean-Denis Chicoine', 225, 31, 1),
-(55, 'Jean-Denis Chicoine', 226, 1, 1),
-(56, 'Jean-Denis Chicoine', 226, 31, 1),
-(57, 'Jean-Denis Chicoine', 227, 1, 1),
-(58, 'Jean-Denis Chicoine', 227, 31, 1),
-(59, 'Anthony Chicoine', 228, 1, 1),
-(60, 'Anthony Chicoine', 229, 1, 1),
-(61, 'Anthony Chicoine', 230, 1, 1),
-(62, 'Anthony Chicoine', 231, 1, 1),
-(63, 'Anthony Chicoine', 232, 1, 1),
-(64, 'Anthony Chicoine', 233, 1, 1),
-(65, 'Anthony Chicoine', 234, 1, 1),
-(66, 'Anthony Chicoine', 235, 1, 1),
-(67, 'Anthony Chicoine', 236, 1, 1),
-(68, 'Anthony Chicoine', 237, 1, 1),
-(69, 'Anthony Chicoine', 238, 1, 1),
-(70, 'Anthony Chicoine', 239, 1, 1),
-(71, 'Anthony Chicoine', 240, 1, 1),
-(72, 'Anthony Chicoine', 241, 1, 1),
-(73, 'Anthony Chicoine', 242, 1, 1),
-(74, 'Anthony Chicoine', 243, 1, 1),
-(75, 'Anthony Chicoine', 244, 1, 1),
-(76, 'Anthony Chicoine', 245, 1, 1),
-(77, 'Anthony Chicoine', 246, 1, 1),
-(78, 'Anthony Chicoine', 247, 1, 1),
-(79, 'Anthony Chicoine', 228, 31, 1),
-(80, 'Anthony Chicoine', 229, 31, 1),
-(81, 'Anthony Chicoine', 230, 31, 1),
-(82, 'Anthony Chicoine', 231, 31, 1),
-(83, 'Anthony Chicoine', 232, 31, 1),
-(84, 'Anthony Chicoine', 233, 31, 1),
-(85, 'Anthony Chicoine', 234, 31, 1),
-(86, 'Anthony Chicoine', 235, 31, 1),
-(87, 'Anthony Chicoine', 236, 31, 1),
-(88, 'Anthony Chicoine', 237, 31, 1),
-(89, 'Anthony Chicoine', 238, 31, 1),
-(90, 'Anthony Chicoine', 239, 31, 1),
-(91, 'Anthony Chicoine', 240, 31, 1),
-(92, 'Anthony Chicoine', 241, 31, 1),
-(93, 'Anthony Chicoine', 242, 31, 1),
-(94, 'Anthony Chicoine', 243, 31, 1),
-(95, 'Anthony Chicoine', 244, 31, 1),
-(96, 'Anthony Chicoine', 245, 31, 1),
-(97, 'Anthony Chicoine', 246, 31, 1),
-(98, 'Anthony Chicoine', 247, 31, 1);
+(99, 'Anthony Chicoine', 248, 1, 1),
+(100, 'Anthony Chicoine', 249, 1, 1),
+(101, 'Anthony Chicoine', 250, 1, 1),
+(102, 'Anthony Chicoine', 248, 31, 1),
+(103, 'Anthony Chicoine', 249, 31, 1),
+(104, 'Anthony Chicoine', 250, 31, 1);
 
 -- --------------------------------------------------------
 
@@ -1583,7 +1511,7 @@ ALTER TABLE `ancienetudiant`
 -- AUTO_INCREMENT pour la table `clavardage`
 --
 ALTER TABLE `clavardage`
-  MODIFY `IdMessage` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdMessage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT pour la table `cour`
@@ -1607,13 +1535,13 @@ ALTER TABLE `etudiant`
 -- AUTO_INCREMENT pour la table `etudiantcour`
 --
 ALTER TABLE `etudiantcour`
-  MODIFY `IdResultat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `IdResultat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- AUTO_INCREMENT pour la table `frais`
 --
 ALTER TABLE `frais`
-  MODIFY `IdFrais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `IdFrais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT pour la table `logcreatedaccount`
@@ -1631,7 +1559,7 @@ ALTER TABLE `logcreatedprogcours`
 -- AUTO_INCREMENT pour la table `logupdatedeleteaccount`
 --
 ALTER TABLE `logupdatedeleteaccount`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
 
 --
 -- AUTO_INCREMENT pour la table `programme`
@@ -1649,7 +1577,7 @@ ALTER TABLE `tablecommentaire`
 -- AUTO_INCREMENT pour la table `tablenotification`
 --
 ALTER TABLE `tablenotification`
-  MODIFY `IdNotification` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `IdNotification` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
